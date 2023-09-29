@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: "Satoshi", sans-serif;
+  }
+  html {
+    scroll-behavior: smooth;
+    box-sizing: border-box;
+  }
+}
+
+@layer components {
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .flex-end {
+    @apply flex items-end justify-center;
+  }
+  .flex-end {
+    @apply flex items-start justify-center;
+  }
+
+  .header-lg {
+    @apply text-gray text-2xl font-semibold;
+  }
+
+  .paragraph-sm {
+    @apply text-gray text-sm md:text-base;
+  }
+
+  .paragraph-md {
+    @apply text-gray text-lg;
+  }
+
+  .paragraph-lg {
+    @apply text-gray text-xl;
+  }
+}
