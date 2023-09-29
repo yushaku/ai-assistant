@@ -11,5 +11,6 @@
       "cache": false,
       "persistent": true
     }
-  }
+  },
+  "globalEnv": ["OPENAI_API_KEY"]
 }
