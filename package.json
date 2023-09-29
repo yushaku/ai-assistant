@@ -1,18 +1,58 @@
 {
   "name": "huce_ai_assistant",
-  "packageManager": "pnpm@8.6.10",
   "private": true,
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "dev:web": "pnpm --filter web dev"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "format": "next lint --fix && prettier '**/*.{tsx, jsx}' --write --ignore-path .gitignore",
+    "check-types": "tsc --noEmit --pretty",
+    "prepare": "husky install",
+    "postbuild": "next-sitemap"
+
+  },
+  "dependencies": {
+    "@huggingface/inference": "^2.6.1",
+    "ai": "^2.2.13",
+    "next": "^13.4.19",
+    "openai": "^4.10.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@next/eslint-plugin-next": "^13.4.19",
+    "@tailwindcss/line-clamp": "^0.4.4",
+    "@tailwindcss/typography": "^0.5.9",
+    "@trivago/prettier-plugin-sort-imports": "^4.2.0",
+    "@types/node": "^17.0.12",
+    "@types/react": "^18.0.22",
+    "@types/react-dom": "^18.0.7",
+    "@typescript-eslint/eslint-plugin": "^6.7.2",
+    "@typescript-eslint/parser": "^6.7.2",
+    "autoprefixer": "^10.4.16",
     "eslint": "^8.48.0",
+    "eslint-config-next": "^13.5.3",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-tailwindcss": "^3.13.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1",
+    "postcss": "^8.4.24",
     "prettier": "^3.0.3",
-    "tsconfig": "workspace:*",
-    "turbo": "latest"
+    "prettier-plugin-tailwindcss": "^0.1.11",
+    "tailwind-merge": "^1.13.1",
+    "tailwindcss": "^3.2.4",
+    "tailwindcss-animated": "^1.0.1",
+    "typescript": "5.2.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
+  },
+  "release": {
+    "branches": [
+      "main"
+    ]
   }
 }

@@ -1,0 +1,35 @@
+{
+  "extends": "next/core-web-vitals",
+  "overrides": [
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "plugins": ["@typescript-eslint", "tailwindcss", "prettier"],
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:tailwindcss/recommended",
+        "next/core-web-vitals"
+      ],
+      "parserOptions": {
+        "project": "./tsconfig.json"
+      },
+      "rules": {
+        "no-console": ["warn", { "allow": ["warn", "error"] }],
+        "import/extensions": "off",
+        "react/function-component-definition": "off",
+        "react/destructuring-assignment": "off",
+        "react/require-default-props": "off",
+        "react/jsx-props-no-spreading": "off",
+        "@next/next/no-img-element": "off",
+        "@typescript-eslint/consistent-type-imports": "warn",
+        "no-restricted-syntax": [
+          "warn",
+          "ForInStatement",
+          "LabeledStatement",
+          "WithStatement"
+        ],
+        "@typescript-eslint/no-unused-vars": "off"
+      }
+    }
+  ]
+}
