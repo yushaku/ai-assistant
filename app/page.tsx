@@ -1,6 +1,7 @@
 "use client";
 
 import { useChat } from "ai/react";
+import { UserButton } from "@clerk/nextjs";
 import { useState } from "react";
 
 const apis = [
@@ -23,6 +24,9 @@ export default function Chat() {
 
   return (
     <main className="mx-auto flex h-screen w-full max-w-lg flex-col p-24">
+      <div>
+        <UserButton afterSignOutUrl="/"/>
+      </div>
       <ul className="flex-center gap-4">
         {apis.map((api) => {
           const selected =

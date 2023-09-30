@@ -10,10 +10,11 @@
     "check-types": "tsc --noEmit --pretty",
     "prepare": "husky install",
     "postbuild": "next-sitemap"
-
   },
   "dependencies": {
+    "@clerk/nextjs": "^4.25.1",
     "@huggingface/inference": "^2.6.1",
+    "@next/bundle-analyzer": "^13.5.3",
     "ai": "^2.2.13",
     "next": "^13.4.19",
     "openai": "^4.10.0",
