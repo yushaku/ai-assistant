@@ -5,12 +5,12 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: "aideation-yt.firebaseapp.com",
-  projectId: "aideation-yt",
-  storageBucket: "aideation-yt.appspot.com",
-  messagingSenderId: "962348384448",
-  appId: "1:962348384448:web:e02758407aba3258d5ad25",
+  apiKey: "AIzaSyDXoQhBvdO5W88Skqu9pFiRjNAOBnks4pM",
+  authDomain: "doodle-f1093.firebaseapp.com",
+  projectId: "doodle-f1093",
+  storageBucket: "doodle-f1093.appspot.com",
+  messagingSenderId: "585137489294",
+  appId: "1:585137489294:web:9e65937cadf72802ec10df"
 };
 
 const app = initializeApp(firebaseConfig);
