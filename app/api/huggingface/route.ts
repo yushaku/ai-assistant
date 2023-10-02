@@ -3,7 +3,7 @@ import { HuggingFaceStream, StreamingTextResponse } from 'ai'
 import { experimental_buildOpenAssistantPrompt } from 'ai/prompts'
 
 export const runtime = 'edge'
-const huggingface = new HfInference(process.env.HUGGINGFACE_API_KEY)
+export const huggingface = new HfInference(process.env.HUGGINGFACE_API_KEY)
 
 export async function POST(req: Request) {
   const { messages } = await req.json()
