@@ -46,7 +46,8 @@
   }
 
   .btn-outline {
-    @apply text-dark;
+    @apply px-4 py-2 rounded-lg border border-blue-500 font-medium 
+    hover:bg-gradient-to-r hover:from-green-500 hover:to-blue-500;
   }
 
   .btn-contained {

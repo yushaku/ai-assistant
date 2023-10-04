@@ -15,6 +15,7 @@
     "@clerk/nextjs": "^4.25.1",
     "@heroicons/react": "^2.0.18",
     "@huggingface/inference": "^2.6.1",
+    "@material-tailwind/react": "^2.1.2",
     "@next/bundle-analyzer": "^13.5.3",
     "ai": "^2.2.13",
     "langchain": "^0.0.157",
