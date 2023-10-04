@@ -50,7 +50,6 @@ const Markdown: FC<MarkdownProps> = ({ children }) => {
           style={syntaxTheme}
           language={hasLang[1]}
           PreTag="div"
-          className="codeStyle"
           showLineNumbers={true}
           wrapLines={hasMeta}
           useInlineStyles={true}

@@ -4,8 +4,8 @@ import React from 'react'
 
 export const UserQuestion = ({ question }: { question: string }) => {
   return (
-    <p className="relative my-4">
-      <span className="absolute -left-10 -top-1 h-7 w-7 rounded-full">
+    <p className="relative my-4 p-4">
+      <span className="absolute -left-10 top-1/4 h-7 w-7 rounded-full">
         <Image
           alt="yushaku"
           src="/man.png"
@@ -22,7 +22,7 @@ export const UserQuestion = ({ question }: { question: string }) => {
 
 export const BotAnswer = ({ answer }: { answer: string }) => {
   return (
-    <div className="relative">
+    <div className="relative rounded-lg bg-dark-100 p-4">
       <span className="absolute -left-10 h-7 w-7 rounded-full">
         <Image
           alt="yushaku"

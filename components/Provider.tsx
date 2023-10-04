@@ -1,7 +1,17 @@
-"use client";
+'use client'
 
-import React from "react";
+import { Navbar } from './Navbar'
+import { Sidebar } from './Sidebar'
+import React from 'react'
 
 export const Provider = ({ children }: { children: React.ReactNode }) => {
-  return <div>{children}</div>;
-};
+  return (
+    <main className="relative bg-dark">
+      <Navbar />
+      <section className="flex">
+        <Sidebar />
+        <article>{children}</article>
+      </section>
+    </main>
+  )
+}

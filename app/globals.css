@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    font-family: "Satoshi", sans-serif;
+    @apply font-sans text-gray-100;
   }
   html {
     scroll-behavior: smooth;
@@ -18,10 +18,15 @@
   }
 
   .flex-end {
-    @apply flex items-end justify-center;
+    @apply flex items-center justify-end;
   }
-  .flex-end {
-    @apply flex items-start justify-center;
+
+  .flex-start {
+    @apply flex items-center justify-start;
+  }
+
+  .flex-between {
+    @apply flex items-center justify-between;
   }
 
   .header-lg {
@@ -39,4 +44,45 @@
   .paragraph-lg {
     @apply text-gray text-xl;
   }
+
+  .btn-outline {
+    @apply text-dark;
+  }
+
+  .btn-contained {
+    @apply px-4 py-2 rounded-lg bg-blue-500 font-medium 
+    hover:bg-gradient-to-r hover:from-green-500 hover:to-blue-500;
+  }
+
+  a:hover {
+    background: #64ffda;
+    background: -webkit-linear-gradient(
+      to left,
+      #64ffda,
+      #38ef7d
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+      to left,
+      #64ffda,
+      #38ef7d
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.green_text_gradient {
+  background: #64ffda; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to left,
+    #64ffda,
+    #38ef7d
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to left,
+    #64ffda,
+    #38ef7d
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
