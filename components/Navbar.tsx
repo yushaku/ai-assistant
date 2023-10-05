@@ -6,7 +6,7 @@ import React from 'react'
 export const Navbar = () => {
   return (
     <nav className="absolute top-0 z-10 flex h-14 w-full items-center bg-dark-100">
-      <div className="flex-between container">
+      <div className="flex-between w-full px-6">
         <Link href="/" className="green_text_gradient text-xl font-bold">
           HUCE Assistents
         </Link>

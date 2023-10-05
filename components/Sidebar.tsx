@@ -5,7 +5,7 @@ import React from 'react'
 export const Sidebar = () => {
   return (
     <Resizable
-      className="mt-14 bg-dark-100 px-6"
+      className="mt-14 bg-dark-100 p-6"
       enable={{
         left: false,
         right: true,

@@ -8,7 +8,11 @@ type Props = {
 export const SelectModel = ({ onclick }: Props) => {
   return (
     <div className="w-72">
-      <Select label="Select Model" className="text-gray-100">
+      <Select
+        defaultValue={AI_MODELS.at(0)?.title}
+        label="Select Model"
+        className="text-gray-100"
+      >
         {AI_MODELS.map((model, index) => {
           return (
             <Option key={index} onClick={() => onclick(model)}>
