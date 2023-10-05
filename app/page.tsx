@@ -60,14 +60,14 @@ export default function Chat() {
               Send <PaperAirplaneIcon className="ml-3 h-5 w-5" />
             </button>
 
-            <div className="flex space-x-1 pl-0 sm:pl-2">
-              <button className="rounded p-2 text-gray-100 hover:bg-gray-600 hover:text-white">
+            <div className="flex space-x-1 pl-0">
+              <button className="rounded p-2 text-gray-100 hover:bg-gray-600">
                 <NewspaperIcon className="h-5 w-5" />
               </button>
-              <button className="rounded p-2 text-gray-100 hover:bg-gray-600 hover:text-white">
+              <button className="rounded p-2 text-gray-100 hover:bg-gray-600">
                 <PhotoIcon className="h-5 w-5" />
               </button>
-              <button className="rounded p-2 text-gray-100 hover:bg-gray-600 hover:text-white">
+              <button className="rounded p-2 text-gray-100 hover:bg-gray-600">
                 <MicrophoneIcon className="h-5 w-5" />
               </button>
             </div>
