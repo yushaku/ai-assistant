@@ -3,6 +3,8 @@ export type Model = {
   href: string
 }
 
+export const INDEX_NAME = 'my-test-pinecone-index'
+
 export const AI_MODELS: Array<Model> = [
   {
     title: 'hugging face',
