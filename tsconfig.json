@@ -40,7 +40,8 @@
     "paths": {
       "@/*": ["./app/*"],
       "@/component/*": ["./components/*"],
-      "@/public/*": ["./public/*"]
+      "@/public/*": ["./public/*"],
+      "@/lib/*": ["./lib/*"]
     },
     "plugins": [
       {
