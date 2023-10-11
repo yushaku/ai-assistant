@@ -60,11 +60,9 @@ export const createPineconeIndex = async (
     console.log(`Creating "${indexName}"...`)
     // 5. Create index
     await client.createIndex({
-      createRequest: {
-        name: indexName,
-        dimension: vectorDimension,
-        metric: 'cosine'
-      }
+      name: indexName,
+      dimension: vectorDimension,
+      metric: 'cosine'
     })
     // 6. Log successful creation
     console.log(`Creating index.... please wait for it to finish initializing.`)
@@ -114,7 +112,7 @@ export const updatePinecone = async (
     const batchSize = 100
     let batch: any = []
     for (let idx = 0; idx < chunks.length; idx++) {
-      const chunk = chunks[idx]
+      const chunk = chunks[idx] as any
       const vector = {
         id: `${txtPath}_${idx}`,
         values: embeddingsArrays[idx],

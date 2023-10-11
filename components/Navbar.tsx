@@ -1,4 +1,4 @@
-import { UserButton } from '@clerk/nextjs'
+import { Avata } from './Avata'
 import { Bars3BottomRightIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 import React from 'react'
@@ -23,7 +23,7 @@ export const Navbar = () => {
 
         <div className="flex-center gap-4">
           <Bars3BottomRightIcon className="h-6 w-6" color="white" />
-          <UserButton />
+          <Avata />
         </div>
       </div>
     </nav>

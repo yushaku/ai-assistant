@@ -8,7 +8,7 @@ import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json'
 import markdown from 'react-syntax-highlighter/dist/cjs/languages/prism/markdown'
 import tsx from 'react-syntax-highlighter/dist/cjs/languages/prism/tsx'
 import typescript from 'react-syntax-highlighter/dist/cjs/languages/prism/typescript'
-import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
+import { dracula } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 
 SyntaxHighlighter.registerLanguage('tsx', tsx)
 SyntaxHighlighter.registerLanguage('typescript', typescript)
@@ -21,7 +21,7 @@ type MarkdownProps = {
 }
 
 const Markdown: FC<MarkdownProps> = ({ children }) => {
-  const syntaxTheme = oneDark
+  const syntaxTheme = dracula
 
   const MarkdownComponents: object = {
     code({ node, inline, className, ...props }: any) {
