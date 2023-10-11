@@ -3,7 +3,8 @@ export type Model = {
   href: string
 }
 
-export const INDEX_NAME = 'my-test-pinecone-index'
+export const INDEX_NAME = 'ai-assistant'
+export const VECTORDIMENSIONS = 1536
 
 export const AI_MODELS: Array<Model> = [
   {
@@ -11,19 +12,15 @@ export const AI_MODELS: Array<Model> = [
     href: '/api/huggingface'
   },
   {
-    title: 'image',
-    href: '/api/huggingface/image'
-  },
-  {
     title: 'open ai',
     href: '/api/openai'
   },
   {
-    title: 'replicatte',
-    href: '/api/replicate'
-  },
-  {
     title: 'langchain',
     href: '/api/langchain'
+  },
+  {
+    title: 'database',
+    href: '/api/read'
   }
 ]

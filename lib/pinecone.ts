@@ -1,24 +1,44 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 /* eslint-disable no-console */
-import type { Pinecone } from '@pinecone-database/pinecone'
-import { loadQAStuffChain } from 'langchain/chains'
+import { INDEX_NAME } from './constants'
+import { Pinecone } from '@pinecone-database/pinecone'
+import {
+  loadQAStuffChain
+} from 'langchain/chains'
 import { Document } from 'langchain/document'
 import { OpenAIEmbeddings } from 'langchain/embeddings/openai'
 import { OpenAI } from 'langchain/llms/openai'
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter'
 
-export const timeout = 180000
+let pinecone: Pinecone
+export const pineconeClient = () => {
+  if (process.env.NODE_ENV === 'production') {
+    pinecone = new Pinecone({
+      apiKey: process.env.PINECONE_API_KEY || '',
+      environment: process.env.PINECONE_ENVIRONMENT || ''
+    })
+  } else {
+    if (!global.pinecone) {
+      global.pinecone = new Pinecone({
+        apiKey: process.env.PINECONE_API_KEY || '',
+        environment: process.env.PINECONE_ENVIRONMENT || ''
+      })
+    }
+    pinecone = global.pinecone
+  }
+  return pinecone
+}
 
 export const queryPineconeVectorStoreAndQueryLLM = async (
   client: Pinecone,
   indexName: string,
   question: string
 ) => {
-  // Retrieve the Pinecone index
-  console.log('Querying Pinecone vector store...')
   const index = client.Index(indexName)
-  // 3. Create query embedding
   const queryEmbedding = await new OpenAIEmbeddings().embedQuery(question)
-  // 4. Query Pinecone index and return top 10 matches
+  console.log(`Asking question: ${question}...`)
+
   const queryResponse = await index.query({
     topK: 10,
     vector: queryEmbedding,
@@ -27,14 +47,12 @@ export const queryPineconeVectorStoreAndQueryLLM = async (
   })
 
   console.log(`Found ${queryResponse?.matches?.length} matches...`)
-  console.log(`Asking question: ${question}...`)
 
   const match = queryResponse.matches
   if (!match) return
 
-  const llm = new OpenAI({})
+  const llm = new OpenAI()
   const chain = loadQAStuffChain(llm)
-  // 8. Extract and concatenate page content from matched documents
   const concatenatedPageContent = match
     .map((match) => match.metadata?.pageContent)
     .join(' ')
@@ -49,35 +67,46 @@ export const queryPineconeVectorStoreAndQueryLLM = async (
   return result.text
 }
 
+export const queryDatabase = async (question: string) => {
+  const client = pineconeClient()
+  const index = client.Index(INDEX_NAME)
+
+  const queryEmbedding = await new OpenAIEmbeddings().embedQuery(question)
+  const queryResponse = await index.query({
+    topK: 10,
+    vector: queryEmbedding,
+    includeMetadata: true,
+    includeValues: true
+  })
+
+  return queryResponse.matches ?? []
+}
+
 export const createPineconeIndex = async (
   client: Pinecone,
   indexName: string,
   vectorDimension: number
 ) => {
   const existingIndexes = await client.listIndexes()
-  if (!existingIndexes.includes(indexName)) {
-    // 4. Log index creation initiation
-    console.log(`Creating "${indexName}"...`)
-    // 5. Create index
-    await client.createIndex({
-      name: indexName,
-      dimension: vectorDimension,
-      metric: 'cosine'
-    })
-    // 6. Log successful creation
-    console.log(`Creating index.... please wait for it to finish initializing.`)
-    // 7. Wait for index initialization
-    await new Promise((resolve) => setTimeout(resolve, timeout))
-  } else {
-    // 8. Log if index already exists
+
+  if (existingIndexes.some(({ name }) => name === indexName)) {
     console.log(`"${indexName}" already exists.`)
+    return
   }
+
+  console.log(`Creating "${indexName}"`)
+  await client.createIndex({
+    name: indexName,
+    dimension: vectorDimension,
+    metric: 'cosine'
+  })
+  console.log(`Creating index.... please wait for it to finish initializing.`)
 }
 
 export const updatePinecone = async (
   client: Pinecone,
   indexName: string,
-  docs: any
+  docs: Document<Record<string, any>>[]
 ) => {
   console.log('Retrieving Pinecone index...')
   // 1. Retrieve Pinecone index
@@ -124,18 +153,11 @@ export const updatePinecone = async (
         }
       }
       batch = [...batch, vector]
-      // When batch is full or it's the last item, upsert the vectors
+
       if (batch.length === batchSize || idx === chunks.length - 1) {
-        await index.upsert({
-          upsertRequest: {
-            vectors: batch
-          }
-        })
-        // Empty the batch
-        batch = []
+        await index.upsert([...batch])
       }
     }
-    // 8. Log the number of vectors updated
     console.log(`Pinecone index updated with ${chunks.length} vectors`)
   }
 }
