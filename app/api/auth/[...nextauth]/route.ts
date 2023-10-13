@@ -2,7 +2,7 @@ import NextAuth, { type NextAuthOptions } from 'next-auth'
 import GithubProvider from 'next-auth/providers/github'
 import Google from 'next-auth/providers/google'
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID ?? '',
@@ -21,7 +21,6 @@ export const authOptions: NextAuthOptions = {
         account?.provider === 'google' &&
         profile?.email?.endsWith('@huce.edu.vn')
       ) {
-        console.log({ user, account, profile })
 
         return true
       } else {
