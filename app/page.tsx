@@ -41,7 +41,7 @@ export default function Chat() {
         onSubmit={handleSubmit}
       >
         <div className="w-full rounded-lg">
-          <div className="rounded-t-lg bg-gray-800">
+          <div className="rounded-t-lg bg-dark-100 p-1">
             <textarea
               rows={3}
               value={input}
@@ -51,7 +51,7 @@ export default function Chat() {
             ></textarea>
           </div>
 
-          <div className="flex-between rounded-b-lg bg-gray-600 px-3 py-2">
+          <div className="flex-between rounded-b-lg bg-dark-100 px-3 py-2">
             <button
               disabled={isLoading}
               type="submit"
@@ -61,13 +61,13 @@ export default function Chat() {
             </button>
 
             <div className="flex space-x-1 pl-0">
-              <button className="rounded p-2 text-gray-100 hover:bg-gray-600">
+              <button className="rounded-lg p-2 text-gray-100 hover:bg-blue-600">
                 <NewspaperIcon className="h-5 w-5" />
               </button>
-              <button className="rounded p-2 text-gray-100 hover:bg-gray-600">
+              <button className="rounded-lg p-2 text-gray-100 hover:bg-blue-600">
                 <PhotoIcon className="h-5 w-5" />
               </button>
-              <button className="rounded p-2 text-gray-100 hover:bg-gray-600">
+              <button className="rounded-lg p-2 text-gray-100 hover:bg-blue-600">
                 <MicrophoneIcon className="h-5 w-5" />
               </button>
             </div>

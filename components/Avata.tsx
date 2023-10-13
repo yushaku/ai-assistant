@@ -44,7 +44,7 @@ export const Avata = () => {
   return (
     <Menu placement="bottom-end">
       <MenuHandler>
-        <Button>login now</Button>
+        <Button className='btn-outline'>login now</Button>
       </MenuHandler>
 
       <MenuList>
