@@ -19,12 +19,16 @@ export const pineconeClient = () => {
       environment: process.env.PINECONE_ENVIRONMENT || ''
     })
   } else {
+
+    // @ts-ignore:
     if (!global.pinecone) {
+    // @ts-ignore:
       global.pinecone = new Pinecone({
         apiKey: process.env.PINECONE_API_KEY || '',
         environment: process.env.PINECONE_ENVIRONMENT || ''
       })
     }
+    // @ts-ignore:
     pinecone = global.pinecone
   }
   return pinecone

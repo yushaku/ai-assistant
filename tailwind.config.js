@@ -1,6 +1,7 @@
 const withMT = require('@material-tailwind/react/utils/withMT')
 
 /** @type {import('tailwindcss').Config} */
+// @ts-ignore:
 module.exports = withMT({
   darkMode: 'class',
   content: [

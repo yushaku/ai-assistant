@@ -3,7 +3,7 @@ import { HuggingFaceStream, StreamingTextResponse } from 'ai'
 import { experimental_buildOpenAssistantPrompt } from 'ai/prompts'
 
 export const runtime = 'edge'
-export const huggingface = new HfInference(process.env.HUGGINGFACE_API_KEY)
+const huggingface = new HfInference(process.env.HUGGINGFACE_API_KEY)
 
 export async function POST(req: Request) {
   const { messages } = await req.json()
@@ -30,20 +30,20 @@ export async function POST(req: Request) {
   return new StreamingTextResponse(stream)
 }
 
-export async function GET(req: Request) {
-  const { messages } = await req.json()
-
-  const response = huggingface.translation({
-    model: 'Helsinki-NLP/opus-mt-ru-en',
-    inputs: experimental_buildOpenAssistantPrompt(messages)
-  })
-
-  // Check for errors
-  // if (!response.ok) {
-  //   return new Response(await response.text(), {
-  //     status: response.status,
-  //   });
-  // }
-
-  return response
-}
+// export async function GET(req: Request) {
+//   const { messages } = await req.json()
+//
+//   const response = huggingface.translation({
+//     model: 'Helsinki-NLP/opus-mt-ru-en',
+//     inputs: experimental_buildOpenAssistantPrompt(messages)
+//   })
+//
+//   // Check for errors
+//   // if (!response.ok) {
+//   //   return new Response(await response.text(), {
+//   //     status: response.status,
+//   //   });
+//   // }
+//
+//   return response
+// }

@@ -21,7 +21,7 @@ const authOptions: NextAuthOptions = {
         account?.provider === 'google' &&
         profile?.email?.endsWith('@huce.edu.vn')
       ) {
-
+        console.debug(user);
         return true
       } else {
         return false

@@ -2,8 +2,15 @@
   "extends": "next/core-web-vitals",
   "overrides": [
     {
-      "files": ["**/*.ts", "**/*.tsx"],
-      "plugins": ["@typescript-eslint", "tailwindcss", "prettier"],
+      "files": [
+        "**/*.ts",
+        "**/*.tsx"
+      ],
+      "plugins": [
+        "@typescript-eslint",
+        "tailwindcss",
+        "prettier"
+      ],
       "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
@@ -14,13 +21,23 @@
         "project": "./tsconfig.json"
       },
       "rules": {
-        "no-console": ["warn", { "allow": ["warn", "error"] }],
+        "no-console": [
+          "warn",
+          {
+            "allow": [
+              "warn",
+              "error"
+            ]
+          }
+        ],
+        "no-unused-vars": "warn",
+        "@typescript-eslint/ban-ts-comment": "warn",
         "import/extensions": "off",
         "react/function-component-definition": "off",
         "react/destructuring-assignment": "off",
         "react/require-default-props": "off",
         "react/jsx-props-no-spreading": "off",
-        "@next/next/no-img-element": "off",
+        "@next/next/no-img-element": "warn",
         "@typescript-eslint/consistent-type-imports": "warn",
         "no-restricted-syntax": [
           "warn",
