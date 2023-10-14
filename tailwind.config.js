@@ -22,6 +22,10 @@ module.exports = withMT({
       }
     },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-poppins)"],
+        mono: ["var(--font-roboto-mono)"],
+      },
       colors: {
         teal: {
           DEFAULT: '#234f66'
