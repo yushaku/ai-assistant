@@ -61,6 +61,10 @@
     hover:bg-gradient-to-r hover:from-green-500 hover:to-blue-500;
   }
 
+  .animate {
+    @apply transition duration-300 ease-in-out;
+  }
+
   a:hover {
     background: #64ffda;
     background: -webkit-linear-gradient(

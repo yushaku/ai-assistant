@@ -1,23 +1,25 @@
-"use client"
-
-import { ChatBubbleLeftRightIcon, PlusIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
+import {
+  PlusIcon,
+  ChatBubbleLeftRightIcon,
+  ChevronLeftIcon,
+} from '@heroicons/react/24/solid'
 import { Resizable } from 're-resizable'
 import React, { useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 
-export const Sidebar = () => {
+export const Prompt = () => {
   const [show, setShow] = useState(true)
+  useHotkeys('alt+l', () => setShow(!show), [show])
 
-  useHotkeys('alt+h', () => setShow(!show), [show])
-  const style = show ? "" : "translate-x-[-100%]"
-  const btnStyle = show ? "right-[-5%] rotate-180 bg-dark" : "right-[-15%] bg-dark-100"
+  const style = show ? "" : "translate-x-[100%]"
+  const btnStyle = show ? "left-[-5%] rotate-180 bg-dark" : "left-[-15%] bg-dark-100"
 
   return (
     <Resizable
       className={`${style} animate mt-14 bg-dark-200`}
       enable={{
-        left: false,
-        right: true,
+        left: true,
+        right: false,
         top: false,
         bottom: false
       }}
@@ -29,15 +31,13 @@ export const Sidebar = () => {
           onClick={() => setShow(!show)}
           className={`${btnStyle} animate absolute top-2 z-10 rounded-full border-dark-200 p-1 hover:bg-blue-500`}
         >
-          <ChevronRightIcon className="h-5 w-5" />
+          <ChevronLeftIcon className="h-5 w-5" />
         </button>
 
         <button className="flex-center btn-contained gap-4">
           <PlusIcon className="h-5 w-5" />
           create new chat
         </button>
-
-        <p className="mb-3 mt-6">Recently</p>
       </div>
 
       <ul className="flex flex-col gap-3">
