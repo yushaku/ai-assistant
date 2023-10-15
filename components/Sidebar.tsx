@@ -27,7 +27,7 @@ export const Sidebar = () => {
       <div className='p-6'>
         <button
           onClick={() => setShow(!show)}
-          className={`${btnStyle} animate absolute top-2 z-10 rounded-full border-dark-200 p-1 hover:bg-blue-500`}
+          className={`${btnStyle} animate absolute top-2 z-[1] rounded-full border-dark-200 p-1 hover:bg-blue-500`}
         >
           <ChevronRightIcon className="h-5 w-5" />
         </button>
@@ -37,7 +37,7 @@ export const Sidebar = () => {
           create new chat
         </button>
 
-        <p className="mb-3 mt-6">Recently</p>
+        <p className="mt-6">Recently</p>
       </div>
 
       <ul className="flex flex-col gap-3">

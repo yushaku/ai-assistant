@@ -1,13 +1,11 @@
 'use client'
 
 import { Navbar } from './Navbar'
-import { Sidebar } from './Sidebar'
 import { ThemeProvider } from '@material-tailwind/react'
-import { SessionProvider } from 'next-auth/react'
-import React, { useState } from 'react'
-import { Prompt } from './Prompt'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { SessionProvider } from 'next-auth/react'
+import React, { useState } from 'react'
 import { Toaster } from 'react-hot-toast'
 
 export const Provider = ({ children }: { children: React.ReactNode }) => {
@@ -24,14 +22,14 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
             // refetchInterval: 1000 * 30, //30 seconds
             // staleTime: 1000 * 30, //30 seconds
             refetchIntervalInBackground: false,
-            suspense: false,
+            suspense: false
           },
           mutations: {
-            retry: 2,
-          },
-        },
+            retry: 2
+          }
+        }
       })
-  );
+  )
 
   return (
     <SessionProvider>
@@ -40,11 +38,7 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
           <main className="relative bg-dark">
             <Toaster position="top-center" />
             <Navbar />
-            <section className="flex overflow-hidden">
-              <Sidebar />
-              <article className="flex-1">{children}</article>
-              <Prompt />
-            </section>
+            {children}
           </main>
         </ThemeProvider>
 

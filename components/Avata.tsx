@@ -1,5 +1,6 @@
 'use client'
 
+import { ArrowUpTrayIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import { GithubIcon } from './icons/GithubIcon'
 import { GoogleIcon } from './icons/GoogleIcon'
 import {
@@ -34,10 +35,16 @@ export const Avata = () => {
         </MenuHandler>
 
         <MenuList>
-          <MenuItem onClick={() => signOut()}>Profile</MenuItem>
-          <MenuItem onClick={() => signOut()}>Sign out</MenuItem>
+          <MenuItem onClick={() => signOut()} className='flex items-center gap-2'>
+            <UserCircleIcon className='h-5 w-5' />
+            Profile
+          </MenuItem>
+          <MenuItem onClick={() => signOut()} className='flex items-center gap-2'>
+            <ArrowUpTrayIcon className='h-5 w-5 rotate-90' />
+            Sign out
+          </MenuItem>
         </MenuList>
-      </Menu>
+      </Menu >
     )
   }
 

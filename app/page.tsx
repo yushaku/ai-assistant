@@ -1,7 +1,9 @@
 'use client'
 
 import { BotAnswer, UserQuestion } from '@/component/chat/QA'
+import { Wapper } from '@/component/chat/Wapper'
 import { SelectModel } from '@/component/dropdown/modelOptions'
+import { AI_MODELS } from '@/lib/constants'
 import {
   MicrophoneIcon,
   NewspaperIcon,
@@ -9,7 +11,6 @@ import {
   PhotoIcon
 } from '@heroicons/react/24/solid'
 import { useChat } from 'ai/react'
-import { AI_MODELS } from 'lib/constants'
 import { useState } from 'react'
 
 export default function Chat() {
@@ -19,9 +20,8 @@ export default function Chat() {
     useChat({ api: model.href })
 
   return (
-    <div className="relative h-screen p-24">
+    <Wapper>
       <SelectModel onclick={(model) => setModel(model)} />
-
       <section className="no-scrollbar mx-auto mb-auto h-[75dvh] max-w-[900px] overflow-y-scroll">
         {messages.map((m) => (
           <div className="mb-6" key={m.id}>
@@ -72,6 +72,6 @@ export default function Chat() {
           </div>
         </div>
       </form>
-    </div>
+    </Wapper>
   )
 }
