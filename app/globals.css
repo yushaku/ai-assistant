@@ -39,6 +39,10 @@
     @apply text-gray text-2xl font-semibold;
   }
 
+  .header-md {
+    @apply text-gray text-xl font-semibold;
+  }
+
   .paragraph-sm {
     @apply text-gray text-sm md:text-base;
   }

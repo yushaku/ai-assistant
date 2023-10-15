@@ -16,9 +16,7 @@ export default function Chat() {
   const [model, setModel] = useState(AI_MODELS.at(0)!)
 
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
-    useChat({
-      api: model.href
-    })
+    useChat({ api: model.href })
 
   return (
     <div className="relative h-screen p-24">
