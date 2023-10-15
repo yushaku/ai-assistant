@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Option, Select } from '@material-tailwind/react'
 import type { Model } from 'lib/constants'
 import { AI_MODELS } from 'lib/constants'
