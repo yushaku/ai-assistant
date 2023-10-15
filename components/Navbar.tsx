@@ -1,5 +1,11 @@
 import { Avata } from './Avata'
-import { Bars3BottomRightIcon } from '@heroicons/react/24/solid'
+import { QuestionMarkCircleIcon } from '@heroicons/react/24/solid'
+import {
+  List,
+  Popover,
+  PopoverContent,
+  PopoverHandler
+} from '@material-tailwind/react'
 import Link from 'next/link'
 import React from 'react'
 
@@ -22,7 +28,26 @@ export const Navbar = () => {
         </ul>
 
         <div className="flex-center gap-4">
-          <Bars3BottomRightIcon className="h-6 w-6" color="white" />
+          <Popover placement="bottom-end">
+            <PopoverHandler>
+              <QuestionMarkCircleIcon
+                className="h-6 w-6 hover:text-teal-200"
+                color="white"
+              />
+            </PopoverHandler>
+            <PopoverContent className="z-10">
+              <List>
+                <li>
+                  <strong>Alt + h</strong>
+                  <span>: toggle chat list</span>
+                </li>
+                <li>
+                  <strong>Alt + L</strong>
+                  <span>: toggle prompt list</span>
+                </li>
+              </List>
+            </PopoverContent>
+          </Popover>
           <Avata />
         </div>
       </div>
@@ -32,19 +57,15 @@ export const Navbar = () => {
 
 const features = [
   {
+    title: 'Chats',
+    href: '/'
+  },
+  {
     title: 'Files',
-    href: '#'
+    href: '/files'
   },
   {
     title: 'Prompts',
-    href: '#'
-  },
-  {
-    title: 'Users',
-    href: '#'
-  },
-  {
-    title: 'Settings',
-    href: '#'
+    href: '/prompts'
   }
 ]
