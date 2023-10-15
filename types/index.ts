@@ -33,3 +33,14 @@ export type User = {
   email: string
   image: string
 }
+
+export type PromptList = {
+  id: string;
+  title: string;
+  prompt: Array<Prompt>
+}
+
+export type Prompt = {
+  id: string;
+  content: string;
+}
