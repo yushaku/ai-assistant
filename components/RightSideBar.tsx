@@ -18,7 +18,7 @@ import React, { useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { useGetPrompts } from 'services/prompt'
 
-export const Prompt = () => {
+export const RightSideBar = () => {
   const [show, setShow] = useState(true)
   const [open, setOpen] = useState(0)
   useHotkeys('alt+l', () => setShow(!show), [show])

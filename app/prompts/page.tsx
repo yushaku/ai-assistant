@@ -6,7 +6,7 @@ import {
   PencilIcon,
   TrashIcon
 } from '@heroicons/react/24/solid'
-import { Option, Select } from '@material-tailwind/react'
+import { Option, Select, Spinner } from '@material-tailwind/react'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { useCreatePrompt, useGetCategory } from 'services'
@@ -58,19 +58,23 @@ const PromptPage = () => {
       </article>
 
       <div className="mt-12">
-        <Select
-          defaultValue={cateList?.at(0)?.title}
-          label="Select Model"
-          className="text-gray-100"
-        >
-          {cateList?.map((cate, index) => {
-            return (
-              <Option key={index} onClick={() => setCateId(cate.id)}>
-                {cate.title}
-              </Option>
-            )
-          })}
-        </Select>
+        {cateList ? (
+          <Select
+            defaultValue={cateList?.at(0)?.title ?? ''}
+            label="Select Model"
+            className="text-gray-100"
+          >
+            {cateList.map((cate, index) => {
+              return (
+                <Option key={index} onClick={() => setCateId(cate.id)}>
+                  {cate.title}
+                </Option>
+              )
+            })}
+          </Select>
+        ) : (
+          <Spinner />
+        )}
 
         <ul className="my-8 grid gap-2">
           {promptList.map((prompt, index) => {

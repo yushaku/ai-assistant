@@ -1,16 +1,22 @@
-"use client"
+'use client'
 
-import { ChatBubbleLeftRightIcon, PlusIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
+import {
+  ChatBubbleLeftRightIcon,
+  ChevronRightIcon,
+  PlusIcon
+} from '@heroicons/react/24/solid'
 import { Resizable } from 're-resizable'
 import React, { useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 
-export const Sidebar = () => {
+export const LeftSidebar = () => {
   const [show, setShow] = useState(true)
 
   useHotkeys('alt+h', () => setShow(!show), [show])
-  const style = show ? "" : "translate-x-[-100%]"
-  const btnStyle = show ? "right-[-5%] rotate-180 bg-dark" : "right-[-15%] bg-dark-100"
+  const style = show ? '' : 'translate-x-[-100%]'
+  const btnStyle = show
+    ? 'right-[-5%] rotate-180 bg-dark'
+    : 'right-[-15%] bg-dark-100'
 
   return (
     <Resizable
@@ -24,7 +30,7 @@ export const Sidebar = () => {
       maxWidth={500}
       minWidth={200}
     >
-      <div className='p-6'>
+      <div className="p-6">
         <button
           onClick={() => setShow(!show)}
           className={`${btnStyle} animate absolute top-2 z-[1] rounded-full border-dark-200 p-1 hover:bg-blue-500`}
