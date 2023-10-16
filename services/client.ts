@@ -1,6 +1,6 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
-import type { PreSignFile, PromptList } from 'types'
+import type { PreSignFile } from 'types'
 
 export const httpClient = () => {
   const client = axios.create({
@@ -13,24 +13,6 @@ export const httpClient = () => {
   })
 
   return client
-}
-
-export const PROMPT_PATH = '/category'
-export const useGetPrompts = () => {
-  return useQuery(
-    [PROMPT_PATH],
-    async () => {
-      const res = await httpClient().get(PROMPT_PATH)
-      const botList = res.data ?? []
-      return botList as PromptList[]
-    },
-    {
-      cacheTime: Infinity,
-      staleTime: Infinity,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false
-    }
-  )
 }
 
 export const FILE_PATH = '/files'
