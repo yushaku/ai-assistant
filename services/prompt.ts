@@ -29,3 +29,39 @@ export const useCreatePrompt = () => {
     }
   )
 }
+
+export const useUpdatePrompt = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation(
+    [PROMPT_PATH],
+    async (data: PromptDTO) => {
+      const res = await httpClient().put(PROMPT_PATH, data)
+      return res.data as unknown
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries([PROMPT_PATH])
+        toast.success('Create successfully')
+      }
+    }
+  )
+}
+
+export const useDatelePrompt = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation(
+    [PROMPT_PATH],
+    async (data: string) => {
+      const res = await httpClient().delete(PROMPT_PATH)
+      return res.data as unknown
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries([PROMPT_PATH])
+        toast.success('Create successfully')
+      }
+    }
+  )
+}

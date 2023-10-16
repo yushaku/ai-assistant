@@ -100,7 +100,7 @@ export const RightSideBar = () => {
 
               <AccordionBody className="py-1">
                 <List className="p-0 text-sm text-gray-300">
-                  {cate.prompt?.map((item) => {
+                  {cate.Prompt?.map((item) => {
                     return (
                       <ListItem
                         key={item.id}

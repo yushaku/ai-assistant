@@ -8,7 +8,7 @@ export default function RootLayout({
   return (
     <section className="flex h-screen bg-dark">
       <PromtSidebar />
-      <article className="flex-1 p-24">{children}</article>
+      <article className="flex-1 px-6 pt-24">{children}</article>
     </section>
   )
 }

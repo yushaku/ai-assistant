@@ -10,7 +10,9 @@ export async function GET() {
       Prompt: {
         select: {
           id: true,
-          content: true
+          content: true,
+          createdAt: true,
+          updatedAt: true
         }
       }
     }

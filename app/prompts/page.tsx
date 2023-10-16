@@ -1,50 +1,17 @@
 'use client'
 
-import { Loading } from '@/component/Loading'
+import { CreateCate } from '@/component/promts/CreateCategory'
+import { CreatePrompt } from '@/component/promts/CreatePrompts'
 import {
-  PaperAirplaneIcon,
-  PencilIcon,
-  TrashIcon
-} from '@heroicons/react/24/solid'
-import { Option, Select, Spinner } from '@material-tailwind/react'
-import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
-import { useCreatePrompt, useGetCategory } from 'services'
+  Tab,
+  TabPanel,
+  Tabs,
+  TabsBody,
+  TabsHeader
+} from '@material-tailwind/react'
+import React from 'react'
 
 const PromptPage = () => {
-  const { data: cateList } = useGetCategory()
-  const { mutate: createPrompt, isLoading } = useCreatePrompt()
-
-  const [promptList, setPromptList] = useState<Array<string>>([])
-  const [prompt, setPrompt] = useState('')
-  const [cateId, setCateId] = useState(cateList?.at(0)?.id ?? '')
-  const router = useRouter()
-
-  const handleAdd = () => {
-    setPromptList([...promptList, prompt])
-    setPrompt('')
-  }
-
-  const handleDelete = (index: number) => {
-    setPromptList(promptList.toSpliced(index, 1))
-  }
-
-  const handleUpdate = (index: number) => {
-    setPrompt(promptList.at(index) ?? '')
-    handleDelete(index)
-  }
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.ctrlKey && e.key === 'Enter') {
-      handleAdd()
-    }
-  }
-
-  const handleSubmit = () => {
-    createPrompt({ cateId, promptList })
-    router.push('/')
-  }
-
   return (
     <section>
       <article className="mt-4 text-center">
@@ -57,81 +24,22 @@ const PromptPage = () => {
         </p>
       </article>
 
-      <div className="mt-12">
-        {cateList ? (
-          <Select
-            defaultValue={cateList?.at(0)?.title ?? ''}
-            label="Select Model"
-            className="text-gray-100"
-          >
-            {cateList.map((cate, index) => {
-              return (
-                <Option key={index} onClick={() => setCateId(cate.id)}>
-                  {cate.title}
-                </Option>
-              )
-            })}
-          </Select>
-        ) : (
-          <Spinner />
-        )}
+      <Tabs value="prompts" className="mx-auto w-1/2">
+        <TabsHeader>
+          <Tab value="prompts">Prompts</Tab>
+          <Tab value="category">Category</Tab>
+        </TabsHeader>
 
-        <ul className="my-8 grid gap-2">
-          {promptList.map((prompt, index) => {
-            return (
-              <li
-                key={index}
-                className="relative cursor-pointer rounded-lg bg-dark-100 px-4 py-2"
-              >
-                <p className="mr-14">{prompt}</p>
-                <p className="absolute bottom-1/2 right-5 flex translate-y-1/2 gap-3">
-                  <span
-                    onClick={() => handleUpdate(index)}
-                    className="rounded-lg p-1 hover:bg-green-400"
-                  >
-                    <PencilIcon className="h-5 w-5" />
-                  </span>
+        <TabsBody>
+          <TabPanel value="prompts">
+            <CreatePrompt />
+          </TabPanel>
 
-                  <span
-                    onClick={() => handleDelete(index)}
-                    className="rounded-lg p-1 hover:bg-red-400"
-                  >
-                    <TrashIcon className="h-5 w-5" />
-                  </span>
-                </p>
-              </li>
-            )
-          })}
-        </ul>
-      </div>
-
-      <div className="flex gap-5 rounded-lg border border-dark-100">
-        <textarea
-          rows={1}
-          value={prompt}
-          onKeyDown={handleKeyDown}
-          onChange={(e) => setPrompt(e.target.value)}
-          className="w-full bg-dark"
-          placeholder="Prompt..."
-        ></textarea>
-
-        <button
-          onClick={handleAdd}
-          className="rounded-lg bg-dark-100 p-3 hover:bg-blue-400"
-        >
-          <PaperAirplaneIcon className="h-5 w-5" />
-        </button>
-      </div>
-
-      <button
-        onClick={handleSubmit}
-        type="submit"
-        className="btn-outline mt-8 w-full"
-      >
-        Save
-      </button>
-
-      <Loading show={isLoading} />
+          <TabPanel value="category">
+            <CreateCate />
+          </TabPanel>
+        </TabsBody>
+      </Tabs>
     </section>
   )
 }

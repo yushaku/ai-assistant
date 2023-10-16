@@ -37,12 +37,14 @@ export type User = {
 export type PromptList = {
   id: string
   title: string
-  prompt: Array<Prompt>
+  Prompt: Array<Prompt>
 }
 
 export type Prompt = {
   id: string
   content: string
+  createdAt: string
+  updatedAt: string
 }
 
 export type ActionType = 'FILE' | 'TEXT' | 'WEBSITE'
