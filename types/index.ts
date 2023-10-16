@@ -61,3 +61,8 @@ export type FormData = {
   'x-amz-date': string
   'x-amz-signature': string
 }
+
+export type PromptDTO = {
+  cateId: string
+  promptList: Array<string>
+}

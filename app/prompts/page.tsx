@@ -1,17 +1,24 @@
 'use client'
 
-import { AI_MODELS } from '@/lib/constants'
+import { Loading } from '@/component/Loading'
 import {
   PaperAirplaneIcon,
   PencilIcon,
   TrashIcon
 } from '@heroicons/react/24/solid'
 import { Option, Select } from '@material-tailwind/react'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
+import { useCreatePrompt, useGetCategory } from 'services'
 
 const PromptPage = () => {
+  const { data: cateList } = useGetCategory()
+  const { mutate: createPrompt, isLoading } = useCreatePrompt()
+
   const [promptList, setPromptList] = useState<Array<string>>([])
   const [prompt, setPrompt] = useState('')
+  const [cateId, setCateId] = useState(cateList?.at(0)?.id ?? '')
+  const router = useRouter()
 
   const handleAdd = () => {
     setPromptList([...promptList, prompt])
@@ -19,7 +26,7 @@ const PromptPage = () => {
   }
 
   const handleDelete = (index: number) => {
-    setPromptList(promptList.splice(index + 1, 1))
+    setPromptList(promptList.toSpliced(index, 1))
   }
 
   const handleUpdate = (index: number) => {
@@ -31,6 +38,11 @@ const PromptPage = () => {
     if (e.ctrlKey && e.key === 'Enter') {
       handleAdd()
     }
+  }
+
+  const handleSubmit = () => {
+    createPrompt({ cateId, promptList })
+    router.push('/')
   }
 
   return (
@@ -45,16 +57,16 @@ const PromptPage = () => {
         </p>
       </article>
 
-      <form>
+      <div className="mt-12">
         <Select
-          defaultValue={AI_MODELS.at(0)?.title}
+          defaultValue={cateList?.at(0)?.title}
           label="Select Model"
           className="text-gray-100"
         >
-          {AI_MODELS.map((model, index) => {
+          {cateList?.map((cate, index) => {
             return (
-              <Option key={index} onClick={() => console.log(model)}>
-                {model.title}
+              <Option key={index} onClick={() => setCateId(cate.id)}>
+                {cate.title}
               </Option>
             )
           })}
@@ -67,29 +79,29 @@ const PromptPage = () => {
                 key={index}
                 className="relative cursor-pointer rounded-lg bg-dark-100 px-4 py-2"
               >
-                {prompt}
+                <p className="mr-14">{prompt}</p>
                 <p className="absolute bottom-1/2 right-5 flex translate-y-1/2 gap-3">
-                  <button
+                  <span
                     onClick={() => handleUpdate(index)}
                     className="rounded-lg p-1 hover:bg-green-400"
                   >
-                    <PencilIcon className="h-5 w-5 " />
-                  </button>
+                    <PencilIcon className="h-5 w-5" />
+                  </span>
 
-                  <button
+                  <span
                     onClick={() => handleDelete(index)}
                     className="rounded-lg p-1 hover:bg-red-400"
                   >
                     <TrashIcon className="h-5 w-5" />
-                  </button>
+                  </span>
                 </p>
               </li>
             )
           })}
         </ul>
-      </form>
+      </div>
 
-      <div className="flex gap-5 rounded-lg bg-dark-200 p-2">
+      <div className="flex gap-5 rounded-lg border border-dark-100">
         <textarea
           rows={1}
           value={prompt}
@@ -106,6 +118,16 @@ const PromptPage = () => {
           <PaperAirplaneIcon className="h-5 w-5" />
         </button>
       </div>
+
+      <button
+        onClick={handleSubmit}
+        type="submit"
+        className="btn-outline mt-8 w-full"
+      >
+        Save
+      </button>
+
+      <Loading show={isLoading} />
     </section>
   )
 }

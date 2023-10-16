@@ -16,7 +16,7 @@ import {
 import { Resizable } from 're-resizable'
 import React, { useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
-import { useGetPrompts } from 'services/client'
+import { useGetPrompts } from 'services/prompt'
 
 export const Prompt = () => {
   const [show, setShow] = useState(true)
