@@ -86,7 +86,8 @@ model Thread {
 
 model Message {
   id        String    @id @default(cuid())
-  content   String
+  answer    String
+  question  String
   thead     Thread    @relation(fields: [threadId], references: [id])
   threadId  String
   createdAt DateTime? @default(now())
