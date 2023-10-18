@@ -12,7 +12,7 @@
   }
 
   textarea {
-    @apply block border-0 p-4 w-full text-base 
+    @apply block border-0 p-4 w-full text-base
     bg-dark-200 text-white placeholder:text-gray-300  rounded-lg 
     focus:ring-blue-500 focus:border-0 focus:ring-0;
   }
@@ -111,4 +111,9 @@
 .no-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+.thin-scrollbar {
+  scrollbar-width: 8px;
+  scrollbar-color: #ccc transparent;
 }

@@ -107,8 +107,9 @@ export const CreatePrompt = () => {
 
         <button
           onClick={handleAdd}
-          className="rounded-lg bg-dark-100 p-3 hover:bg-blue-400"
+          className="flex-center gap-3 rounded-lg bg-dark-100 p-3 hover:bg-blue-400"
         >
+          Add
           <PaperAirplaneIcon className="h-5 w-5" />
         </button>
       </div>
@@ -118,7 +119,7 @@ export const CreatePrompt = () => {
         type="submit"
         className="btn-outline mt-8 w-full"
       >
-        Save
+        Save All
       </button>
 
       <Loading show={isLoading} />

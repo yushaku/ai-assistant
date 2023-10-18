@@ -17,7 +17,7 @@ export const useCreateCategory = () => {
 
   return useMutation(
     [PROMPT_PATH],
-    async (data: Omit<Category, 'id'>) => {
+    async (data: Pick<Category, 'title'>) => {
       const res = await httpClient().post(PROMPT_PATH, data)
       return res.data as unknown
     },
@@ -34,14 +34,14 @@ export const useUpdateCategory = () => {
   const queryClient = useQueryClient()
   return useMutation(
     [PROMPT_PATH],
-    async (data: Omit<Category, 'id'>) => {
-      const res = await httpClient().post(PROMPT_PATH, data)
+    async (data: Pick<Category, 'id' | 'title'>) => {
+      const res = await httpClient().put(PROMPT_PATH, data)
       return res.data as unknown
     },
     {
       onSuccess: () => {
         queryClient.invalidateQueries([PROMPT_PATH])
-        toast.success('Create successfully')
+        toast.success('Update successfully')
       }
     }
   )
@@ -58,7 +58,7 @@ export const useDeleleCategory = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries([PROMPT_PATH])
-        toast.success('Create successfully')
+        toast.success('Detele successfully')
       }
     }
   )

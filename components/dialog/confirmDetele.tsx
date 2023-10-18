@@ -1,3 +1,4 @@
+import { ExclamationCircleIcon } from '@heroicons/react/24/solid'
 import {
   Button,
   Dialog,
@@ -9,31 +10,32 @@ import React from 'react'
 
 export const ConfirmDeteleDialog = ({
   open,
-  handleOpen
+  handleOpen,
+  handleSubmit
 }: {
   open: boolean
   handleOpen: () => void
   handleSubmit: () => void
 }) => {
   return (
-    <Dialog open={open} handler={handleOpen}>
-      <DialogHeader>Its a simple dialog.</DialogHeader>
-      <DialogBody divider>
-        The key to more success is to have a lot of pillows. Put it this way, it
-        took me twenty five years to get these plants, twenty five years of
-        blood sweat and tears, and I&apos;m never giving up, I&apos;m just
-        getting started. I&apos;m up to something. Fan luv.
+    <Dialog className="flex-center flex-col" open={open} handler={handleOpen}>
+      <DialogHeader>Are you sure?</DialogHeader>
+
+      <DialogBody>
+        <p>deleting can not be revert!</p>
+        <ExclamationCircleIcon className="mx-auto h-32 w-32" color="red" />
       </DialogBody>
+
       <DialogFooter>
         <Button
           variant="text"
-          color="red"
+          color="blue"
           onClick={handleOpen}
           className="mr-1"
         >
           <span>Cancel</span>
         </Button>
-        <Button variant="gradient" color="green" onClick={handleOpen}>
+        <Button variant="gradient" color="red" onClick={handleSubmit}>
           <span>Confirm</span>
         </Button>
       </DialogFooter>
