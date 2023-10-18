@@ -1,7 +1,9 @@
 'use client'
 
 import { BotAnswer, UserQuestion } from '@/component/chat/QA'
+import { Wapper } from '@/component/chat/Wapper'
 import { SelectModel } from '@/component/dropdown/modelOptions'
+import { AI_MODELS } from '@/lib/constants'
 import {
   MicrophoneIcon,
   NewspaperIcon,
@@ -9,21 +11,17 @@ import {
   PhotoIcon
 } from '@heroicons/react/24/solid'
 import { useChat } from 'ai/react'
-import { AI_MODELS } from 'lib/constants'
 import { useState } from 'react'
 
 export default function Chat() {
   const [model, setModel] = useState(AI_MODELS.at(0)!)
 
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
-    useChat({
-      api: model.href
-    })
+    useChat({ api: model.href })
 
   return (
-    <div className="relative h-screen p-24">
+    <Wapper>
       <SelectModel onclick={(model) => setModel(model)} />
-
       <section className="no-scrollbar mx-auto mb-auto h-[75dvh] max-w-[900px] overflow-y-scroll">
         {messages.map((m) => (
           <div className="mb-6" key={m.id}>
@@ -41,7 +39,7 @@ export default function Chat() {
         onSubmit={handleSubmit}
       >
         <div className="w-full rounded-lg">
-          <div className="rounded-t-lg bg-gray-800">
+          <div className="rounded-t-lg bg-dark-100 p-1">
             <textarea
               rows={3}
               value={input}
@@ -51,7 +49,7 @@ export default function Chat() {
             ></textarea>
           </div>
 
-          <div className="flex-between rounded-b-lg bg-gray-600 px-3 py-2">
+          <div className="flex-between rounded-b-lg bg-dark-100 px-3 py-2">
             <button
               disabled={isLoading}
               type="submit"
@@ -61,19 +59,19 @@ export default function Chat() {
             </button>
 
             <div className="flex space-x-1 pl-0">
-              <button className="rounded p-2 text-gray-100 hover:bg-gray-600">
+              <button className="rounded-lg p-2 text-gray-100 hover:bg-blue-600">
                 <NewspaperIcon className="h-5 w-5" />
               </button>
-              <button className="rounded p-2 text-gray-100 hover:bg-gray-600">
+              <button className="rounded-lg p-2 text-gray-100 hover:bg-blue-600">
                 <PhotoIcon className="h-5 w-5" />
               </button>
-              <button className="rounded p-2 text-gray-100 hover:bg-gray-600">
+              <button className="rounded-lg p-2 text-gray-100 hover:bg-blue-600">
                 <MicrophoneIcon className="h-5 w-5" />
               </button>
             </div>
           </div>
         </div>
       </form>
-    </div>
+    </Wapper>
   )
 }

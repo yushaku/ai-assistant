@@ -33,3 +33,38 @@ export type User = {
   email: string
   image: string
 }
+
+export type PromptList = {
+  id: string
+  title: string
+  Prompt: Array<Prompt>
+}
+
+export type Prompt = {
+  id: string
+  content: string
+  createdAt: string
+  updatedAt: string
+}
+
+export type ActionType = 'FILE' | 'TEXT' | 'WEBSITE'
+
+export type PreSignFile = {
+  formData: FormData
+  postURL: string
+}
+
+export type FormData = {
+  key: string
+  policy: string
+  'Content-Type': string
+  'x-amz-algorithm': string
+  'x-amz-credential': string
+  'x-amz-date': string
+  'x-amz-signature': string
+}
+
+export type PromptDTO = {
+  cateId: string
+  promptList: Array<string>
+}

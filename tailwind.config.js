@@ -22,19 +22,24 @@ module.exports = withMT({
       }
     },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-poppins)"],
+        mono: ["var(--font-roboto-mono)"],
+      },
       colors: {
         teal: {
           DEFAULT: '#234f66'
         },
         gray: {
-          DEFAULT: '#627480'
+          DEFAULT: '#627480',
         },
         black: {
           DEFAULT: '#051320'
         },
         dark: {
-          DEFAULT: '#141922',
-          100: '#24283b'
+          DEFAULT: '#181d27',
+          100: '#2d3549',
+          200: '#1e2431',
         }
       },
       boxShadow: {

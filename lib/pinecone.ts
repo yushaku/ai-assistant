@@ -3,9 +3,7 @@
 /* eslint-disable no-console */
 import { INDEX_NAME } from './constants'
 import { Pinecone } from '@pinecone-database/pinecone'
-import {
-  loadQAStuffChain
-} from 'langchain/chains'
+import { loadQAStuffChain } from 'langchain/chains'
 import { Document } from 'langchain/document'
 import { OpenAIEmbeddings } from 'langchain/embeddings/openai'
 import { OpenAI } from 'langchain/llms/openai'
@@ -19,10 +17,9 @@ export const pineconeClient = () => {
       environment: process.env.PINECONE_ENVIRONMENT || ''
     })
   } else {
-
     // @ts-ignore:
     if (!global.pinecone) {
-    // @ts-ignore:
+      // @ts-ignore:
       global.pinecone = new Pinecone({
         apiKey: process.env.PINECONE_API_KEY || '',
         environment: process.env.PINECONE_ENVIRONMENT || ''

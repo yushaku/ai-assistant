@@ -22,7 +22,7 @@ export const UserQuestion = ({ question }: { question: string }) => {
 
 export const BotAnswer = ({ answer }: { answer: string }) => {
   return (
-    <div className="relative rounded-lg bg-dark-100 p-4">
+    <div className="relative rounded-lg bg-dark-200 p-4">
       <span className="absolute -left-10 h-7 w-7 rounded-full">
         <Image
           alt="yushaku"

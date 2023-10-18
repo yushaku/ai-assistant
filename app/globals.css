@@ -12,7 +12,8 @@
   }
 
   textarea {
-    @apply block border-0 p-4 w-full text-base bg-gray-800 text-white placeholder:text-gray-300  rounded-lg 
+    @apply block border-0 p-4 w-full text-base
+    bg-dark-200 text-white placeholder:text-gray-300  rounded-lg 
     focus:ring-blue-500 focus:border-0 focus:ring-0;
   }
 }
@@ -38,6 +39,10 @@
     @apply text-gray text-2xl font-semibold;
   }
 
+  .header-md {
+    @apply text-gray text-xl font-semibold;
+  }
+
   .paragraph-sm {
     @apply text-gray text-sm md:text-base;
   }
@@ -58,6 +63,10 @@
   .btn-contained {
     @apply px-4 py-2 rounded-lg bg-blue-500 font-medium 
     hover:bg-gradient-to-r hover:from-green-500 hover:to-blue-500;
+  }
+
+  .animate {
+    @apply transition duration-300 ease-in-out;
   }
 
   a:hover {
@@ -102,4 +111,9 @@
 .no-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+.thin-scrollbar {
+  scrollbar-width: 8px;
+  scrollbar-color: #ccc transparent;
 }
