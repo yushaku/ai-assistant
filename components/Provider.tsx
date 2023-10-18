@@ -7,6 +7,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { SessionProvider } from 'next-auth/react'
 import React, { useState } from 'react'
 import { Toaster } from 'react-hot-toast'
+import { RecoilRoot } from 'recoil'
 
 export const Provider = ({ children }: { children: React.ReactNode }) => {
   const [client] = useState(
@@ -34,13 +35,15 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
   return (
     <SessionProvider>
       <QueryClientProvider client={client}>
-        <ThemeProvider>
-          <main className="relative bg-dark">
-            <Toaster position="top-center" />
-            <Navbar />
-            {children}
-          </main>
-        </ThemeProvider>
+        <RecoilRoot>
+          <ThemeProvider>
+            <main className="relative bg-dark">
+              <Toaster position="top-center" />
+              <Navbar />
+              {children}
+            </main>
+          </ThemeProvider>
+        </RecoilRoot>
 
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>

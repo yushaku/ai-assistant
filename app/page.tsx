@@ -3,6 +3,7 @@
 import { BotAnswer, UserQuestion } from '@/component/chat/QA'
 import { Wapper } from '@/component/chat/Wapper'
 import { SelectModel } from '@/component/dropdown/modelOptions'
+import { globlePrompt } from '@/lib/atom'
 import { AI_MODELS } from '@/lib/constants'
 import {
   MicrophoneIcon,
@@ -11,13 +12,26 @@ import {
   PhotoIcon
 } from '@heroicons/react/24/solid'
 import { useChat } from 'ai/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useRecoilValue } from 'recoil'
 
 export default function Chat() {
   const [model, setModel] = useState(AI_MODELS.at(0)!)
+  const examplePromt = useRecoilValue(globlePrompt)
 
-  const { messages, input, handleInputChange, handleSubmit, isLoading } =
-    useChat({ api: model.href })
+  const {
+    messages,
+    input,
+    isLoading,
+    setInput,
+    handleInputChange,
+    handleSubmit
+  } = useChat({ api: model.href })
+
+  useEffect(() => {
+    setInput(examplePromt)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [examplePromt])
 
   return (
     <Wapper>

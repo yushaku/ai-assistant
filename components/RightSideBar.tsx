@@ -1,3 +1,4 @@
+import { globlePrompt } from '@/lib/atom'
 import {
   ChevronDownIcon,
   ChevronLeftIcon,
@@ -16,9 +17,11 @@ import {
 import { Resizable } from 're-resizable'
 import React, { useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
+import { useRecoilState } from 'recoil'
 import { useGetPrompts } from 'services/prompt'
 
 export const RightSideBar = () => {
+  const [, setGlobalPrompt] = useRecoilState(globlePrompt)
   const [show, setShow] = useState(true)
   const [open, setOpen] = useState(0)
   useHotkeys('alt+l', () => setShow(!show), [show])
@@ -104,6 +107,7 @@ export const RightSideBar = () => {
                     return (
                       <ListItem
                         key={item.id}
+                        onClick={() => setGlobalPrompt(item.content)}
                         className="rounded-r-none border-r-4 border-transparent hover:border-r-blue-500 hover:bg-dark-100 hover:text-white"
                       >
                         <ListItemPrefix>
