@@ -1,4 +1,5 @@
 import { httpClient } from './client'
+import type { Prompt } from '@prisma/client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import type { PromptDTO, PromptList } from 'types'
@@ -35,7 +36,7 @@ export const useUpdatePrompt = () => {
 
   return useMutation(
     [PROMPT_PATH],
-    async (data: PromptDTO) => {
+    async (data: Pick<Prompt, 'content' | 'id' | 'categoryId'>) => {
       const res = await httpClient().put(PROMPT_PATH, data)
       return res.data as unknown
     },
@@ -53,8 +54,8 @@ export const useDatelePrompt = () => {
 
   return useMutation(
     [PROMPT_PATH],
-    async (data: string) => {
-      const res = await httpClient().delete(PROMPT_PATH)
+    async (id: string) => {
+      const res = await httpClient().delete(`${PROMPT_PATH}/${id}`)
       return res.data as unknown
     },
     {

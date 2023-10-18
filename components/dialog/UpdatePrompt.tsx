@@ -1,33 +1,35 @@
+'use client'
+
+/* eslint-disable no-unused-vars */
 import {
   Button,
   Dialog,
   DialogBody,
   DialogFooter,
   DialogHeader,
-  Input,
-} from "@material-tailwind/react";
-import { useState } from "react";
+  Input
+} from '@material-tailwind/react'
+import { useState } from 'react'
 
-export const UpdateAccountDialog = ({
-  title = "",
+export const UpdateDialog = function ({
+  title = '',
   open,
-  handleOpen,
-  handleConfirm,
+  onOpen,
+  onConfirm
 }: {
-  title?: string;
-  open: boolean;
-  handleOpen: () => void;
-  handleConfirm: (title: string) => void;
-}) => {
-  const [value, setValue] = useState(title);
+  title?: string
+  open: boolean
+  onOpen: () => void
+  onConfirm: (title: string) => void
+}): JSX.Element {
+  const [value, setValue] = useState(title)
 
   const handleQuit = () => {
-    setValue("");
-    handleOpen();
-  };
+    onOpen()
+  }
 
   return (
-    <Dialog open={open} handler={handleOpen}>
+    <Dialog open={open} handler={onOpen}>
       <div className="flex items-center justify-between">
         <DialogHeader>Create your account</DialogHeader>
       </div>
@@ -35,11 +37,10 @@ export const UpdateAccountDialog = ({
       <DialogBody divider>
         <div className="grid gap-6">
           <Input
-            label="New account name"
-            name="title"
+            label="New content"
+            name="content"
             onChange={(e) => setValue(e.target.value)}
             value={value}
-            crossOrigin=""
           />
         </div>
       </DialogBody>
@@ -52,11 +53,11 @@ export const UpdateAccountDialog = ({
         <Button
           variant="gradient"
           color="green"
-          onClick={() => handleConfirm(value)}
+          onClick={() => onConfirm(value)}
         >
           Submit
         </Button>
       </DialogFooter>
     </Dialog>
-  );
-};
+  )
+}

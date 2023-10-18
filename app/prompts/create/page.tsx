@@ -11,9 +11,14 @@ import {
   TabsHeader
 } from '@material-tailwind/react'
 import Link from 'next/link'
+import { useRouter, useSearchParams } from 'next/navigation'
 import React from 'react'
 
 const PromptPage = () => {
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const addStuff = searchParams.get('add') || 'prompts'
+
   return (
     <section>
       <article className="mx-auto my-8 lg:w-1/2">
@@ -29,10 +34,14 @@ const PromptPage = () => {
         </p>
       </article>
 
-      <Tabs value="prompts" className="mx-auto lg:w-1/2">
+      <Tabs value={addStuff} className="mx-auto lg:w-1/2">
         <TabsHeader>
-          <Tab value="prompts">Prompts</Tab>
-          <Tab value="category">Category</Tab>
+          <Tab value="prompts" onClick={() => router.push('?add=prompts')}>
+            Prompts
+          </Tab>
+          <Tab value="category" onClick={() => router.push('?add=category')}>
+            Category
+          </Tab>
         </TabsHeader>
 
         <TabsBody>

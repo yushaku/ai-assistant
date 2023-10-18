@@ -58,7 +58,7 @@
     ".next/types/**/*.ts",
     "src/libs/Env.mjs",
     "tailwind.config.js",
-    "middleware.lua",
+    "middleware.ts.bad",
     "lib/constants.tss"
   ]
 }
