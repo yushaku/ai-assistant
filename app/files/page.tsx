@@ -1,5 +1,6 @@
 'use client'
 
+/* eslint-disable no-console */
 import { CrawlWebsiteForm } from '@/component/files/CrawlWebsiteForm'
 import { FileDropZone } from '@/component/files/FileDropZone'
 import { createDocBtn } from '@/lib/constants'
@@ -9,11 +10,17 @@ import type { ActionType } from 'types'
 const KnownledgePage = () => {
   const [action, setAction] = useState<ActionType>('FILE')
 
-  const handleCrawlWebsite = async (url: string) => {}
+  const handleCrawlWebsite = async (url: string) => {
+    console.log(url)
+  }
 
-  const handleCreateFile = (title: string, text: string) => {}
+  // const handleCreateFile = (title: string, text: string) => {
+  //   console.log({ title, text })
+  // }
 
-  const handleUpload = (url: string, title: string) => {}
+  const handleUpload = (url: string, title: string) => {
+    console.log({ title, url })
+  }
 
   return (
     <section className="container mx-auto h-screen p-24">

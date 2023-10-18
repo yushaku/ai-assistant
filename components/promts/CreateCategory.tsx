@@ -79,6 +79,9 @@ export const CreateCate = () => {
           onChange={(e) =>
             setCate((pre) => ({ ...pre, title: e.target.value }))
           }
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') handleSubmit()
+          }}
           className="h-[50px] w-full text-gray-100"
         ></Input>
 
