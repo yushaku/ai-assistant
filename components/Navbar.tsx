@@ -6,10 +6,14 @@ import {
   PopoverContent,
   PopoverHandler
 } from '@material-tailwind/react'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import React from 'react'
 
 export const Navbar = () => {
+  const { data: section } = useSession()
+  const styled = section?.user?.isAdmin ? 'flex-center' : 'hidden'
+
   return (
     <nav className="absolute top-0 z-10 flex h-14 w-full items-center bg-dark-200">
       <div className="flex-between w-full px-6">
@@ -17,7 +21,7 @@ export const Navbar = () => {
           HUCE Assistents
         </Link>
 
-        <ul className="flex-center gap-4">
+        <ul className={`${styled} gap-4`}>
           {features.map((feat) => {
             return (
               <li key={feat.title}>

@@ -1,22 +1,30 @@
-import prisma from '@/lib/prisma';
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import NextAuth, { type NextAuthOptions } from 'next-auth';
-import GithubProvider from 'next-auth/providers/github';
-import Google from 'next-auth/providers/google';
+import prisma from '@/lib/prisma'
+import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import NextAuth, { type NextAuthOptions } from 'next-auth'
+import GithubProvider from 'next-auth/providers/github'
+import Google from 'next-auth/providers/google'
+
+const {
+  SUPPER_ADMIN,
+  GOOGLE_CLIENT_ID = '',
+  GOOGLE_CLIENT_SECRET = '',
+  GITHUB_ID = '',
+  GITHUB_SECRET = ''
+} = process.env
 
 const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     Google({
-      clientId: process.env.GOOGLE_CLIENT_ID ?? '',
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? ''
+      clientId: GOOGLE_CLIENT_ID,
+      clientSecret: GOOGLE_CLIENT_SECRET
     }),
     GithubProvider({
-      clientId: process.env.GITHUB_ID ?? '',
-      clientSecret: process.env.GITHUB_SECRET ?? ''
+      clientId: GITHUB_ID,
+      clientSecret: GITHUB_SECRET
     })
   ],
-  secret: process.env.SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
   session: { strategy: 'jwt' },
   callbacks: {
     signIn({ account, profile }) {
@@ -33,11 +41,12 @@ const authOptions: NextAuthOptions = {
       if (!user?.email) return token
 
       const email = user.email
-      const match = email.match(/\d+/);
+      const match = email.match(/\d+/)
 
       const schoolId = match?.at(0)
       if (!schoolId) return token
-      const isAdmin = schoolId.length <= 3 ? true : false
+      const isAdmin =
+        schoolId.length <= 3 ? true : email === SUPPER_ADMIN ? true : false
 
       return {
         ...token,
@@ -55,11 +64,10 @@ const authOptions: NextAuthOptions = {
           isAdmin: token?.isAdmin ?? false
         }
       }
-    },
+    }
   }
 }
 
 const handler = NextAuth(authOptions)
 
-export { handler as GET, handler as POST };
-
+export { handler as GET, handler as POST }
