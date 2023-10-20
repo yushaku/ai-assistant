@@ -6,6 +6,7 @@ import { ConfirmDeteleDialog } from '@/component/dialog/confirmDetele'
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/solid'
 import { Card, Typography } from '@material-tailwind/react'
 import moment from 'moment'
+import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { useDatelePrompt, useGetPrompts, useUpdatePrompt } from 'services'
@@ -42,7 +43,7 @@ const CategoryPage = () => {
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="relative">
           {promptList?.length !== 0 ? (
             promptList?.map(({ title, Prompt, ...cate }) => {
               return Prompt?.map(({ id, content, createdAt, updatedAt }) => {
@@ -94,9 +95,15 @@ const CategoryPage = () => {
               })
             })
           ) : (
-            <Typography className="text-center font-normal text-gray-100">
-              Empty...
-            </Typography>
+            <div className="absolute right-1/2 top-1/2 translate-x-1/2 translate-y-1/2 text-center">
+              <Image
+                src="/catinbox.gif"
+                alt="Empty image"
+                width={500}
+                height={500}
+              />
+              <h3 className="text-2xl text-gray-100">Prompts Empty</h3>
+            </div>
           )}
         </tbody>
       </table>
