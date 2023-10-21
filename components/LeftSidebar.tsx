@@ -17,7 +17,7 @@ import {
   PopoverHandler
 } from '@material-tailwind/react'
 import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { Resizable } from 're-resizable'
 import React, { useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
@@ -30,7 +30,7 @@ import {
 
 export const LeftSidebar = () => {
   const { data: threads } = useGetThreads()
-  const { mutate: create, isLoading: isCreating } = useCreateThread()
+  const { mutateAsync: create, isLoading: isCreating } = useCreateThread()
   const { mutate: update, isLoading: isUpdating } = useUpdateThread()
   const { mutate: deleteThread, isLoading: isDeleting } = useDeleteThread()
 
@@ -39,6 +39,7 @@ export const LeftSidebar = () => {
     null
   )
   const [thread, setThread] = useState({ id: '', title: '' })
+  const router = useRouter()
   const searchParams = useSearchParams()
   const threadId = searchParams.get('thread') ?? ''
 
@@ -47,6 +48,17 @@ export const LeftSidebar = () => {
   const btnStyle = show
     ? 'right-[-5%] rotate-180 bg-dark'
     : 'right-[-15%] bg-dark-100'
+
+  async function handleConfirm(title: string) {
+    if (state === 'create') {
+      const newone = await create({ title })
+      setState(null)
+      router.push(`?thread=${newone.id}`)
+    } else {
+      update({ title, id: thread.id })
+      setState(null)
+    }
+  }
 
   return (
     <Resizable
@@ -139,10 +151,7 @@ export const LeftSidebar = () => {
         title={thread.title}
         open={state === 'create' || state === 'update'}
         onOpen={() => setState(null)}
-        onConfirm={(title) => {
-          create({ title })
-          setState(null)
-        }}
+        onConfirm={handleConfirm}
       />
 
       <ConfirmDeteleDialog

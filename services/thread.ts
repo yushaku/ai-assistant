@@ -19,7 +19,7 @@ export const useCreateThread = () => {
     [PROMPT_PATH],
     async (data: Pick<Thread, 'title'>) => {
       const res = await httpClient().post(PROMPT_PATH, data)
-      return res.data as unknown
+      return res.data as Thread
     },
     {
       onSuccess: () => {

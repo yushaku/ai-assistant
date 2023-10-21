@@ -9,7 +9,7 @@ import {
   DialogHeader,
   Input
 } from '@material-tailwind/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export const ThreadDialog = function ({
   title = '',
@@ -24,9 +24,9 @@ export const ThreadDialog = function ({
 }): JSX.Element {
   const [value, setValue] = useState(title)
 
-  const handleQuit = () => {
-    onOpen()
-  }
+  useEffect(() => {
+    setValue(title)
+  }, [open, title])
 
   return (
     <Dialog open={open} handler={onOpen}>
@@ -46,14 +46,24 @@ export const ThreadDialog = function ({
       </DialogBody>
 
       <DialogFooter className="space-x-2">
-        <Button variant="outlined" color="red" onClick={handleQuit}>
+        <Button
+          variant="outlined"
+          color="red"
+          onClick={() => {
+            onOpen()
+            setValue('')
+          }}
+        >
           close
         </Button>
 
         <Button
           variant="gradient"
           color="green"
-          onClick={() => onConfirm(value)}
+          onClick={() => {
+            onConfirm(value)
+            setValue('')
+          }}
         >
           Submit
         </Button>
