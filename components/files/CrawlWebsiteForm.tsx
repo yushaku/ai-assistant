@@ -2,12 +2,13 @@
 
 import { Button, Input } from '@material-tailwind/react'
 import { useState } from 'react'
+import type { CrawlWebsite } from 'types'
 
 // eslint-disable-next-line no-unused-vars
-type Props = { onCrawlWebsite: (link: string) => void }
+type Props = { onConfirm: (form: CrawlWebsite) => void }
 
-export const CrawlWebsiteForm = function ({ onCrawlWebsite }: Props) {
-  const [web, setWebsite] = useState('')
+export const CrawlWebsiteForm = function ({ onConfirm }: Props) {
+  const [form, setForm] = useState({ url: '', title: '' })
 
   return (
     <div className="mt-16">
@@ -19,20 +20,30 @@ export const CrawlWebsiteForm = function ({ onCrawlWebsite }: Props) {
           name="link"
           label="Import Website"
           color="blue"
-          value={web}
-          onChange={(e) => setWebsite(e.target.value)}
+          value={form.url}
+          onChange={(e) => setForm({ ...form, url: e.target.value })}
           className="text-gray-400 focus:border-gray-600"
         />
 
-        <p className="mt-4 py-3 text-sm text-gray">
-          Crawls your website for all textual content that Tigon AI can learn
-          from, it works even better if you import with a sitemap link.
-        </p>
+        <Input
+          type="text"
+          name="title"
+          label="Import Website"
+          color="blue"
+          value={form.title}
+          onChange={(e) => setForm({ ...form, title: e.target.value })}
+          className="text-gray-400 focus:border-gray-600"
+        />
 
-        <h5 className="font-semibold text-blue-300">Update to Premium</h5>
+        {/* <p className="mt-4 py-3 text-sm text-gray"> */}
+        {/*   Crawls your website for all textual content that Tigon AI can learn */}
+        {/*   from, it works even better if you import with a sitemap link. */}
+        {/* </p> */}
+        {/**/}
+        {/* <h5 className="font-semibold text-blue-300">Update to Premium</h5> */}
 
         <Button
-          onClick={() => onCrawlWebsite(web)}
+          onClick={() => onConfirm({ ...form, type: 'WEBSITE' })}
           title="Import Website"
           className="btn-outline my-4 bg-blue-500"
         >

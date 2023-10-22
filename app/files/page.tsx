@@ -1,26 +1,16 @@
 'use client'
 
-/* eslint-disable no-console */
+import { Loading } from '@/component/Loading'
 import { CrawlWebsiteForm } from '@/component/files/CrawlWebsiteForm'
 import { FileDropZone } from '@/component/files/FileDropZone'
 import { createDocBtn } from '@/lib/constants'
 import React, { useState } from 'react'
-import type { ActionType } from 'types'
+import { useUpload } from 'services/files'
+import { type ActionType } from 'types'
 
 const KnownledgePage = () => {
   const [action, setAction] = useState<ActionType>('FILE')
-
-  const handleCrawlWebsite = async (url: string) => {
-    console.log(url)
-  }
-
-  // const handleCreateFile = (title: string, text: string) => {
-  //   console.log({ title, text })
-  // }
-
-  const handleUpload = (url: string, title: string) => {
-    console.log({ title, url })
-  }
+  const { mutate: upload, isLoading: isUploading } = useUpload()
 
   return (
     <section className="container mx-auto h-screen p-24">
@@ -70,20 +60,11 @@ const KnownledgePage = () => {
         {/*   /> */}
         {/* ) : null} */}
 
-        {action === 'FILE' ? (
-          <FileDropZone
-            onSave={(url: string, title: string) => handleUpload(url, title)}
-          />
-        ) : null}
-
-        {action === 'WEBSITE' ? (
-          <CrawlWebsiteForm
-            onCrawlWebsite={(link: string) => {
-              handleCrawlWebsite(link)
-            }}
-          />
-        ) : null}
+        {action === 'FILE' ? <FileDropZone /> : null}
+        {action === 'WEBSITE' ? <CrawlWebsiteForm onConfirm={upload} /> : null}
       </article>
+
+      <Loading show={isUploading} />
     </section>
   )
 }

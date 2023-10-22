@@ -48,10 +48,30 @@ export type Prompt = {
 }
 
 export type ActionType = 'FILE' | 'TEXT' | 'WEBSITE'
+export type Upload = CrawlWebsite | UploadFile
+
+export type CrawlWebsite = {
+  type: 'WEBSITE'
+  title: string
+  url: string
+}
+
+export type UploadFile = {
+  type: 'FILE'
+  title: string
+  content: string
+}
 
 export type PreSignFile = {
   formData: FormData
   postURL: string
+}
+export function isUploadFile(data: Upload): data is UploadFile {
+  return (data as UploadFile).type === 'FILE'
+}
+
+export function isCrawWebsite(data: Upload): data is CrawlWebsite {
+  return (data as CrawlWebsite).type === 'WEBSITE'
 }
 
 export type FormData = {

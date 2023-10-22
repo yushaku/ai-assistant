@@ -58,6 +58,6 @@
     ".next/types/**/*.ts",
     "src/libs/Env.mjs",
     "tailwind.config.js",
-    "middleware.ts"
+    "middleware.ts.bad"
   ]
 }
