@@ -9,7 +9,8 @@ const {
   GOOGLE_CLIENT_ID = '',
   GOOGLE_CLIENT_SECRET = '',
   GITHUB_ID = '',
-  GITHUB_SECRET = ''
+  GITHUB_SECRET = '',
+  NEXTAUTH_SECRET = ''
 } = process.env
 
 const authOptions: NextAuthOptions = {
@@ -24,7 +25,7 @@ const authOptions: NextAuthOptions = {
       clientSecret: GITHUB_SECRET
     })
   ],
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: NEXTAUTH_SECRET,
   session: { strategy: 'jwt' },
   callbacks: {
     signIn({ account, profile }) {

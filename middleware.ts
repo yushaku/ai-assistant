@@ -23,9 +23,9 @@ export const middleware = async (request: NextRequest) => {
   }
 
   // redirect to Homepage
-  if (token && pathname === '/sign-in') {
-    return NextResponse.redirect(new URL('/', request.url))
-  }
+  // if (token && pathname === '/sign-in') {
+  //   return NextResponse.redirect(new URL('/', request.url))
+  // }
 
   // require login
   if (!token) {
