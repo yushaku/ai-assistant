@@ -52,12 +52,12 @@ export const LeftSidebar = () => {
   async function handleConfirm(title: string) {
     if (state === 'create') {
       const newone = await create({ title })
-      setState(null)
       router.push(`?thread=${newone.id}`)
     } else {
       update({ title, id: thread.id })
-      setState(null)
     }
+
+    setState(null)
   }
 
   return (
@@ -117,7 +117,7 @@ export const LeftSidebar = () => {
                   </PopoverHandler>
 
                   <PopoverContent className="group/func-hover:opacity-100">
-                    <ul className="grid gap-3">
+                    <ul className="grid cursor-pointer gap-3">
                       <li
                         onClick={() => {
                           setState('update')
@@ -156,7 +156,10 @@ export const LeftSidebar = () => {
 
       <ConfirmDeteleDialog
         open={state === 'delete' && thread.id !== ''}
-        handleSubmit={() => deleteThread(thread.id)}
+        handleSubmit={() => {
+          deleteThread(thread.id)
+          setState(null)
+        }}
         handleOpen={() => setState(null)}
       />
     </Resizable>
