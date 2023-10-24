@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 /* eslint-disable no-console */
@@ -31,15 +33,12 @@ export const pineconeClient = () => {
   return pinecone
 }
 
-export const queryPineconeVectorStoreAndQueryLLM = async (
-  client: Pinecone,
-  indexName: string,
-  question: string
-) => {
-  const index = client.Index(indexName)
-  const queryEmbedding = await new OpenAIEmbeddings().embedQuery(question)
-  console.log(`Asking question: ${question}...`)
+export const queryPineconeVectorStoreAndQueryLLM = async (question: string) => {
+  const client = pineconeClient()
+  const index = client.Index(INDEX_NAME)
 
+  console.log(`Asking question: ${question}...`)
+  const queryEmbedding = await new OpenAIEmbeddings().embedQuery(question)
   const queryResponse = await index.query({
     topK: 10,
     vector: queryEmbedding,
@@ -49,22 +48,17 @@ export const queryPineconeVectorStoreAndQueryLLM = async (
 
   console.log(`Found ${queryResponse?.matches?.length} matches...`)
 
-  const match = queryResponse.matches
-  if (!match) return
+  const matches = queryResponse.matches
+  if (!matches) return
 
   const llm = new OpenAI()
   const chain = loadQAStuffChain(llm)
-  const concatenatedPageContent = match
-    .map((match) => match.metadata?.pageContent)
-    .join(' ')
+  const content = matches.map((match) => match.metadata?.pageContent).join(' ')
 
   const result = await chain.call({
-    input_documents: [new Document({ pageContent: concatenatedPageContent })],
+    input_documents: [new Document({ pageContent: content })],
     question: question
   })
-
-  // 10. Log the answer
-  console.log(`Answer: ${result.text}`)
   return result.text
 }
 
