@@ -51,8 +51,8 @@ export const useDeleleCategory = () => {
   const queryClient = useQueryClient()
   return useMutation(
     [PROMPT_PATH],
-    async (data: string) => {
-      const res = await httpClient().post(PROMPT_PATH, data)
+    async (id: string) => {
+      const res = await httpClient().delete(`${PROMPT_PATH}?id=${id}`)
       return res.data as unknown
     },
     {

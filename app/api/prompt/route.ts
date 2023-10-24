@@ -47,13 +47,12 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-  const data = (await req.json()) as string[]
-  const cate = await prisma.prompt.deleteMany({
-    where: {
-      id: {
-        in: data
-      }
-    }
+  const searchParams = req.nextUrl.searchParams
+  const id = searchParams.get('id')
+  if (!id) throw new Error('there is no id')
+
+  const cate = await prisma.prompt.delete({
+    where: { id }
   })
   return NextResponse.json(cate)
 }

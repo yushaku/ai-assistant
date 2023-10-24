@@ -73,20 +73,20 @@ export const CreatePrompt = () => {
                 key={index}
                 className="relative cursor-pointer rounded-lg bg-dark-100 px-4 py-2"
               >
-                <p className="mr-14">{prompt}</p>
+                <p className="mr-14 text-gray-200">{prompt}</p>
                 <p className="absolute bottom-1/2 right-5 flex translate-y-1/2 gap-3">
                   <span
                     onClick={() => handleUpdate(index)}
                     className="rounded-lg p-1 hover:bg-green-400"
                   >
-                    <PencilIcon className="h-5 w-5" />
+                    <PencilIcon color="white" className="h-5 w-5" />
                   </span>
 
                   <span
                     onClick={() => handleDelete(index)}
                     className="rounded-lg p-1 hover:bg-red-400"
                   >
-                    <TrashIcon className="h-5 w-5" />
+                    <TrashIcon color="white" className="h-5 w-5" />
                   </span>
                 </p>
               </li>
@@ -95,7 +95,7 @@ export const CreatePrompt = () => {
         </ul>
       </div>
 
-      <div className="flex gap-5 rounded-lg border border-dark-100">
+      <div className="mx-1 flex gap-5 rounded-lg border border-dark-100">
         <textarea
           rows={1}
           value={prompt}
@@ -117,7 +117,7 @@ export const CreatePrompt = () => {
       <button
         onClick={handleSubmit}
         type="submit"
-        className="btn-outline mt-8 w-full"
+        className="btn-outline mt-8 w-full text-gray-200"
       >
         Save All
       </button>

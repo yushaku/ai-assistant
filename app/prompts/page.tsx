@@ -112,7 +112,10 @@ const CategoryPage = () => {
 
       <ConfirmDeteleDialog
         open={state === 'delete' && prompt.id !== ''}
-        handleSubmit={() => detele(prompt.id)}
+        handleSubmit={() => {
+          detele(prompt.id)
+          setState(null)
+        }}
         handleOpen={() => setState(null)}
       />
 
@@ -121,13 +124,14 @@ const CategoryPage = () => {
           title={prompt.content}
           open={state === 'update' && prompt.id !== ''}
           onOpen={() => setState(null)}
-          onConfirm={(content) =>
+          onConfirm={(content) => {
+            setState(null)
             update({
               id: prompt.id,
               content,
               categoryId: prompt.categoryId
             })
-          }
+          }}
         />
       )}
     </Card>

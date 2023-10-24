@@ -28,6 +28,7 @@ export const CreateCate = () => {
   const handleSubmit = () => {
     state === 'update' ? updateCate(cate) : createCate({ title: cate.title })
     setCate({ title: '', id: '' })
+    setState(null)
   }
 
   const handleDelete = (id: string) => {
@@ -99,7 +100,10 @@ export const CreateCate = () => {
       <Loading show={isCreating || isDeleting || isUpdating} />
       <ConfirmDeteleDialog
         open={state === 'delete' && cate.id !== ''}
-        handleSubmit={() => deteleCate(cate.id)}
+        handleSubmit={() => {
+          deteleCate(cate.id)
+          setState(null)
+        }}
         handleOpen={() => setState(null)}
       />
     </div>

@@ -38,9 +38,12 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-  const data = (await req.json()) as Pick<Category, 'id'>
+  const searchParams = req.nextUrl.searchParams
+  const id = searchParams.get('id')
+  if (!id) throw new Error('there is no id')
+
   const cate = await prisma.category.delete({
-    where: { id: data.id },
+    where: { id },
     include: { Prompt: true }
   })
   return NextResponse.json(cate)

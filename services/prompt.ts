@@ -55,7 +55,7 @@ export const useDatelePrompt = () => {
   return useMutation(
     [PROMPT_PATH],
     async (id: string) => {
-      const res = await httpClient().delete(`${PROMPT_PATH}/${id}`)
+      const res = await httpClient().delete(`${PROMPT_PATH}?id=${id}`)
       return res.data as unknown
     },
     {

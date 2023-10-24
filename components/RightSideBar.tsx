@@ -66,7 +66,7 @@ export const RightSideBar = () => {
           return (
             <Accordion
               key={cate.id}
-              open={open === 1}
+              open={open === index}
               icon={
                 <ChevronDownIcon
                   strokeWidth={3}
