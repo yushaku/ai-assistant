@@ -5,10 +5,11 @@ import { AI_MODELS } from 'lib/constants'
 
 type Props = {
   onclick: (model: Model) => void
+  show: boolean
 }
-export const SelectModel = ({ onclick }: Props) => {
+export const SelectModel = ({ onclick, show }: Props) => {
   return (
-    <div className="w-72">
+    <div className={`w-72 ${show ? 'block' : 'hidden'}`}>
       <Select
         defaultValue={AI_MODELS.at(0)?.title}
         label="Select Model"

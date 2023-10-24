@@ -15,12 +15,12 @@ export const VECTORDIMENSIONS = 1536
 
 export const AI_MODELS: Array<Model> = [
   {
-    title: 'hugging face',
-    href: '/api/huggingface'
-  },
-  {
     title: 'open ai',
     href: '/api/openai'
+  },
+  {
+    title: 'hugging face',
+    href: '/api/huggingface'
   },
   {
     title: 'langchain',

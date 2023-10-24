@@ -12,6 +12,7 @@ import {
   List,
   ListItem,
   ListItemPrefix,
+  Spinner,
   Typography
 } from '@material-tailwind/react'
 import { Resizable } from 're-resizable'
@@ -26,7 +27,7 @@ export const RightSideBar = () => {
   const [open, setOpen] = useState(0)
   useHotkeys('alt+l', () => setShow(!show), [show])
 
-  const { data: prompts } = useGetPrompts()
+  const { data: prompts, isLoading } = useGetPrompts()
 
   const handleOpen = (value: number) => {
     setOpen(open === value ? 0 : value)
@@ -122,6 +123,8 @@ export const RightSideBar = () => {
             </Accordion>
           )
         })}
+
+        {isLoading && <Spinner color="blue" className="mx-auto" />}
       </List>
     </Resizable>
   )

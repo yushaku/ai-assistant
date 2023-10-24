@@ -5,7 +5,7 @@ import GithubProvider from 'next-auth/providers/github'
 import Google from 'next-auth/providers/google'
 
 const {
-  SUPPER_ADMIN,
+  NEXT_PUBLIC_SUPPER_ADMIN,
   GOOGLE_CLIENT_ID = '',
   GOOGLE_CLIENT_SECRET = '',
   GITHUB_ID = '',
@@ -47,7 +47,11 @@ const authOptions: NextAuthOptions = {
       const schoolId = match?.at(0)
       if (!schoolId) return token
       const isAdmin =
-        schoolId.length <= 3 ? true : email === SUPPER_ADMIN ? true : false
+        schoolId.length <= 3
+          ? true
+          : email === NEXT_PUBLIC_SUPPER_ADMIN
+          ? true
+          : false
 
       return {
         ...token,

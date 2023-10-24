@@ -14,7 +14,8 @@ import {
 import {
   Popover,
   PopoverContent,
-  PopoverHandler
+  PopoverHandler,
+  Spinner
 } from '@material-tailwind/react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -29,7 +30,7 @@ import {
 } from 'services'
 
 export const LeftSidebar = () => {
-  const { data: threads } = useGetThreads()
+  const { data: threads, isLoading } = useGetThreads()
   const { mutateAsync: create, isLoading: isCreating } = useCreateThread()
   const { mutate: update, isLoading: isUpdating } = useUpdateThread()
   const { mutate: deleteThread, isLoading: isDeleting } = useDeleteThread()
@@ -143,6 +144,11 @@ export const LeftSidebar = () => {
             </li>
           )
         })}
+        {isLoading && (
+          <li className="mx-auto">
+            <Spinner color="blue" />
+          </li>
+        )}
       </ul>
 
       <Loading show={isCreating || isDeleting || isUpdating} />
