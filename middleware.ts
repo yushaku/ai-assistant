@@ -17,7 +17,9 @@ export const middleware = async (request: NextRequest) => {
   if (
     pathname.includes('/api/auth') ||
     pathname.includes('/_next') ||
-    pathname === '/sign-in'
+    pathname === '/sign-in' ||
+    pathname === '/favicon-32x32.png' ||
+    pathname === '/spaceUp.gif'
   ) {
     return NextResponse.next()
   }
