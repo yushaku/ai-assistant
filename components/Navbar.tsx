@@ -1,6 +1,7 @@
 import { Avata } from './Avata'
 import { QuestionMarkCircleIcon } from '@heroicons/react/24/solid'
 import {
+  Avatar,
   List,
   Popover,
   PopoverContent,
@@ -17,7 +18,11 @@ export const Navbar = () => {
   return (
     <nav className="absolute top-0 z-10 flex h-14 w-full items-center bg-dark-200">
       <div className="flex-between w-full px-6">
-        <Link href="/" className="green_text_gradient text-xl font-bold">
+        <Link
+          href="/"
+          className="green_text_gradient flex-center gap-2 text-xl font-bold"
+        >
+          <Avatar src="/favicon-32x32.png" size="sm" />
           HUCE Assistents
         </Link>
 

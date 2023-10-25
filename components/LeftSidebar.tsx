@@ -63,7 +63,7 @@ export const LeftSidebar = () => {
 
   return (
     <Resizable
-      className={`${style} animate mt-14 bg-dark-200`}
+      className={`${style} animate relative mt-14 bg-dark-200`}
       enable={{
         left: false,
         right: true,
@@ -150,6 +150,13 @@ export const LeftSidebar = () => {
           </li>
         )}
       </ul>
+
+      <Link
+        href="https://github.com/yushaku"
+        className="absolute bottom-2 w-full text-center text-sm text-gray-500"
+      >
+        Designed and created by Yushaku
+      </Link>
 
       <Loading show={isCreating || isDeleting || isUpdating} />
 
