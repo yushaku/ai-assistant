@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { ArrowUpTrayIcon } from '@heroicons/react/24/solid'
+import { upload } from '@vercel/blob/client'
 import React, { useCallback, useState } from 'react'
 import type { FileWithPath } from 'react-dropzone'
 import { useDropzone } from 'react-dropzone'
@@ -25,9 +26,13 @@ export const FileDropZone = () => {
 
       reader.onabort = () => toast('file reading was aborted')
       reader.onerror = () => toast.error('file reading has failed')
-      console.log(file)
 
-      // const url = await uploadFile(file)
+      const blob = await upload(file.name, file, {
+        access: 'public',
+        handleUploadUrl: '/api/blob'
+      })
+
+      console.log(blob)
       // onConfirm(url, file.name)
     })
   }, [])
