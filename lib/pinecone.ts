@@ -99,12 +99,12 @@ export const createPineconeIndex = async (
 }
 
 export const updatePinecone = async (
-  client: Pinecone,
   indexName: string,
   docs: Document<Record<string, any>>[]
 ) => {
   console.log('Retrieving Pinecone index...')
   // 1. Retrieve Pinecone index
+  const client = pineconeClient()
   const index = client.Index(indexName)
   // 2. Log the retrieved index name
   console.log(`Pinecone index retrieved: ${indexName}`)

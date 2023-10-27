@@ -1,43 +1,37 @@
+/* eslint-disable no-console */
 import { del, list } from '@vercel/blob'
 import { type HandleUploadBody, handleUpload } from '@vercel/blob/client'
+import { getToken } from 'next-auth/jwt'
+import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
 export const runtime = 'edge'
 
-export async function POST(request: Request): Promise<NextResponse> {
-  const body = (await request.json()) as HandleUploadBody
+export async function POST(req: NextRequest): Promise<NextResponse> {
+  const user = await getToken({ req })
+
+  const body = (await req.json()) as HandleUploadBody
 
   try {
     const jsonResponse = await handleUpload({
+      token: '',
       body,
-      request,
-      onBeforeGenerateToken: async () =>
-        // pathname: string
-        // clientPayload?: string
-        {
-          // Generate a client token for the browser to upload the file
-          // ⚠️ Authenticate and authorize users before generating the token.
-          // Otherwise, you're allowing anonymous uploads.
+      request: req,
+      onBeforeGenerateToken: async (pathname: string) => {
+        console.log(pathname)
 
-          return {
-            allowedContentTypes: ['.docx', '.doc', '.pdf', '.txt'],
-            tokenPayload: JSON.stringify({
-              // optional, sent to your server on upload completion
-              // you could pass a user id from auth, or a value from clientPayload
-            })
-          }
-        },
+        return {
+          allowedContentTypes: ['.docx', '.doc', '.pdf', '.txt'],
+          tokenPayload: JSON.stringify({
+            id: user?.id
+          })
+        }
+      },
       onUploadCompleted: async ({ blob, tokenPayload }) => {
-        // Get notified of client upload completion
-        // ⚠️ This will not work on `localhost` websites,
-        // Use ngrok or similar to get the full upload flow
-
-        console.log('blob upload completed', blob, tokenPayload)
-
         try {
-          // Run any logic after the file upload completed
-          // const { userId } = JSON.parse(tokenPayload);
-          // await db.update({ avatar: blob.url, userId });
+          const { userId } = JSON.parse(tokenPayload ?? '')
+          console.log('blob upload completed', blob, tokenPayload, userId)
+          // await db.update({ avatar: blob.url, userId })
         } catch (error) {
           throw new Error('Could not update user')
         }

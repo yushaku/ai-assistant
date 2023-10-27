@@ -30,7 +30,7 @@ const KnownledgePage = () => {
             const styleH5 =
               href === action
                 ? 'font-semibold text-blue-500'
-                : 'font-normal text-blue-200'
+                : 'font-normal text-blue-100'
 
             return (
               <li
@@ -60,7 +60,7 @@ const KnownledgePage = () => {
         {/*   /> */}
         {/* ) : null} */}
 
-        {action === 'FILE' ? <FileDropZone /> : null}
+        {action === 'FILE' ? <FileDropZone onConfirm={upload} /> : null}
         {action === 'WEBSITE' ? <CrawlWebsiteForm onConfirm={upload} /> : null}
       </article>
 

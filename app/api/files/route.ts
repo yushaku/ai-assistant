@@ -1,15 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { INDEX_NAME } from '@/lib/constants'
-import { pineconeClient, updatePinecone } from '@/lib/pinecone'
+import { updatePinecone } from '@/lib/pinecone'
+import prisma from '@/lib/prisma'
 import type { Document } from 'langchain/document'
-// import { DirectoryLoader } from 'langchain/document_loaders/fs/directory'
-// import { PDFLoader } from 'langchain/document_loaders/fs/pdf'
-// import { TextLoader } from 'langchain/document_loaders/fs/text'
+import { TextLoader } from 'langchain/document_loaders/fs/text'
 import { CheerioWebBaseLoader } from 'langchain/document_loaders/web/cheerio'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import type { Upload } from 'types'
-import { isCrawWebsite, isUploadFile } from 'types'
+import type { ActionType } from 'types'
 
 // export async function POST() {
 //   const loader = new DirectoryLoader('./documents', {
@@ -34,20 +32,40 @@ import { isCrawWebsite, isUploadFile } from 'types'
 // }
 
 export async function POST(req: NextRequest) {
-  const data = (await req.json()) as Upload
-  let docs: Document<Record<string, any>>[]
-  const client = pineconeClient()
+  const formData = await req.formData()
+  const type = formData.get('type') as ActionType
+  const title = formData.get('title') as string
 
-  if (isCrawWebsite(data)) {
-    const loader = new CheerioWebBaseLoader(data.url, { selector: 'article' })
+  let docs: Document<Record<string, any>>[]
+
+  if (type === 'WEBSITE') {
+    const url = formData.get('url') as string
+
+    const loader = new CheerioWebBaseLoader(url, { selector: 'article' })
     docs = await loader.load()
-    await updatePinecone(client, INDEX_NAME, docs)
+    await updatePinecone(INDEX_NAME, docs)
+    await prisma.documents.create({
+      data: { title, url }
+    })
+
     return NextResponse.json({
       data: docs.at(0)?.pageContent
     })
   }
 
-  if (isUploadFile(data)) {
+  if (type === 'FILE') {
+    const file = formData.get('file') as File
+
+    const loader = new TextLoader(file)
+    docs = await loader.load()
+
+    await updatePinecone(INDEX_NAME, docs)
+    // await prisma.documents.create({
+    //   data: {
+    //     title: title
+    //   }
+    // })
+
     return NextResponse.json({
       data: 'comming soon'
     })

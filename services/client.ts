@@ -6,7 +6,7 @@ export const httpClient = () => {
     withCredentials: true,
     headers: {
       Accept: '*',
-      'Content-Type': 'application/json'
+      'Content-Type': '*'
     }
   })
 
