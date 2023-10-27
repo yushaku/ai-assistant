@@ -2,13 +2,21 @@
 
 import { Button, Input } from '@material-tailwind/react'
 import { useState } from 'react'
-import type { CrawlWebsite } from 'types'
+import type { Upload } from 'types'
 
 // eslint-disable-next-line no-unused-vars
-type Props = { onConfirm: (form: CrawlWebsite) => void }
+type Props = { onConfirm: (form: Upload) => void }
 
 export const CrawlWebsiteForm = function ({ onConfirm }: Props) {
   const [form, setForm] = useState({ url: '', title: '' })
+
+  function handleSubmit() {
+    const data = new FormData()
+    data.set('type', 'WEBSITE')
+    data.set('title', form.title)
+    data.set('url', form.url)
+    onConfirm(data)
+  }
 
   return (
     <div className="mt-16">
@@ -43,7 +51,7 @@ export const CrawlWebsiteForm = function ({ onConfirm }: Props) {
         {/* <h5 className="font-semibold text-blue-300">Update to Premium</h5> */}
 
         <Button
-          onClick={() => onConfirm({ ...form, type: 'WEBSITE' })}
+          onClick={handleSubmit}
           title="Import Website"
           className="btn-outline my-4 bg-blue-500"
         >

@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import { ArrowUpTrayIcon } from '@heroicons/react/24/solid'
-import { upload } from '@vercel/blob/client'
 import React, { useCallback, useState } from 'react'
 import type { FileWithPath } from 'react-dropzone'
 import { useDropzone } from 'react-dropzone'
@@ -9,50 +8,45 @@ import type { Upload } from 'types'
 
 export type Props = { onConfirm: (data: Upload) => void }
 
-export const FileDropZone = () => {
+export const FileDropZone = ({ onConfirm }: Props) => {
   const [isDragActive, setIsDragActive] = useState(false)
 
-  const handleDragEnter = () => {
-    setIsDragActive(true)
-  }
+  const handleDropFile = useCallback(
+    (acceptedFiles: FileWithPath[]) => {
+      acceptedFiles.forEach(async (file) => {
+        const reader = new FileReader()
 
-  const handleDragLeave = () => {
-    setIsDragActive(false)
-  }
+        reader.onabort = () => toast('file reading was aborted')
+        reader.onerror = () => toast.error('file reading has failed')
 
-  const handleDropFile = useCallback((acceptedFiles: FileWithPath[]) => {
-    acceptedFiles.forEach(async (file: File) => {
-      const reader = new FileReader()
-
-      reader.onabort = () => toast('file reading was aborted')
-      reader.onerror = () => toast.error('file reading has failed')
-
-      const blob = await upload(file.name, file, {
-        access: 'public',
-        handleUploadUrl: '/api/blob'
+        const data = new FormData()
+        data.set('file', file)
+        data.set('type', 'FILE')
+        data.set('title', file.name)
+        onConfirm(data)
       })
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
 
-      console.log(blob)
-      // onConfirm(url, file.name)
-    })
-  }, [])
-
-  const { getRootProps, getInputProps } = useDropzone({
+  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
     onDrop: handleDropFile,
-    maxSize: 20 * 1024 * 1024, // Maximum file size: 20MB
+    maxSize: 4 * 1024 * 1024, // Maximum file size: 4MB
     accept: {
       'text/*': ['.docx', '.doc', '.pdf', '.txt']
     },
-    onDragEnter: handleDragEnter,
-    onDragLeave: handleDragLeave,
+    onDragEnter: () => setIsDragActive(true),
+    onDragLeave: () => setIsDragActive(false),
     onDropRejected(fileRejections) {
-      handleDragLeave()
+      setIsDragActive(false)
       const errMessage = fileRejections?.at(0)?.errors?.at(0)?.message
       toast.error(
         errMessage ? errMessage : 'File type must be text: docx, doc, pdf, txt'
       )
     }
   })
+
   return (
     <div className="group mx-auto mt-16">
       <h5 className="text-lg font-semibold text-gray">Upload</h5>
@@ -73,10 +67,17 @@ export const FileDropZone = () => {
           <span className="text-gray underline group-hover:text-blue-300">
             Click to upload{' '}
           </span>
-          or drag and drop Up to 10 files like word, or PDF, and upto 20 MB
-          each.
+          or drag and drop Up to 10 files like word, or PDF, and upto 4 MB each.
         </span>
       </div>
+
+      <ul className="list-disc pt-8 text-gray-400">
+        {acceptedFiles.map((file: FileWithPath) => (
+          <li key={file.path}>
+            {file.path} - {file.size} bytes
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }

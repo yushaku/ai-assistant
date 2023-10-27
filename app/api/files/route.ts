@@ -3,6 +3,8 @@ import { INDEX_NAME } from '@/lib/constants'
 import { updatePinecone } from '@/lib/pinecone'
 import prisma from '@/lib/prisma'
 import type { Document } from 'langchain/document'
+import { DocxLoader } from 'langchain/document_loaders/fs/docx'
+import { PDFLoader } from 'langchain/document_loaders/fs/pdf'
 import { TextLoader } from 'langchain/document_loaders/fs/text'
 import { CheerioWebBaseLoader } from 'langchain/document_loaders/web/cheerio'
 import type { NextRequest } from 'next/server'
@@ -55,11 +57,33 @@ export async function POST(req: NextRequest) {
 
   if (type === 'FILE') {
     const file = formData.get('file') as File
+    const extension = file.name.split('.').pop()
 
-    const loader = new TextLoader(file)
-    docs = await loader.load()
+    switch (extension) {
+      case 'txt': {
+        const loader = new TextLoader(file)
+        docs = await loader.load()
+        break
+      }
 
-    await updatePinecone(INDEX_NAME, docs)
+      case 'pdf': {
+        const loader = new PDFLoader(file)
+        docs = await loader.load()
+        break
+      }
+
+      case 'doc':
+      case 'docx': {
+        const loader = new DocxLoader(file)
+        docs = await loader.load()
+        break
+      }
+
+      default:
+        break
+    }
+
+    // await updatePinecone(INDEX_NAME, docs)
     // await prisma.documents.create({
     //   data: {
     //     title: title

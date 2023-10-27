@@ -13,7 +13,7 @@ export default function Page() {
         onClick={() => signIn('google', { callbackUrl: '/' })}
       >
         <GoogleIcon />
-        Sign in with with school email
+        Sign In With School Email
       </button>
 
       {/* <button */}

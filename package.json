@@ -27,6 +27,7 @@
     "bcrypt": "^5.1.1",
     "cheerio": "1.0.0-rc.12",
     "langchain": "^0.0.157",
+    "mammoth": "^1.6.0",
     "moment": "^2.29.4",
     "next": "^13.4.19",
     "next-auth": "^4.23.2",
