@@ -20,9 +20,9 @@ export const CrawlWebsiteForm = function ({ onConfirm }: Props) {
 
   return (
     <div className="mt-16">
-      <h5 className="font-semibold text-gray">Crawl Website</h5>
-
       <div className="mt-3 grid gap-6 rounded-lg bg-dark-200 p-5">
+        <h5 className="font-semibold text-gray">Crawl Website</h5>
+
         <Input
           type="text"
           name="title"

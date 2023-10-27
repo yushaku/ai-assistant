@@ -3,6 +3,7 @@
 import { Loading } from '@/component/Loading'
 import { CrawlWebsiteForm } from '@/component/files/CrawlWebsiteForm'
 import { FileDropZone } from '@/component/files/FileDropZone'
+import { TextEditor } from '@/component/files/TextEdittor'
 import { createDocBtn } from '@/lib/constants'
 import React, { useState } from 'react'
 import { useUpload } from 'services/files'
@@ -52,14 +53,7 @@ const KnownledgePage = () => {
       </article>
 
       <article>
-        {/* {action === "TEXT" ? ( */}
-        {/*   <TextEditor */}
-        {/*     onCreate={(title: string, text: string) => */}
-        {/*       handleCreateFile(title, text) */}
-        {/*     } */}
-        {/*   /> */}
-        {/* ) : null} */}
-
+        {action === 'TEXT' ? <TextEditor onConfirm={upload} /> : null}
         {action === 'FILE' ? <FileDropZone onConfirm={upload} /> : null}
         {action === 'WEBSITE' ? <CrawlWebsiteForm onConfirm={upload} /> : null}
       </article>

@@ -55,6 +55,17 @@ export async function POST(req: NextRequest) {
     })
   }
 
+  if (type === 'TEXT') {
+    const content = formData.get('content') as string
+
+    // await updatePinecone(INDEX_NAME, docs)
+    // await prisma.documents.create({
+    //   data: { title, url }
+    // })
+
+    return NextResponse.json({ message: 'ok' })
+  }
+
   if (type === 'FILE') {
     const file = formData.get('file') as File
     const extension = file.name.split('.').pop()
