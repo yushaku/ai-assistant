@@ -1,66 +1,120 @@
 'use client'
 
 import { Loading } from '@/component/Loading'
-import { CrawlWebsiteForm } from '@/component/files/CrawlWebsiteForm'
-import { FileDropZone } from '@/component/files/FileDropZone'
-import { TextEditor } from '@/component/files/TextEdittor'
-import { createDocBtn } from '@/lib/constants'
+import { ConfirmDeteleDialog } from '@/component/dialog/confirmDetele'
+import { PencilIcon, TrashIcon } from '@heroicons/react/24/solid'
+import { Card, Typography } from '@material-tailwind/react'
+import moment from 'moment'
+import Image from 'next/image'
+import Link from 'next/link'
 import React, { useState } from 'react'
-import { useUpload } from 'services/files'
-import { type ActionType } from 'types'
+import { useDatelePrompt, useGetFiles } from 'services'
 
-const KnownledgePage = () => {
-  const [action, setAction] = useState<ActionType>('FILE')
-  const { mutate: upload, isLoading: isUploading } = useUpload()
+const TABLE_HEAD = ['Title', 'Prompt', 'Is Trained', 'Created at', 'Updated at']
+
+const CategoryPage = () => {
+  const { data: promptList } = useGetFiles()
+  const { mutate: detele, isLoading: isDeleting } = useDatelePrompt()
+
+  const [state, setState] = useState<'delete' | 'update' | null>(null)
+  const [prompt, setPrompt] = useState({ id: '' })
 
   return (
-    <section className="container mx-auto h-screen p-24">
-      <article className="mt-4 text-center">
-        <h4 className="green_text_gradient text-xl font-semibold">
-          Create Documents
-        </h4>
-        <p className="my-4 text-gray">
-          You can create a new document in this folder by writing,
-          <br /> uploading an existing document or importing a webpage.
-        </p>
+    <Card className="no-scrollbar h-full w-full overflow-y-scroll bg-dark-200">
+      <table className="w-full min-w-max table-auto text-left">
+        <thead className="bg-dark-100">
+          <tr>
+            {TABLE_HEAD.map((head) => (
+              <th key={head} className="border-b border-blue-gray-100 p-4">
+                <Typography className="text-lg font-semibold text-white">
+                  {head}
+                </Typography>
+              </th>
+            ))}
 
-        <ul className="mt-8 flex flex-wrap items-center justify-between gap-8">
-          {createDocBtn.map(({ type, desc, href, Icon }, index) => {
-            const styleSpan =
-              href === action ? 'shadow-lg -top-6 bg-dark-100' : '-top-2'
-            const styleH5 =
-              href === action
-                ? 'font-semibold text-blue-500'
-                : 'font-normal text-blue-100'
+            <th className="border-b border-blue-gray-100 p-4">
+              <Link href="/files/create" className="btn-outline text-white">
+                create new
+              </Link>
+            </th>
+          </tr>
+        </thead>
 
-            return (
-              <li
-                key={index}
-                onClick={() => setAction(href)}
-                className="animate group relative w-1/4 min-w-[250px] cursor-pointer rounded-xl bg-dark-200 px-6 pb-2 pt-12 text-center shadow-lg hover:shadow-2xl"
-              >
-                <span
-                  className={`${styleSpan} animate absolute right-1/2 m-2 translate-x-1/2 rounded-full p-3 group-hover:shadow-lg`}
-                >
-                  {Icon}
-                </span>
-                <h5 className={`${styleH5} animate my-3 text-xl`}>{type}</h5>
-                <p className="text-gray">{desc}</p>
-              </li>
-            )
-          })}
-        </ul>
-      </article>
+        <tbody className="relative">
+          {promptList?.length !== 0 ? (
+            promptList?.map(({ id, title, createdAt, updatedAt }) => {
+              return (
+                <tr key={id} className="even:bg-dark-100">
+                  <td className="p-4">
+                    <Typography className="font-normal text-gray-100">
+                      {title}
+                    </Typography>
+                  </td>
+                  <td>
+                    <Typography className="font-normal text-gray-100">
+                      {content}
+                    </Typography>
+                  </td>
+                  <td>
+                    <Typography className="font-normal text-gray-100">
+                      {moment(createdAt).format('ll')}
+                    </Typography>
+                  </td>
+                  <td>
+                    <Typography className="font-normal text-gray-100">
+                      {moment(updatedAt).format('LL')}
+                    </Typography>
+                  </td>
+                  <td className="flex gap-3">
+                    <button
+                      onClick={() => {
+                        setPrompt({ id })
+                        setState('update')
+                      }}
+                      className="rounded-lg p-3 font-normal text-gray-100 hover:bg-blue-400"
+                    >
+                      <PencilIcon className="h-5 w-5" />
+                    </button>
 
-      <article>
-        {action === 'TEXT' ? <TextEditor onConfirm={upload} /> : null}
-        {action === 'FILE' ? <FileDropZone onConfirm={upload} /> : null}
-        {action === 'WEBSITE' ? <CrawlWebsiteForm onConfirm={upload} /> : null}
-      </article>
+                    <button
+                      onClick={() => {
+                        setPrompt({ id })
+                        setState('delete')
+                      }}
+                      className="rounded-lg p-3 font-normal text-gray-100 hover:bg-red-400"
+                    >
+                      <TrashIcon className="h-5 w-5" />
+                    </button>
+                  </td>
+                </tr>
+              )
+            })
+          ) : (
+            <div className="absolute right-1/2 top-1/2 translate-x-1/2 translate-y-1/2 text-center">
+              <Image
+                src="/catinbox.gif"
+                alt="Empty image"
+                width={300}
+                height={300}
+              />
+              <h3 className="text-2xl text-gray-100">Prompts Empty</h3>
+            </div>
+          )}
+        </tbody>
+      </table>
 
-      <Loading show={isUploading} />
-    </section>
+      <Loading show={isDeleting} />
+
+      <ConfirmDeteleDialog
+        open={state === 'delete' && prompt.id !== ''}
+        handleSubmit={() => {
+          detele(prompt.id)
+          setState(null)
+        }}
+        handleOpen={() => setState(null)}
+      />
+    </Card>
   )
 }
 
-export default KnownledgePage
+export default CategoryPage

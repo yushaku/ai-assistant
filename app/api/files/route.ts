@@ -11,28 +11,6 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import type { ActionType } from 'types'
 
-// export async function POST() {
-//   const loader = new DirectoryLoader('./documents', {
-//     '.txt': (path) => new TextLoader(path),
-//     '.md': (path) => new TextLoader(path),
-//     '.pdf': (path) => new PDFLoader(path)
-//   })
-//
-//   const docs = await loader.load()
-//   const client = pineconeClient()
-//
-//   try {
-//     await client.describeIndex(INDEX_NAME)
-//     await updatePinecone(client, INDEX_NAME, docs)
-//   } catch (err) {
-//     console.error('error: ', err)
-//   }
-//
-//   return NextResponse.json({
-//     data: 'successfully created index and loaded data into pinecone...'
-//   })
-// }
-
 export async function POST(req: NextRequest) {
   const formData = await req.formData()
   const type = formData.get('type') as ActionType
@@ -59,9 +37,9 @@ export async function POST(req: NextRequest) {
     const content = formData.get('content') as string
 
     // await updatePinecone(INDEX_NAME, docs)
-    // await prisma.documents.create({
-    //   data: { title, url }
-    // })
+    await prisma.documents.create({
+      data: { title, content }
+    })
 
     return NextResponse.json({ message: 'ok' })
   }
@@ -110,3 +88,41 @@ export async function POST(req: NextRequest) {
     data: 'comming soon'
   })
 }
+
+export async function GET() {
+  const data = await prisma.documents.findMany()
+  return NextResponse.json(data)
+}
+
+export async function DELETE(req: NextRequest) {
+  const searchParams = req.nextUrl.searchParams
+  const id = searchParams.get('id')
+  if (!id) throw new Error('there is no id')
+
+  await prisma.documents.delete({
+    where: { id }
+  })
+  return NextResponse.json({ message: 'ok' })
+}
+
+// export async function POST() {
+//   const loader = new DirectoryLoader('./documents', {
+//     '.txt': (path) => new TextLoader(path),
+//     '.md': (path) => new TextLoader(path),
+//     '.pdf': (path) => new PDFLoader(path)
+//   })
+//
+//   const docs = await loader.load()
+//   const client = pineconeClient()
+//
+//   try {
+//     await client.describeIndex(INDEX_NAME)
+//     await updatePinecone(client, INDEX_NAME, docs)
+//   } catch (err) {
+//     console.error('error: ', err)
+//   }
+//
+//   return NextResponse.json({
+//     data: 'successfully created index and loaded data into pinecone...'
+//   })
+// }

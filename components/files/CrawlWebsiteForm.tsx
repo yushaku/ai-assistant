@@ -20,8 +20,8 @@ export const CrawlWebsiteForm = function ({ onConfirm }: Props) {
 
   return (
     <div className="mt-16">
-      <div className="mt-3 grid gap-6 rounded-lg bg-dark-200 p-5">
-        <h5 className="font-semibold text-gray">Crawl Website</h5>
+      <div className="mt-3 grid gap-6 rounded-lg bg-dark-200 px-10 py-5">
+        <h5 className="header-md">Crawl Website</h5>
 
         <Input
           type="text"
@@ -43,7 +43,7 @@ export const CrawlWebsiteForm = function ({ onConfirm }: Props) {
           className="text-gray-400 focus:border-gray-600"
         />
 
-        <p className="mt-4 py-3 text-sm text-gray">
+        <p className="py-2 text-sm text-gray">
           Crawls your website for all textual content that HUCE AI can learn
           from, it works even better if you import with a sitemap link.
         </p>
@@ -53,7 +53,7 @@ export const CrawlWebsiteForm = function ({ onConfirm }: Props) {
         <Button
           onClick={handleSubmit}
           title="Import Website"
-          className="btn-outline my-4 bg-blue-500"
+          className="btn-outline bg-blue-500"
         >
           Submit
         </Button>

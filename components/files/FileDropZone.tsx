@@ -49,7 +49,7 @@ export const FileDropZone = ({ onConfirm }: Props) => {
 
   return (
     <div className="group mx-auto mt-16">
-      <h5 className="text-lg font-semibold text-gray">Upload</h5>
+      <h5 className="header-md">Upload</h5>
       <div
         {...getRootProps()}
         className={`flex-center mt-3 cursor-pointer flex-col rounded-lg border border-dashed py-10 ${

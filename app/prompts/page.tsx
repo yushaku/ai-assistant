@@ -99,8 +99,8 @@ const CategoryPage = () => {
               <Image
                 src="/catinbox.gif"
                 alt="Empty image"
-                width={500}
-                height={500}
+                width={300}
+                height={300}
               />
               <h3 className="text-2xl text-gray-100">Prompts Empty</h3>
             </div>

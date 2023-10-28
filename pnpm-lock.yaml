@@ -50,12 +50,9 @@ dependencies:
   cheerio:
     specifier: 1.0.0-rc.12
     version: 1.0.0-rc.12
-  html-to-text:
-    specifier: ^9.0.5
-    version: 9.0.5
   langchain:
     specifier: ^0.0.157
-    version: 0.0.157(@huggingface/inference@2.6.1)(@pinecone-database/pinecone@1.1.0)(axios@1.5.1)(cheerio@1.0.0-rc.12)(html-to-text@9.0.5)(mammoth@1.6.0)(pdf-parse@1.1.1)(replicate@0.18.1)
+    version: 0.0.157(@huggingface/inference@2.6.1)(@pinecone-database/pinecone@1.1.0)(axios@1.5.1)(cheerio@1.0.0-rc.12)(mammoth@1.6.0)(pdf-parse@1.1.1)(replicate@0.18.1)
   mammoth:
     specifier: ^1.6.0
     version: 1.6.0
@@ -846,13 +843,6 @@ packages:
   /@rushstack/eslint-patch@1.5.0:
     resolution: {integrity: sha512-EF3948ckf3f5uPgYbQ6GhyA56Dmv8yg0+ir+BroRjwdxyZJsekhZzawOecC2rOTPCz173t7ZcR1HHZu0dZgOCw==}
     dev: true
-
-  /@selderee/plugin-htmlparser2@0.11.0:
-    resolution: {integrity: sha512-P33hHGdldxGabLFjPPpaTxVolMrzrcegejx+0GxjrIb9Zv48D8yAIA/QTDR2dFl7Uz7urX8aX6+5bCZslr+gWQ==}
-    dependencies:
-      domhandler: 5.0.3
-      selderee: 0.11.0
-    dev: false
 
   /@sinclair/typebox@0.27.8:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
@@ -2144,11 +2134,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
-  /deepmerge@4.3.1:
-    resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
-    engines: {node: '>=0.10.0'}
-    dev: false
-
   /default-browser-id@3.0.0:
     resolution: {integrity: sha512-OZ1y3y0SqSICtE8DE4S8YOE9UZOJ8wO16fKWVP5J1Qz42kV9jcnMVFrEE/noXb/ss3Q4pZIH79kxofzyNNtUNA==}
     engines: {node: '>=12'}
@@ -3266,17 +3251,6 @@ packages:
       whatwg-encoding: 2.0.0
     dev: false
 
-  /html-to-text@9.0.5:
-    resolution: {integrity: sha512-qY60FjREgVZL03vJU6IfMV4GDjGBIoOyvuFdpBDIX9yTlDw0TjxVBQp+P8NvpdIXNJvfWBTNul7fsAQJq2FNpg==}
-    engines: {node: '>=14'}
-    dependencies:
-      '@selderee/plugin-htmlparser2': 0.11.0
-      deepmerge: 4.3.1
-      dom-serializer: 2.0.0
-      htmlparser2: 8.0.2
-      selderee: 0.11.0
-    dev: false
-
   /html-url-attributes@3.0.0:
     resolution: {integrity: sha512-/sXbVCWayk6GDVg3ctOX6nxaVj7So40FcFAnWlWGNAB1LpYKcV5Cd10APjPjW80O7zYW2MsjBV4zZ7IZO5fVow==}
     dev: false
@@ -3836,7 +3810,7 @@ packages:
       setimmediate: 1.0.5
     dev: false
 
-  /langchain@0.0.157(@huggingface/inference@2.6.1)(@pinecone-database/pinecone@1.1.0)(axios@1.5.1)(cheerio@1.0.0-rc.12)(html-to-text@9.0.5)(mammoth@1.6.0)(pdf-parse@1.1.1)(replicate@0.18.1):
+  /langchain@0.0.157(@huggingface/inference@2.6.1)(@pinecone-database/pinecone@1.1.0)(axios@1.5.1)(cheerio@1.0.0-rc.12)(mammoth@1.6.0)(pdf-parse@1.1.1)(replicate@0.18.1):
     resolution: {integrity: sha512-G69Azp9KN/0ispqTM/Ns+UyaOm+GR4TAh3U41idA1gTyyG2n8zcO1hEC/HA4TwcxyNvWVHgX0vLo956Is5DcgQ==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -4102,7 +4076,6 @@ packages:
       decamelize: 1.2.0
       expr-eval: 2.0.2
       flat: 5.0.2
-      html-to-text: 9.0.5
       js-tiktoken: 1.0.7
       js-yaml: 4.1.0
       jsonpointer: 5.0.1
@@ -4149,10 +4122,6 @@ packages:
     dependencies:
       language-subtag-registry: 0.3.22
     dev: true
-
-  /leac@0.6.0:
-    resolution: {integrity: sha512-y+SqErxb8h7nE/fiEX07jsbuhrpO9lL8eca7/Y1nuWV2moNlXhyd59iDGcRf6moVyDMbmTNzL40SUyrFU/yDpg==}
-    dev: false
 
   /levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
@@ -5101,13 +5070,6 @@ packages:
       entities: 4.5.0
     dev: false
 
-  /parseley@0.12.1:
-    resolution: {integrity: sha512-e6qHKe3a9HWr0oMRVDTRhKce+bRO8VGQR3NyVwcjwrbhMmFCX9KszEV35+rn4AdilFAq9VPxP/Fe1wC9Qjd2lw==}
-    dependencies:
-      leac: 0.6.0
-      peberminta: 0.9.0
-    dev: false
-
   /path-exists@4.0.0:
     resolution: {integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==}
     engines: {node: '>=8'}
@@ -5144,10 +5106,6 @@ packages:
       node-ensure: 0.0.0
     transitivePeerDependencies:
       - supports-color
-    dev: false
-
-  /peberminta@0.9.0:
-    resolution: {integrity: sha512-XIxfHpEuSJbITd1H3EeQwpcZbTLHc+VVr8ANI9t5sit565tsI4/xK3KWTUFE2e6QiangUkh3B0jihzmGnNrRsQ==}
     dev: false
 
   /periscopic@3.1.0:
@@ -5734,12 +5692,6 @@ packages:
     resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
     dependencies:
       loose-envify: 1.4.0
-    dev: false
-
-  /selderee@0.11.0:
-    resolution: {integrity: sha512-5TF+l7p4+OsnP8BCCvSyZiSPc4x4//p5uPwK8TCnVPJYRmU2aYKMpOXvw8zM5a5JvuuCGN1jmsMwuU2W02ukfA==}
-    dependencies:
-      parseley: 0.12.1
     dev: false
 
   /semver@6.3.1:
