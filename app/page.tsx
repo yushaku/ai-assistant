@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 
 export default function Chat() {
+  const { data: session } = useSession()
   const [model, setModel] = useState(AI_MODELS.at(0)!)
   const { data } = useSession()
 
@@ -43,7 +44,7 @@ export default function Chat() {
         {messages.map((m) => (
           <div className="mb-6" key={m.id}>
             {m.role === 'user' ? (
-              <UserQuestion question={m.content} />
+              <UserQuestion question={m.content} image={session?.user.image} />
             ) : (
               <BotAnswer answer={m.content} />
             )}

@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     })
 
     return NextResponse.json({
-      data: docs.at(0)?.pageContent
+      message: 'ok'
     })
   }
 

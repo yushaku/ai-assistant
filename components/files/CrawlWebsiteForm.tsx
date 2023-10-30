@@ -16,6 +16,7 @@ export const CrawlWebsiteForm = function ({ onConfirm }: Props) {
     data.set('title', form.title)
     data.set('url', form.url)
     onConfirm(data)
+    setForm({ url: '', title: '' })
   }
 
   return (

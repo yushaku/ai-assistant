@@ -27,7 +27,10 @@ const CategoryPage = () => {
         <thead className="bg-dark-100">
           <tr>
             {TABLE_HEAD.map((head) => (
-              <th key={head} className="border-b border-blue-gray-100 p-4">
+              <th
+                key={head}
+                className="border-b border-blue-gray-100 first:p-4"
+              >
                 <Typography className="text-lg font-semibold text-white">
                   {head}
                 </Typography>
@@ -44,29 +47,28 @@ const CategoryPage = () => {
           </tr>
         </thead>
         <tbody className="relative">
-          {promptList?.length !== 0 ? (
+          {promptList?.length ? (
             promptList?.map(({ title, Prompt, ...cate }) => {
               return Prompt?.map(({ id, content, createdAt, updatedAt }) => {
                 return (
-                  <tr key={id} className="even:bg-dark-100">
+                  <tr
+                    key={id}
+                    className="font-normal text-gray-100 even:bg-dark-100 hover:bg-dark-50"
+                  >
                     <td className="p-4">
-                      <Typography className="font-normal text-gray-100">
-                        {title}
+                      <Typography>{title}</Typography>
+                    </td>
+                    <td>
+                      <Typography>{content}</Typography>
+                    </td>
+                    <td>
+                      <Typography>
+                        {moment(createdAt).format('DD/MM/YYYY')}
                       </Typography>
                     </td>
                     <td>
-                      <Typography className="font-normal text-gray-100">
-                        {content}
-                      </Typography>
-                    </td>
-                    <td>
-                      <Typography className="font-normal text-gray-100">
-                        {moment(createdAt).format('ll')}
-                      </Typography>
-                    </td>
-                    <td>
-                      <Typography className="font-normal text-gray-100">
-                        {moment(updatedAt).format('LL')}
+                      <Typography>
+                        {moment(updatedAt).format('DD/MM/YYYY')}
                       </Typography>
                     </td>
                     <td className="flex gap-3">

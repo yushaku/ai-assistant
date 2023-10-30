@@ -21,6 +21,7 @@ export const TextEditor = ({ onConfirm }: Props) => {
     form.set('title', value.title)
     form.set('content', value.content)
     onConfirm(form)
+    setValue({ content: '', title: '' })
   }
 
   return (
