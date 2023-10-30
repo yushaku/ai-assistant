@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { INDEX_NAME } from '@/lib/constants'
-import { updatePinecone } from '@/lib/pinecone'
+import { deleteVertor, updatePinecone } from '@/lib/pinecone'
 import prisma from '@/lib/prisma'
 import type { Document } from 'langchain/document'
 import { DocxLoader } from 'langchain/document_loaders/fs/docx'
@@ -10,6 +9,12 @@ import { CheerioWebBaseLoader } from 'langchain/document_loaders/web/cheerio'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import type { ActionType } from 'types'
+
+const loaders = new Map<string, any>()
+loaders.set('txt', TextLoader)
+loaders.set('pdf', PDFLoader)
+loaders.set('doc', DocxLoader)
+loaders.set('docx', DocxLoader)
 
 export async function POST(req: NextRequest) {
   const formData = await req.formData()
@@ -23,9 +28,16 @@ export async function POST(req: NextRequest) {
 
     const loader = new CheerioWebBaseLoader(url, { selector: 'article' })
     docs = await loader.load()
-    await updatePinecone(INDEX_NAME, docs)
-    await prisma.documents.create({
-      data: { title, url }
+
+    const ids = await updatePinecone(docs)
+    await prisma.documents.createMany({
+      data: docs.map((file) => ({
+        title,
+        url,
+        pineconeIds: ids,
+        isTrained: true,
+        content: file.pageContent
+      }))
     })
 
     return NextResponse.json({
@@ -38,7 +50,7 @@ export async function POST(req: NextRequest) {
 
     // await updatePinecone(INDEX_NAME, docs)
     await prisma.documents.create({
-      data: { title, content }
+      data: { title, content, isTrained: true }
     })
 
     return NextResponse.json({ message: 'ok' })
@@ -47,46 +59,28 @@ export async function POST(req: NextRequest) {
   if (type === 'FILE') {
     const file = formData.get('file') as File
     const extension = file.name.split('.').pop()
+    const Loader = loaders.get(extension ?? '')
 
-    switch (extension) {
-      case 'txt': {
-        const loader = new TextLoader(file)
-        docs = await loader.load()
-        break
-      }
+    if (!Loader) return
+    const loader = new Loader(file)
+    docs = await loader.load()
 
-      case 'pdf': {
-        const loader = new PDFLoader(file)
-        docs = await loader.load()
-        break
-      }
-
-      case 'doc':
-      case 'docx': {
-        const loader = new DocxLoader(file)
-        docs = await loader.load()
-        break
-      }
-
-      default:
-        break
-    }
-
-    // await updatePinecone(INDEX_NAME, docs)
-    // await prisma.documents.create({
-    //   data: {
-    //     title: title
-    //   }
-    // })
+    const ids = await updatePinecone(docs)
+    await prisma.documents.createMany({
+      data: docs.map((file) => ({
+        title,
+        pineconeIds: ids,
+        isTrained: true,
+        content: file.pageContent
+      }))
+    })
 
     return NextResponse.json({
-      data: 'comming soon'
+      data: 'ok'
     })
   }
 
-  return NextResponse.json({
-    data: 'comming soon'
-  })
+  return NextResponse.json({ data: 'comming soon' })
 }
 
 export async function GET() {
@@ -99,30 +93,15 @@ export async function DELETE(req: NextRequest) {
   const id = searchParams.get('id')
   if (!id) throw new Error('there is no id')
 
+  const docs = await prisma.documents.findUnique({
+    select: { id: true, pineconeIds: true },
+    where: { id }
+  })
+  if (!docs) return
+
   await prisma.documents.delete({
     where: { id }
   })
+  await deleteVertor(docs.pineconeIds)
   return NextResponse.json({ message: 'ok' })
 }
-
-// export async function POST() {
-//   const loader = new DirectoryLoader('./documents', {
-//     '.txt': (path) => new TextLoader(path),
-//     '.md': (path) => new TextLoader(path),
-//     '.pdf': (path) => new PDFLoader(path)
-//   })
-//
-//   const docs = await loader.load()
-//   const client = pineconeClient()
-//
-//   try {
-//     await client.describeIndex(INDEX_NAME)
-//     await updatePinecone(client, INDEX_NAME, docs)
-//   } catch (err) {
-//     console.error('error: ', err)
-//   }
-//
-//   return NextResponse.json({
-//     data: 'successfully created index and loaded data into pinecone...'
-//   })
-// }

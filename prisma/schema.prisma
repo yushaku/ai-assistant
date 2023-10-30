@@ -95,12 +95,12 @@ model Message {
 }
 
 model Documents {
-  id        String    @id @default(cuid())
-  title     String
-  url       String?
-  content   String?
-  prismaId  String?
-  isTrained Boolean   @default(false)
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
+  id          String    @id @default(cuid())
+  title       String
+  url         String?
+  content     String?
+  pineconeIds String[]  @default([])
+  isTrained   Boolean   @default(false)
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
 }

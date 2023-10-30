@@ -11,13 +11,16 @@ export const useUpload = () => {
   return useMutation(
     [FILE_PATH],
     async (data: Upload) => {
+      toast.success('sending files')
       const res = await httpClient().post(`${FILE_PATH}`, data)
       return res.data
     },
     {
       onSuccess: () => {
         queryClient.invalidateQueries([FILE_PATH])
-        toast.success('Create successfully')
+      },
+      onError: () => {
+        toast.error('Create file got error')
       }
     }
   )

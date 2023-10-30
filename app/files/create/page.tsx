@@ -1,6 +1,5 @@
 'use client'
 
-import { Loading } from '@/component/Loading'
 import { CrawlWebsiteForm } from '@/component/files/CrawlWebsiteForm'
 import { FileDropZone } from '@/component/files/FileDropZone'
 import { TextEditor } from '@/component/files/TextEdittor'
@@ -16,7 +15,7 @@ const KnownledgePage = () => {
   const router = useRouter()
 
   const action = searchParams.get('add') ?? 'FILE'
-  const { mutate: upload, isLoading: isUploading } = useUpload()
+  const { mutate: upload } = useUpload()
 
   return (
     <section className="container mx-auto h-screen px-24">
@@ -65,8 +64,6 @@ const KnownledgePage = () => {
         {action === 'FILE' ? <FileDropZone onConfirm={upload} /> : null}
         {action === 'WEBSITE' ? <CrawlWebsiteForm onConfirm={upload} /> : null}
       </article>
-
-      <Loading show={isUploading} />
     </section>
   )
 }

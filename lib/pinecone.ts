@@ -77,6 +77,12 @@ export const queryDatabase = async (question: string) => {
   return queryResponse.matches ?? []
 }
 
+export const deleteVertor = async (id: string[]) => {
+  const client = pineconeClient()
+  const index = client.Index(INDEX_NAME)
+  index.deleteMany(id)
+}
+
 export const createPineconeIndex = async (
   client: Pinecone,
   indexName: string,
@@ -98,32 +104,30 @@ export const createPineconeIndex = async (
   console.log(`Creating index.... please wait for it to finish initializing.`)
 }
 
-export const updatePinecone = async (
-  indexName: string,
-  docs: Document<Record<string, any>>[]
-) => {
+export const updatePinecone = async (docs: Document<Record<string, any>>[]) => {
   console.log('Retrieving Pinecone index...')
   // 1. Retrieve Pinecone index
   const client = pineconeClient()
-  const index = client.Index(indexName)
-  // 2. Log the retrieved index name
-  console.log(`Pinecone index retrieved: ${indexName}`)
-  // 3. Process each document in the docs array
+  const index = client.Index(INDEX_NAME)
+  const ids: Array<string> = []
+
+  // 2. Process each document in the docs array
   for (const doc of docs) {
     console.log(`Processing document: ${doc.metadata.source}`)
     const txtPath = doc.metadata.source
     const text = doc.pageContent
     // 4. Create RecursiveCharacterTextSplitter instance
     const textSplitter = new RecursiveCharacterTextSplitter({
-      chunkSize: 1000
+      chunkSize: 2000
     })
+
     console.log('Splitting text into chunks...')
-    // 5. Split text into chunks (documents)
     const chunks = await textSplitter.createDocuments([text])
     console.log(`Text split into ${chunks.length} chunks`)
     console.log(
       `Calling OpenAI's Embedding endpoint documents with ${chunks.length} text chunks ...`
     )
+
     // 6. Create OpenAI embeddings for documents
     const embeddingsArrays = await new OpenAIEmbeddings().embedDocuments(
       chunks.map((chunk) => chunk.pageContent.replace(/\n/g, ' '))
@@ -132,13 +136,16 @@ export const updatePinecone = async (
     console.log(
       `Creating ${chunks.length} vectors array with id, values, and metadata...`
     )
+
     // 7. Create and upsert vectors in batches of 100
     const batchSize = 100
     let batch: any = []
     for (let idx = 0; idx < chunks.length; idx++) {
+      const id = `${txtPath}_${idx}`
+      ids.push(id)
       const chunk = chunks[idx] as any
       const vector = {
-        id: `${txtPath}_${idx}`,
+        id,
         values: embeddingsArrays[idx],
         metadata: {
           ...chunk.metadata,
@@ -155,4 +162,6 @@ export const updatePinecone = async (
     }
     console.log(`Pinecone index updated with ${chunks.length} vectors`)
   }
+
+  return ids
 }

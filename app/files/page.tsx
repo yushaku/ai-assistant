@@ -61,7 +61,9 @@ const CategoryPage = () => {
                     className="font-normal text-gray-100 even:bg-dark-100 hover:bg-dark-50"
                   >
                     <td className="p-4">
-                      <Typography>{title}</Typography>
+                      <Typography className="max-w-sm truncate">
+                        {title}
+                      </Typography>
                     </td>
                     <td>
                       <Typography className="max-w-xs truncate">
