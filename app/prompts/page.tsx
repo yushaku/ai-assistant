@@ -8,7 +8,9 @@ import { Card, Typography } from '@material-tailwind/react'
 import moment from 'moment'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
 import { useDatelePrompt, useGetPrompts, useUpdatePrompt } from 'services'
 
 const TABLE_HEAD = ['Category', 'Prompt', 'Created at', 'Updated at']
@@ -20,6 +22,8 @@ const CategoryPage = () => {
 
   const [state, setState] = useState<'delete' | 'update' | null>(null)
   const [prompt, setPrompt] = useState({ content: '', id: '', categoryId: '' })
+  const router = useRouter()
+  useHotkeys('c', () => router.push('/prompts/create?add=prompts'))
 
   return (
     <Card className="no-scrollbar h-full w-full overflow-y-scroll bg-dark-200">

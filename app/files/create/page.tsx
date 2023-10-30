@@ -7,12 +7,15 @@ import { TextEditor } from '@/component/files/TextEdittor'
 import { createDocBtn } from '@/lib/constants'
 import { ArrowLeftIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import React from 'react'
 import { useUpload } from 'services/files'
-import { type ActionType } from 'types'
 
 const KnownledgePage = () => {
-  const [action, setAction] = useState<ActionType>('FILE')
+  const searchParams = useSearchParams()
+  const router = useRouter()
+
+  const action = searchParams.get('add') ?? 'FILE'
   const { mutate: upload, isLoading: isUploading } = useUpload()
 
   return (
@@ -41,7 +44,7 @@ const KnownledgePage = () => {
             return (
               <li
                 key={index}
-                onClick={() => setAction(href)}
+                onClick={() => router.push(`?add=${href}`)}
                 className="animate group relative w-1/4 min-w-[250px] cursor-pointer rounded-xl bg-dark-200 px-6 pb-2 pt-12 text-center shadow-lg hover:shadow-2xl"
               >
                 <span

@@ -7,7 +7,9 @@ import { Card, Typography } from '@material-tailwind/react'
 import moment from 'moment'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
 import { useDeleteFile, useGetFiles } from 'services'
 
 const TABLE_HEAD = ['Title', 'url', 'Is Trained', 'Created at', 'Updated at']
@@ -18,6 +20,9 @@ const CategoryPage = () => {
 
   const [state, setState] = useState<'delete' | 'update' | null>(null)
   const [prompt, setPrompt] = useState({ id: '' })
+
+  const router = useRouter()
+  useHotkeys('c', () => router.push('/files/create?add=FILE'))
 
   return (
     <Card className="no-scrollbar h-full w-full overflow-y-scroll bg-dark-200">
@@ -36,7 +41,10 @@ const CategoryPage = () => {
             ))}
 
             <th className="border-b border-blue-gray-100 p-4">
-              <Link href="/files/create" className="btn-outline text-white">
+              <Link
+                href="/files/create?add=FILE"
+                className="btn-outline text-white"
+              >
                 create new
               </Link>
             </th>

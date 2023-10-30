@@ -9,11 +9,18 @@ import {
 } from '@material-tailwind/react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 export const Navbar = () => {
   const { data: section } = useSession()
   const styled = section?.user?.isAdmin ? 'flex-center' : 'hidden'
+  const router = useRouter()
+
+  useHotkeys('ctrl+alt+c', () => router.push('/'), [])
+  useHotkeys('ctrl+alt+f', () => router.push('/files'), [])
+  useHotkeys('ctrl+alt+p', () => router.push('/prompts'), [])
 
   return (
     <nav className="absolute top-0 z-10 flex h-14 w-full items-center bg-dark-200">
@@ -46,14 +53,14 @@ export const Navbar = () => {
             </PopoverHandler>
             <PopoverContent className="z-10">
               <List>
-                <li>
-                  <strong>Alt + h</strong>
-                  <span>: toggle chat list</span>
-                </li>
-                <li>
-                  <strong>Alt + L</strong>
-                  <span>: toggle prompt list</span>
-                </li>
+                {shortcuts.map(({ key, desc }, index) => {
+                  return (
+                    <li key={index}>
+                      <strong>{key}</strong>
+                      <span>{desc}</span>
+                    </li>
+                  )
+                })}
               </List>
             </PopoverContent>
           </Popover>
@@ -76,5 +83,28 @@ const features = [
   {
     title: 'Prompts',
     href: '/prompts'
+  }
+]
+
+const shortcuts = [
+  {
+    key: 'Alt + h',
+    desc: ': toggle chat list'
+  },
+  {
+    key: 'Alt + l',
+    desc: ': toggle prompt list'
+  },
+  {
+    key: 'Ctrl + Alt + c',
+    desc: ': jump to chat page'
+  },
+  {
+    key: 'Ctrl + Alt + f',
+    desc: ': jump to files page'
+  },
+  {
+    key: 'Ctrl + Alt + p',
+    desc: ': jump to prompts page'
   }
 ]
