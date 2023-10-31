@@ -12,6 +12,8 @@ export type Model = {
 
 export const INDEX_NAME = 'ai-assistant'
 export const VECTORDIMENSIONS = 1536
+export const UPLOAD_FILE_PATH = '/files/create?add=FILE'
+export const CRAWL_WEB_PATH = '/files/create?add=WEBSITE'
 
 export const AI_MODELS: Array<Model> = [
   {

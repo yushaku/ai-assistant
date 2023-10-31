@@ -1,5 +1,6 @@
 'use client'
 
+import { UPLOAD_FILE_PATH } from '@/lib/constants'
 import {
   ChevronRightIcon,
   DocumentTextIcon,
@@ -44,7 +45,7 @@ export const Sidebar = () => {
         </button>
 
         <Link
-          href="/files/create?add=FILE"
+          href={UPLOAD_FILE_PATH}
           className="flex-center btn-outline gap-4"
         >
           <PlusIcon className="h-5 w-5" />

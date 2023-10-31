@@ -50,11 +50,18 @@ export const useDeleteFile = () => {
 }
 
 export const useGetFiles = () => {
-  return useQuery([FILE_PATH], async () => {
-    const res = await httpClient().get(FILE_PATH)
-    const list = res.data ?? []
-    return list as Documents[]
-  })
+  return useQuery(
+    [FILE_PATH],
+    async () => {
+      const res = await httpClient().get(FILE_PATH)
+      const list = res.data ?? []
+      return list as Documents[]
+    },
+    {
+      cacheTime: Infinity,
+      staleTime: 500 * 60 * 60
+    }
+  )
 }
 
 export function useGetFileDetail(id: string) {
@@ -66,7 +73,9 @@ export function useGetFileDetail(id: string) {
       return list as Documents
     },
     {
-      refetchOnMount: false
+      refetchOnMount: false,
+      cacheTime: Infinity,
+      staleTime: 500 * 60 * 60
     }
   )
 }

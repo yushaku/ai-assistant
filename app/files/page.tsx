@@ -2,6 +2,7 @@
 
 import { Loading } from '@/component/Loading'
 import { ConfirmDeteleDialog } from '@/component/dialog/confirmDetele'
+import { UPLOAD_FILE_PATH } from '@/lib/constants'
 import { TrashIcon } from '@heroicons/react/24/solid'
 import { Card, Typography } from '@material-tailwind/react'
 import moment from 'moment'
@@ -12,7 +13,7 @@ import React, { useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { useDeleteFile, useGetFiles } from 'services'
 
-const TABLE_HEAD = ['Title', 'url', 'Is Trained', 'Created at', 'Updated at']
+const TABLE_HEAD = ['Title', 'Type', 'Is Trained', 'Created at', 'Updated at']
 
 const CategoryPage = () => {
   const { data: promptList } = useGetFiles()
@@ -22,7 +23,7 @@ const CategoryPage = () => {
   const [prompt, setPrompt] = useState({ id: '' })
 
   const router = useRouter()
-  useHotkeys('c', () => router.push('/files/create?add=FILE'))
+  useHotkeys('c', () => router.push(UPLOAD_FILE_PATH))
 
   return (
     <Card className="no-scrollbar h-full w-full overflow-y-scroll bg-dark-200 px-12 pb-12 pt-24">
@@ -41,10 +42,7 @@ const CategoryPage = () => {
             ))}
 
             <th className="border-b border-blue-gray-100 p-4">
-              <Link
-                href="/files/create?add=FILE"
-                className="btn-outline text-white"
-              >
+              <Link href={UPLOAD_FILE_PATH} className="btn-outline text-white">
                 create new
               </Link>
             </th>
@@ -67,7 +65,7 @@ const CategoryPage = () => {
                     </td>
                     <td>
                       <Typography className="max-w-xs truncate">
-                        {url}
+                        {url ? 'Website Crawled' : 'Document Uploaded'}
                       </Typography>
                     </td>
                     <td>

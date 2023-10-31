@@ -86,7 +86,17 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET() {
-  const data = await prisma.documents.findMany()
+  const data = await prisma.documents.findMany({
+    select: {
+      id: true,
+      title: true,
+      url: true,
+      content: true,
+      isTrained: true,
+      createdAt: true,
+      updatedAt: true
+    }
+  })
   return NextResponse.json(data)
 }
 

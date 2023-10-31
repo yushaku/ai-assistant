@@ -9,7 +9,7 @@ import React, { useState } from 'react'
 import { useDeleteFile, useGetFileDetail } from 'services'
 
 export default function DetailPage() {
-  const path = usePathname()
+  const path = usePathname() // "/files/id"
   const id = path.split('/').pop() ?? ''
 
   const { data } = useGetFileDetail(id)
