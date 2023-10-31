@@ -1,6 +1,12 @@
 import { httpClient } from './client'
 import type { Documents } from '@prisma/client'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  QueryClient,
+  dehydrate,
+  useMutation,
+  useQuery,
+  useQueryClient
+} from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import type { Upload } from 'types'
 
@@ -49,4 +55,28 @@ export const useGetFiles = () => {
     const list = res.data ?? []
     return list as Documents[]
   })
+}
+
+export function useGetFileDetail(id: string) {
+  return useQuery(
+    [`${FILE_PATH}/${id}`],
+    async () => {
+      const res = await httpClient().get(`${FILE_PATH}/${id}`)
+      const list = res.data ?? []
+      return list as Documents
+    },
+    {
+      refetchOnMount: false
+    }
+  )
+}
+
+export const usePrefetchFile = async (id: string) => {
+  const client = new QueryClient()
+  await client.prefetchQuery([`${FILE_PATH}/${id}`], async () => {
+    const res = await httpClient().get(`${FILE_PATH}/${id}`)
+    const list = res.data ?? []
+    return list as Documents
+  })
+  return dehydrate(client)
 }

@@ -26,18 +26,20 @@ export async function POST(req: NextRequest) {
   if (type === 'WEBSITE') {
     const url = formData.get('url') as string
 
-    const loader = new CheerioWebBaseLoader(url, { selector: 'article' })
+    const loader = new CheerioWebBaseLoader(url, { selector: 'body' })
     docs = await loader.load()
 
     const ids = await updatePinecone(docs)
     await prisma.documents.createMany({
-      data: docs.map((file) => ({
-        title,
-        url,
-        pineconeIds: ids,
-        isTrained: true,
-        content: file.pageContent
-      }))
+      data: docs.map((file) => {
+        return {
+          title,
+          url,
+          pineconeIds: ids,
+          isTrained: true,
+          content: file.pageContent
+        }
+      })
     })
 
     return NextResponse.json({

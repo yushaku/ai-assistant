@@ -25,7 +25,7 @@ const CategoryPage = () => {
   useHotkeys('c', () => router.push('/files/create?add=FILE'))
 
   return (
-    <Card className="no-scrollbar h-full w-full overflow-y-scroll bg-dark-200">
+    <Card className="no-scrollbar h-full w-full overflow-y-scroll bg-dark-200 px-12 pb-12 pt-24">
       <table className="w-full min-w-max table-auto text-left">
         <thead className="bg-dark-100">
           <tr>
@@ -61,9 +61,9 @@ const CategoryPage = () => {
                     className="font-normal text-gray-100 even:bg-dark-100 hover:bg-dark-50"
                   >
                     <td className="p-4">
-                      <Typography className="max-w-sm truncate">
+                      <Link className="max-w-sm truncate" href={`/files/${id}`}>
                         {title}
-                      </Typography>
+                      </Link>
                     </td>
                     <td>
                       <Typography className="max-w-xs truncate">

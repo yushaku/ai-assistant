@@ -7,7 +7,7 @@ export default function RootLayout({
 }): JSX.Element {
   return (
     <section className="no-scrollbar flex h-screen overflow-y-scroll bg-dark">
-      <article className="flex-1 px-12 pb-12 pt-24">{children}</article>
+      <article className="flex-1">{children}</article>
     </section>
   )
 }

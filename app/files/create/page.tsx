@@ -18,7 +18,7 @@ const KnownledgePage = () => {
   const { mutate: upload } = useUpload()
 
   return (
-    <section className="container mx-auto h-screen px-24">
+    <section className="container mx-auto h-screen px-24 pb-12 pt-24">
       <article className="mt-4 text-center">
         <h4 className="green_text_gradient text-xl font-semibold">
           <Link href="/files" className="hover:text-blue-500">

@@ -1,22 +1,20 @@
 'use client'
 
 import {
-  ChatBubbleLeftRightIcon,
-  ChevronRightIcon
+  ChevronRightIcon,
+  DocumentTextIcon,
+  PlusIcon
 } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Resizable } from 're-resizable'
 import React, { useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
+import { useGetFiles } from 'services'
 
-const nav = [
-  { name: 'Category', href: '/prompts/category' },
-  { name: 'Prompts', href: '/prompts' }
-]
-
-export const PromtSidebar = () => {
-  const pathname = usePathname()
+export const Sidebar = () => {
+  const { data: fileList } = useGetFiles()
+  const pathname = usePathname().split('/').pop()
   const [show, setShow] = useState(true)
 
   useHotkeys('alt+h', () => setShow(!show), [show])
@@ -44,23 +42,31 @@ export const PromtSidebar = () => {
         >
           <ChevronRightIcon className="h-5 w-5" />
         </button>
+
+        <Link
+          href="/files/create?add=FILE"
+          className="flex-center btn-outline gap-4"
+        >
+          <PlusIcon className="h-5 w-5" />
+          create new file
+        </Link>
       </div>
 
       <div className="flex flex-col gap-3">
-        {nav.map((item, index) => {
+        {fileList?.map((item, index) => {
           const styleSelected =
-            pathname === item.href
+            pathname === item.id
               ? 'rounded-r-lg border-l-4 border-blue-500 bg-dark-100'
               : 'rounded-lg border-l-4 border-transparent'
 
           return (
             <Link
               key={index}
-              href={item.href}
+              href={`/files/${item.id}`}
               className={`${styleSelected} flex-start gap-4 p-4 hover:bg-dark-100`}
             >
-              <ChatBubbleLeftRightIcon className="h-5 w-5" />
-              {item.name}
+              <DocumentTextIcon className="h-5 w-5" />
+              {item.title}
             </Link>
           )
         })}
