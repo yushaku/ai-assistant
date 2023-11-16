@@ -117,3 +117,26 @@
   scrollbar-width: 8px;
   scrollbar-color: #ccc transparent;
 }
+
+#bot_answer ol {
+  list-style: decimal;
+  padding: 1rem;
+}
+
+#bot_answer ul {
+  list-style: disc;
+  padding: 1rem;
+}
+
+#bot_answer li,
+p {
+  padding: 0.2rem 0;
+}
+
+#bot_answer code:not(pre code) {
+  background-color: #2d3748;
+  color: #fdba74;
+  padding: 2px 3px;
+  border-radius: 0.375rem;
+  margin: 0 2px;
+}

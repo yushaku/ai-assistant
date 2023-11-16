@@ -17,6 +17,7 @@ import {
   PopoverHandler,
   Spinner
 } from '@material-tailwind/react'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Resizable } from 're-resizable'
@@ -30,6 +31,8 @@ import {
 } from 'services'
 
 export const LeftSidebar = () => {
+  const { status } = useSession()
+
   const { data: threads, isLoading } = useGetThreads()
   const { mutateAsync: create, isLoading: isCreating } = useCreateThread()
   const { mutate: update, isLoading: isUpdating } = useUpdateThread()
@@ -51,15 +54,16 @@ export const LeftSidebar = () => {
     : 'right-[-15%] bg-dark-100'
 
   async function handleConfirm(title: string) {
+    setState(null)
     if (state === 'create') {
       const newone = await create({ title })
       router.push(`?thread=${newone.id}`)
     } else {
       update({ title, id: thread.id })
     }
-
-    setState(null)
   }
+
+  if (status === 'unauthenticated') return <div></div>
 
   return (
     <Resizable
@@ -92,7 +96,7 @@ export const LeftSidebar = () => {
         <p className="mt-6">Recently</p>
       </div>
 
-      <ul className="flex flex-col gap-3">
+      <ul className="flex flex-col">
         {threads?.map(({ id, title }) => {
           const styleSelected =
             threadId === id
@@ -102,7 +106,7 @@ export const LeftSidebar = () => {
           return (
             <li key={id}>
               <Link
-                href={`?thread=${id}`}
+                href={`/chat/${id}`}
                 className={`${styleSelected} flex-start group relative gap-4 p-4 hover:shadow-lg`}
               >
                 <ChatBubbleLeftRightIcon className="h-5 w-5" />

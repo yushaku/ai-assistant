@@ -25,7 +25,7 @@ export const BotAnswer = ({ answer }: { answer: string }) => {
       <span className="h-7 w-7 rounded-full">
         <Avatar size="sm" src="/bot.png" alt="avata" />
       </span>
-      <span className="flex-1">
+      <span id="bot_answer" className="flex-1">
         <ReactMarkdown>{answer}</ReactMarkdown>
       </span>
     </div>

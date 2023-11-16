@@ -4,7 +4,6 @@ import { Navbar } from './Navbar'
 import { ThemeProvider } from '@material-tailwind/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental'
 import { SessionProvider } from 'next-auth/react'
 import React, { useState } from 'react'
 import { Toaster } from 'react-hot-toast'
@@ -36,17 +35,15 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
   return (
     <SessionProvider>
       <QueryClientProvider client={client}>
-        <ReactQueryStreamedHydration>
-          <RecoilRoot>
-            <ThemeProvider>
-              <main className="relative bg-dark">
-                <Toaster position="top-center" />
-                <Navbar />
-                {children}
-              </main>
-            </ThemeProvider>
-          </RecoilRoot>
-        </ReactQueryStreamedHydration>
+        <RecoilRoot>
+          <ThemeProvider>
+            <main className="relative bg-dark">
+              <Toaster position="top-center" />
+              <Navbar />
+              {children}
+            </main>
+          </ThemeProvider>
+        </RecoilRoot>
 
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>

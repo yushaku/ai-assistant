@@ -45,12 +45,14 @@ const Markdown: FC<MarkdownProps> = ({ children }) => {
         }
       }
 
-      return hasLang ? (
+      const isCode = hasLang || node?.tagName === 'code'
+
+      return isCode ? (
         <SyntaxHighlighter
           style={syntaxTheme}
-          language={hasLang[1]}
+          language={hasLang?.at(1) ?? 'bash'}
           PreTag="div"
-          showLineNumbers={true}
+          showLineNumbers={false}
           wrapLines={hasMeta}
           useInlineStyles={true}
           lineProps={applyHighlights}

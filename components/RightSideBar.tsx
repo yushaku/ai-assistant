@@ -1,3 +1,5 @@
+'use client'
+
 import { globlePrompt } from '@/lib/atom'
 import {
   ChevronDownIcon,
@@ -49,6 +51,9 @@ export const RightSideBar = () => {
       }}
       maxWidth={500}
       minWidth={200}
+      defaultSize={{
+        width: 300
+      }}
     >
       <div className="px-6 py-2">
         <button
@@ -80,10 +85,10 @@ export const RightSideBar = () => {
             >
               <ListItem
                 className="p-0 text-white hover:bg-dark-100"
-                selected={open === 1}
+                selected={open === index}
               >
                 <AccordionHeader
-                  onClick={() => handleOpen(1)}
+                  onClick={() => handleOpen(index)}
                   className="border-b-0 p-3"
                 >
                   <ListItemPrefix>
