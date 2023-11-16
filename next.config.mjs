@@ -1,19 +1,18 @@
 /* eslint-disable import/no-extraneous-dependencies, import/extensions */
-import withBundleAnalyzer from '@next/bundle-analyzer';
+import withBundleAnalyzer from '@next/bundle-analyzer'
 
 const bundleAnalyzer = withBundleAnalyzer({
-  enabled: process.env.ANALYZE === 'true',
-});
+  enabled: process.env.ANALYZE === 'true'
+})
 
 /** @type {import('next').NextConfig} */
 export default bundleAnalyzer({
   eslint: {
-    dirs: ['.'],
+    dirs: ['.']
   },
   images: {
-    domains: ['raw.githubusercontent.com'],
+    domains: ['raw.githubusercontent.com']
   },
-  poweredByHeader: false,
   basePath: '',
   // The starter code load resources from `public` folder with `router.basePath` in React components.
   // So, the source code is "basePath-ready".
@@ -25,9 +24,9 @@ export default bundleAnalyzer({
     // Module not found: Can't resolve 'utf-8-validate'
     config.externals.push({
       bufferutil: 'bufferutil',
-      'utf-8-validate': 'utf-8-validate',
-    });
+      'utf-8-validate': 'utf-8-validate'
+    })
 
-    return config;
-  },
-});
+    return config
+  }
+})
