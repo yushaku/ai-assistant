@@ -1,26 +1,22 @@
 import prisma from '@/lib/prisma'
 import type { Thread } from '@prisma/client'
+import { kv } from '@vercel/kv'
 import { getToken } from 'next-auth/jwt'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
 export async function GET(req: NextRequest) {
   const user = await getToken({ req })
+  const searchParams = req.nextUrl.searchParams
+  const limit = searchParams.get('limit')
+    ? Number(searchParams.get('limit'))
+    : 10
+
   if (!user) throw new Error('authentication failed')
 
   const prompt = await prisma.thread.findMany({
     where: { userId: user.id as string },
-    include: {
-      Message: {
-        select: {
-          id: true,
-          answer: true,
-          question: true,
-          createdAt: true,
-          updatedAt: true
-        }
-      }
-    }
+    take: limit
   })
 
   return NextResponse.json(prompt)
@@ -28,7 +24,11 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   const user = await getToken({ req })
-  if (!user) throw new Error('authentication failed')
+  if (!user) {
+    return new Response('Unauthorized', {
+      status: 401
+    })
+  }
 
   const data = (await req.json()) as Pick<Thread, 'title'>
   const cate = await prisma.thread.create({
@@ -52,11 +52,17 @@ export async function PUT(req: NextRequest) {
 export async function DELETE(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams
   const id = searchParams.get('id')
-  if (!id) throw new Error('there is no id')
+  if (!id) {
+    return new Response('Missing thread id', {
+      status: 403
+    })
+  }
 
   const cate = await prisma.thread.delete({
     where: { id },
     include: { Message: true }
   })
+  await kv.del(`chat:${id}`)
+
   return NextResponse.json(cate)
 }

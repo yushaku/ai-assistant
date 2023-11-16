@@ -2,14 +2,31 @@ import { httpClient } from './client'
 import type { Thread } from '@prisma/client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
+import type { ChatCache } from 'types'
 
 const PROMPT_PATH = '/thread'
-export const useGetThreads = () => {
+export const useGetThreads = (num = 5) => {
   return useQuery([PROMPT_PATH], async () => {
-    const res = await httpClient().get(PROMPT_PATH)
+    const res = await httpClient().get(`${PROMPT_PATH}?limit=${num}`)
     const list = res.data ?? []
     return list as Thread[]
   })
+}
+
+export const useGetMessage = (threadId: string, limit = 10) => {
+  return useQuery(['/read'], async () => {
+    const res = await httpClient().get(
+      `read?threadId=${threadId}&limit=${limit}`
+    )
+    const list = res.data ?? []
+    return list as ChatCache
+  })
+}
+
+export const getThreads = async () => {
+  const res = await httpClient().get(PROMPT_PATH)
+  const list = res.data ?? []
+  return list as Thread[]
 }
 
 export const useCreateThread = () => {
