@@ -32,7 +32,7 @@ export const FileDropZone = ({ onConfirm }: Props) => {
 
   const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
     onDrop: handleDropFile,
-    maxSize: 4 * 1024 * 1024, // Maximum file size: 4MB
+    maxSize: 14 * 1024 * 1024, // Maximum file size: 14MB
     accept: {
       'text/*': ['.docx', '.doc', '.pdf', '.txt']
     },

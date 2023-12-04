@@ -6,16 +6,17 @@ import React from 'react'
 
 const exampleMessages = [
   {
-    heading: 'Explain technical concepts',
-    message: `What is a "serverless function"?`
+    heading: 'Khi nào mở lớp đăng ký học kỳ?',
+    message: `Khi nào mở lớp đăng ký học kỳ ở trường đại học xây dựng?`
   },
   {
-    heading: 'Summarize an article',
-    message: 'Summarize the following article for a 2nd grader: \n'
+    heading: 'Danh sách sinh viên đạt học bỏng kỳ này?',
+    message:
+      'Danh sách sinh viên đạt học bỏng kỳ này của trường đại học xây dựng: \n'
   },
   {
-    heading: 'Draft an email',
-    message: `Draft an email to my boss about the following: \n`
+    heading: 'Tiêu chuẩn đầu ra tiếng anh của trường HUCE?',
+    message: `Tiêu chuẩn đầu ra tiếng anh của trường HUCE: \n`
   }
 ]
 

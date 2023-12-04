@@ -16,7 +16,7 @@ export const ThreadList = () => {
             <li key={thread.id}>
               <Link
                 className="flex-start gap-2 text-blue-200"
-                href={`?thread=${thread.id}`}
+                href={`/chat/${thread.id}`}
               >
                 <ArrowRightIcon className="h-5 w-5" />
                 {thread.title}
