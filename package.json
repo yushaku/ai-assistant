@@ -39,7 +39,7 @@
     "parse-numeric-range": "^1.3.0",
     "pdf-parse": "^1.1.1",
     "prisma": "^5.4.2",
-    "re-resizable": "^6.9.11",
+    "@yushaku/re-resizable": "^6.9.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",

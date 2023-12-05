@@ -6,9 +6,9 @@ import {
   DocumentTextIcon,
   PlusIcon
 } from '@heroicons/react/24/solid'
+import { Resizable } from '@yushaku/re-resizable'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Resizable } from 're-resizable'
 import React, { useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { useGetFiles } from 'services'
@@ -44,10 +44,7 @@ export const Sidebar = () => {
           <ChevronRightIcon className="h-5 w-5" />
         </button>
 
-        <Link
-          href={UPLOAD_FILE_PATH}
-          className="flex-center btn-outline gap-4"
-        >
+        <Link href={UPLOAD_FILE_PATH} className="flex-center btn-outline gap-4">
           <PlusIcon className="h-5 w-5" />
           create new file
         </Link>

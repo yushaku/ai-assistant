@@ -17,7 +17,7 @@ import {
   Spinner,
   Typography
 } from '@material-tailwind/react'
-import { Resizable } from 're-resizable'
+import { Resizable } from '@yushaku/re-resizable'
 import React, { useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { useRecoilState } from 'recoil'
@@ -51,9 +51,7 @@ export const RightSideBar = () => {
       }}
       maxWidth={500}
       minWidth={200}
-      defaultSize={{
-        width: 300
-      }}
+      defaultSize={{ width: 300 }}
     >
       <div className="px-6 py-2">
         <button

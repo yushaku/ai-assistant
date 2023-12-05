@@ -17,10 +17,10 @@ import {
   PopoverHandler,
   Spinner
 } from '@material-tailwind/react'
+import { Resizable } from '@yushaku/re-resizable'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Resizable } from 're-resizable'
 import React, { useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import {
