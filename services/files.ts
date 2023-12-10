@@ -7,6 +7,7 @@ import {
   useQuery,
   useQueryClient
 } from '@tanstack/react-query'
+import { revalidatePath } from 'next/cache'
 import toast from 'react-hot-toast'
 import type { Upload } from 'types'
 
@@ -33,7 +34,6 @@ export const useUpload = () => {
 }
 
 export const useDeleteFile = () => {
-  const queryClient = useQueryClient()
   return useMutation(
     [FILE_PATH],
     async (id: string) => {
@@ -42,7 +42,7 @@ export const useDeleteFile = () => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries([FILE_PATH])
+        revalidatePath('/files')
         toast.success('Delete successfully')
       }
     }

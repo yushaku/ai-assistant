@@ -1,5 +1,7 @@
 'use server'
 
+import { deleteVertor } from '@/lib/pinecone'
+import prisma from '@/lib/prisma'
 import { kv } from '@vercel/kv'
 import { getSession } from 'next-auth/react'
 import { revalidatePath } from 'next/cache'

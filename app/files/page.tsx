@@ -1,32 +1,34 @@
-'use client'
-
-import { Loading } from '@/component/Loading'
-import { ConfirmDeteleDialog } from '@/component/dialog/confirmDetele'
+import { TrashBtn } from '@/component/files/TrashBtn'
 import { UPLOAD_FILE_PATH } from '@/lib/constants'
+import prisma from '@/lib/prisma'
 import { TrashIcon } from '@heroicons/react/24/solid'
-import { Card, Typography } from '@material-tailwind/react'
+import { Typography } from '@material-tailwind/react'
 import moment from 'moment'
-import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
-import { useHotkeys } from 'react-hotkeys-hook'
-import { useDeleteFile, useGetFiles } from 'services'
 
 const TABLE_HEAD = ['Title', 'Type', 'Is Trained', 'Created at', 'Updated at']
 
-const CategoryPage = () => {
-  const { data: promptList } = useGetFiles()
-  const { mutate: detele, isLoading: isDeleting } = useDeleteFile()
+const queryData = async () => {
+  'use server'
+  const data = await prisma.documents.findMany({
+    select: {
+      id: true,
+      title: true,
+      url: true,
+      content: true,
+      isTrained: true,
+      createdAt: true,
+      updatedAt: true
+    }
+  })
+  return data
+}
 
-  const [state, setState] = useState<'delete' | 'update' | null>(null)
-  const [prompt, setPrompt] = useState({ id: '' })
-
-  const router = useRouter()
-  useHotkeys('c', () => router.push(UPLOAD_FILE_PATH))
+export default async function CategoryPage() {
+  const promptList = await queryData()
 
   return (
-    <Card className="no-scrollbar h-full w-full overflow-y-scroll bg-dark-200 px-12 pb-12 pt-24">
+    <div className="no-scrollbar h-full w-full overflow-y-scroll bg-dark-200 px-12 pb-12 pt-24">
       <table className="w-full min-w-max table-auto text-left">
         <thead className="bg-dark-100">
           <tr>
@@ -35,9 +37,7 @@ const CategoryPage = () => {
                 key={head}
                 className="mx-auto border-b border-blue-gray-100 first:p-4"
               >
-                <Typography className="text-lg font-semibold text-white">
-                  {head}
-                </Typography>
+                <p className="text-lg font-semibold text-white">{head}</p>
               </th>
             ))}
 
@@ -120,19 +120,6 @@ const CategoryPage = () => {
           )}
         </tbody>
       </table>
-
-      <Loading show={isDeleting} />
-
-      <ConfirmDeteleDialog
-        open={state === 'delete' && prompt.id !== ''}
-        handleSubmit={() => {
-          detele(prompt.id)
-          setState(null)
-        }}
-        handleOpen={() => setState(null)}
-      />
-    </Card>
+    </div>
   )
 }
-
-export default CategoryPage

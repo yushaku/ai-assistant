@@ -40,7 +40,7 @@ export const queryPineconeVectorStoreAndQueryLLM = async (question: string) => {
   console.log(`Asking question: ${question}...`)
   const queryEmbedding = await new OpenAIEmbeddings().embedQuery(question)
   const queryResponse = await index.query({
-    topK: 10,
+    topK: 2,
     vector: queryEmbedding,
     includeMetadata: true,
     includeValues: true
