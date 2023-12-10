@@ -47,15 +47,14 @@ export default function Conversation({ initialMessages, id }: ChatProps) {
 
   return (
     <>
-      <SelectModel
-        show={session?.user.email === SUPPER_ADMIN}
-        onclick={(model) => setModel(model)}
-      />
-
       <div
         ref={componentRef}
         className="no-scrollbar relative mx-auto mb-auto h-[75dvh] max-w-[900px] overflow-y-scroll"
       >
+        <SelectModel
+          show={session?.user.email === SUPPER_ADMIN}
+          onclick={(model) => setModel(model)}
+        />
         {messages.length ? (
           <>
             {messages.map((m, index) => (

@@ -30,14 +30,16 @@ export const Navbar = () => {
           className="green_text_gradient flex-center gap-2 text-xl font-bold"
         >
           <Avatar src="/favicon-32x32.png" size="sm" />
-          HUCE Assistents
+          <span className="hidden md:block">HUCE Assistents</span>
         </Link>
 
         <ul className={`${styled} gap-4`}>
           {features.map((feat) => {
             return (
               <li key={feat.title}>
-                <Link href={feat.href}>{feat.title}</Link>
+                <Link className="link" href={feat.href}>
+                  {feat.title}
+                </Link>
               </li>
             )
           })}
