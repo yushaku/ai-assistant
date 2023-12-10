@@ -2,6 +2,7 @@
 import { deleteVertor, updatePinecone } from '@/lib/pinecone'
 import prisma from '@/lib/prisma'
 import type { Document } from 'langchain/document'
+import { CSVLoader } from 'langchain/document_loaders/fs/csv'
 import { DocxLoader } from 'langchain/document_loaders/fs/docx'
 import { PDFLoader } from 'langchain/document_loaders/fs/pdf'
 import { TextLoader } from 'langchain/document_loaders/fs/text'
@@ -15,6 +16,7 @@ loaders.set('txt', TextLoader)
 loaders.set('pdf', PDFLoader)
 loaders.set('doc', DocxLoader)
 loaders.set('docx', DocxLoader)
+loaders.set('csv', CSVLoader)
 
 export async function POST(req: NextRequest) {
   const formData = await req.formData()
