@@ -7,7 +7,6 @@ import { NextResponse } from 'next/server'
 import OpenAI from 'openai'
 
 // import prisma from '@/lib/prisma'
-// import { v4 as uidv4 } from 'uuid'
 
 export const runtime = 'edge'
 const openai = new OpenAI({

@@ -122,9 +122,6 @@ dependencies:
   replicate:
     specifier: ^0.18.1
     version: 0.18.1
-  uuid:
-    specifier: ^9.0.1
-    version: 9.0.1
 
 devDependencies:
   '@next/eslint-plugin-next':
@@ -157,9 +154,6 @@ devDependencies:
   '@types/react-syntax-highlighter':
     specifier: ^15.5.7
     version: 15.5.7
-  '@types/uuid':
-    specifier: ^9.0.7
-    version: 9.0.7
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.7.2
     version: 6.7.3(@typescript-eslint/parser@6.7.3)(eslint@8.48.0)(typescript@5.2.2)
@@ -1522,6 +1516,7 @@ packages:
 
   /@types/uuid@9.0.7:
     resolution: {integrity: sha512-WUtIVRUZ9i5dYXefDEAI7sh9/O7jGvHg7Df/5O/gtH3Yabe5odI3UWopVR1qbPXQtvOxWu3mM4XxlYeZtMWF4g==}
+    dev: false
 
   /@types/yargs-parser@21.0.2:
     resolution: {integrity: sha512-5qcvofLPbfjmBfKaLfj/+f+Sbd6pN4zl7w7VSVI5uz7m9QZTuB2aZAa2uo1wHFBNN2x6g/SoTkXmd8mQnQF2Cw==}
@@ -2545,7 +2540,7 @@ packages:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
       '@types/estree': 1.0.2
-      acorn: 8.10.0
+      acorn: 8.11.2
       estree-walker: 3.0.3
       periscopic: 3.1.0
     dev: false
@@ -7029,7 +7024,7 @@ packages:
       '@ampproject/remapping': 2.2.1
       '@jridgewell/sourcemap-codec': 1.4.15
       '@jridgewell/trace-mapping': 0.3.19
-      acorn: 8.10.0
+      acorn: 8.11.2
       aria-query: 5.3.0
       axobject-query: 3.2.1
       code-red: 1.0.4

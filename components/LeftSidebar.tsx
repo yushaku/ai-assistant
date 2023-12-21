@@ -103,8 +103,6 @@ export const LeftSidebar = () => {
 
         <ul className="flex flex-col">
           {threads?.map(({ id, title }) => {
-            console.log({ threadId, id })
-
             const styleSelected =
               threadId === id
                 ? 'rounded-r-lg border-l-4 border-blue-500 bg-dark-100'

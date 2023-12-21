@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
   if (type === 'WEBSITE') {
     const url = formData.get('url') as string
 
-    const loader = new CheerioWebBaseLoader(url, { selector: 'body' })
+    const loader = new CheerioWebBaseLoader(url, { selector: 'section' })
     docs = await loader.load()
 
     const ids = await updatePinecone(docs)

@@ -1,4 +1,5 @@
 import { httpClient } from './client'
+import type { FormReport } from '@/component/dialog/ReportDialog'
 import type { Thread } from '@prisma/client'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
@@ -81,4 +82,13 @@ export const useDeleteThread = () => {
       }
     }
   )
+}
+
+export type Report = FormReport & { question: string; answer: string }
+
+export const useCreateReport = () => {
+  return useMutation(['/report'], async (data: Report) => {
+    const res = await httpClient().post('report', data)
+    return res.data as Thread
+  })
 }

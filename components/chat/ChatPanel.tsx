@@ -1,9 +1,5 @@
 import { ButtonScrollToBottom } from './button-scroll-to-bottom'
-import {
-  ArrowPathIcon,
-  PaperAirplaneIcon,
-  StopIcon
-} from '@heroicons/react/24/solid'
+import { PaperAirplaneIcon, StopIcon } from '@heroicons/react/24/solid'
 import { Button } from '@material-tailwind/react'
 import { type UseChatHelpers } from 'ai/react'
 import { useEnterSubmit } from 'hooks/useEnterSubmit'
@@ -14,13 +10,7 @@ import Textarea from 'react-textarea-autosize'
 export interface ChatPanelProps
   extends Pick<
     UseChatHelpers,
-    | 'append'
-    | 'isLoading'
-    | 'reload'
-    | 'messages'
-    | 'stop'
-    | 'input'
-    | 'setInput'
+    'append' | 'isLoading' | 'messages' | 'stop' | 'input' | 'setInput'
   > {
   id?: string
 }
@@ -30,10 +20,8 @@ export function ChatPanel({
   isLoading,
   stop,
   append,
-  reload,
   input,
-  setInput,
-  messages
+  setInput
 }: ChatPanelProps) {
   const { formRef, onKeyDown } = useEnterSubmit()
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -55,21 +43,11 @@ export function ChatPanel({
 
       <div className="mx-auto sm:max-w-2xl sm:px-4">
         <div className="flex h-10 items-center justify-center">
-          {isLoading ? (
+          {isLoading && (
             <Button onClick={stop} className="flex-center gap-2 bg-dark-100">
               <StopIcon className="h-5 w-5" />
               Stop generating
             </Button>
-          ) : (
-            messages?.length > 0 && (
-              <Button
-                onClick={() => reload()}
-                className="flex-center gap-2 bg-dark-100"
-              >
-                <ArrowPathIcon className="mr-2 h-5 w-5" />
-                Regenerate response
-              </Button>
-            )
           )}
         </div>
 

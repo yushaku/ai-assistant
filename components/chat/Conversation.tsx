@@ -1,5 +1,7 @@
 'use client'
 
+import type { FormReport } from '../dialog/ReportDialog'
+import { ReportDialog } from '../dialog/ReportDialog'
 import { ChatPanel } from './ChatPanel'
 import { ChatScrollAnchor } from './ChatScrollAnchor'
 import { EmptyScreem } from './EmptyScream'
@@ -13,16 +15,21 @@ import { useSession } from 'next-auth/react'
 import { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useRecoilValue } from 'recoil'
+import { useCreateReport } from 'services'
 
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
   id?: string
 }
 
+const initReport = { question: '', answer: '' }
+
 export default function Conversation({ initialMessages, id }: ChatProps) {
+  const [report, setReport] = useState(initReport)
   const { data: session } = useSession()
   const [model, setModel] = useState(AI_MODELS.at(0)!)
   const componentRef = useRef<HTMLDivElement>(null)
+  const { mutate: sendReport } = useCreateReport()
 
   const SUPPER_ADMIN = process.env.NEXT_PUBLIC_SUPPER_ADMIN
   const examplePromt = useRecoilValue(globlePrompt)
@@ -45,6 +52,15 @@ export default function Conversation({ initialMessages, id }: ChatProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [examplePromt])
 
+  function handleReport(data: FormReport) {
+    setReport(initReport)
+    sendReport({
+      ...data,
+      ...report
+    })
+    toast.success('success send report')
+  }
+
   return (
     <>
       <div
@@ -65,7 +81,16 @@ export default function Conversation({ initialMessages, id }: ChatProps) {
                     image={session?.user.image}
                   />
                 ) : (
-                  <BotAnswer answer={m.content} />
+                  <BotAnswer
+                    toggleReport={() =>
+                      setReport({
+                        question: messages[index - 1]?.content ?? '',
+                        answer: m.content
+                      })
+                    }
+                    reload={reload}
+                    answer={m.content}
+                  />
                 )}
               </div>
             ))}
@@ -82,10 +107,15 @@ export default function Conversation({ initialMessages, id }: ChatProps) {
         isLoading={isLoading}
         stop={stop}
         append={append}
-        reload={reload}
         messages={messages}
         input={input}
         setInput={setInput}
+      />
+
+      <ReportDialog
+        open={report.question !== ''}
+        onOpen={() => setReport(initReport)}
+        onConfirm={(data) => handleReport(data)}
       />
     </>
   )
