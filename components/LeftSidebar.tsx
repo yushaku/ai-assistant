@@ -112,7 +112,7 @@ export const LeftSidebar = () => {
               <li key={id}>
                 <Link
                   href={`/chat/${id}`}
-                  className={`${styleSelected} flex-start group relative gap-4 p-4 hover:bg-dark-100`}
+                  className={`${styleSelected} flex-start group relative gap-4 p-4 hover:bg-dark-100 hover:text-blue-400`}
                 >
                   <ChatBubbleLeftRightIcon className="h-5 w-5" />
                   {title}

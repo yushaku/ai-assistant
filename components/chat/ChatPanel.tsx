@@ -61,7 +61,7 @@ export function ChatPanel({
             onChange={(e) => setInput(e.target.value)}
             placeholder="Send a message."
             spellCheck={false}
-            className="min-h-[60px] w-full resize-none py-5 pl-4 pr-16 text-gray-200 sm:text-sm"
+            className="min-h-[60px] w-full resize-none py-5 pl-4 pr-16 text-base text-gray-200"
           />
 
           <div className="absolute bottom-1/2 right-5 translate-y-1/2">

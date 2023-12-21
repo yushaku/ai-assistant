@@ -87,7 +87,7 @@ export const RightSideBar = () => {
                 }
               >
                 <ListItem
-                  className="p-0 text-white hover:bg-dark-100"
+                  className="group bg-dark-100 p-0 text-white hover:bg-dark-100/90"
                   selected={open === index}
                 >
                   <AccordionHeader
@@ -101,10 +101,7 @@ export const RightSideBar = () => {
                         className="h-5 w-5"
                       />
                     </ListItemPrefix>
-                    <Typography
-                      color="white"
-                      className="mr-auto text-base font-normal"
-                    >
+                    <Typography className="mr-auto text-base font-normal text-white group-hover:text-blue-400">
                       {cate.title}
                     </Typography>
                   </AccordionHeader>
