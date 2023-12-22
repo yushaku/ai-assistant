@@ -1,7 +1,6 @@
 'use client'
 
 import Conversation from '@/component/chat/Conversation'
-import { Wapper } from '@/component/chat/Wapper'
 import { useGetMessage } from 'services'
 
 export interface ChatPageProps {
@@ -23,9 +22,5 @@ export default function Chat({ params }: ChatPageProps) {
   // if (!chat) notFound()
   const { data: thread } = useGetMessage(threadId)
 
-  return (
-    <Wapper>
-      <Conversation initialMessages={thread?.messages} id={threadId} />
-    </Wapper>
-  )
+  return <Conversation initialMessages={thread?.messages} id={threadId} />
 }

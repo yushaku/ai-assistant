@@ -14,22 +14,19 @@ import {
   List,
   ListItem,
   ListItemPrefix,
-  Spinner,
   Typography
 } from '@material-tailwind/react'
 import { Resizable } from '@yushaku/re-resizable'
 import React, { useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { useRecoilState } from 'recoil'
-import { useGetPrompts } from 'services/prompt'
+import type { PromptList } from 'types'
 
-export const RightSideBar = () => {
+export const RightSideBar = ({ prompts }: { prompts: PromptList[] }) => {
   const [, setGlobalPrompt] = useRecoilState(globlePrompt)
   const [show, setShow] = useState(true)
   const [open, setOpen] = useState(0)
   useHotkeys('alt+l', () => setShow(!show), [show])
-
-  const { data: prompts, isLoading } = useGetPrompts()
 
   const handleOpen = (value: number) => {
     setOpen(open === value ? 0 : value)
@@ -130,8 +127,6 @@ export const RightSideBar = () => {
           })}
         </List>
       </Resizable>
-
-      {isLoading && <Spinner color="blue" className="mx-auto" />}
     </div>
   )
 }

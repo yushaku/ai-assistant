@@ -1,5 +1,5 @@
-import { LeftSidebar } from '../LeftSidebar'
-import { RightSideBar } from '../RightSideBar'
+import { LeftSidebar } from '@/component/LeftSidebar'
+import { RightSideBar } from '@/component/RightSideBar'
 import prisma from '@/lib/prisma'
 import React from 'react'
 import type { PromptList } from 'types'
@@ -18,7 +18,6 @@ const queryData = async () => {
       }
     }
   })
-  console.log(data)
 
   return data as unknown as PromptList[]
 }

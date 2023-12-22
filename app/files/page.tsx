@@ -1,4 +1,3 @@
-import { TrashBtn } from '@/component/files/TrashBtn'
 import { UPLOAD_FILE_PATH } from '@/lib/constants'
 import prisma from '@/lib/prisma'
 import { TrashIcon } from '@heroicons/react/24/solid'
@@ -50,7 +49,7 @@ export default async function CategoryPage() {
         </thead>
 
         <tbody className="relative">
-          {promptList?.length ? (
+          {promptList?.length &&
             promptList?.map(
               ({ id, title, isTrained, url, createdAt, updatedAt }) => {
                 return (
@@ -94,10 +93,7 @@ export default async function CategoryPage() {
                     </td>
                     <td className="flex-center">
                       <button
-                        onClick={() => {
-                          setPrompt({ id })
-                          setState('delete')
-                        }}
+                        onClick={() => {}}
                         className="rounded-lg p-3 font-normal text-gray-100 hover:bg-red-400"
                       >
                         <TrashIcon className="h-5 w-5" />
@@ -106,18 +102,7 @@ export default async function CategoryPage() {
                   </tr>
                 )
               }
-            )
-          ) : (
-            <div className="absolute right-1/2 top-1/2 translate-x-1/2 translate-y-1/2 text-center">
-              <Image
-                src="/catinbox.gif"
-                alt="Empty image"
-                width={300}
-                height={300}
-              />
-              <h3 className="text-2xl text-gray-100">Prompts Empty</h3>
-            </div>
-          )}
+            )}
         </tbody>
       </table>
     </div>
