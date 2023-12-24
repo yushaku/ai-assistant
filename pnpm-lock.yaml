@@ -35,9 +35,6 @@ dependencies:
   '@tanstack/react-query-devtools':
     specifier: ^4.36.1
     version: 4.36.1(@tanstack/react-query@4.36.1)(react-dom@18.2.0)(react@18.2.0)
-  '@tinymce/tinymce-react':
-    specifier: ^4.3.0
-    version: 4.3.0(react-dom@18.2.0)(react@18.2.0)
   '@vercel/blob':
     specifier: ^0.14.1
     version: 0.14.1
@@ -59,6 +56,9 @@ dependencies:
   cheerio:
     specifier: 1.0.0-rc.12
     version: 1.0.0-rc.12
+  jodit-react:
+    specifier: ^1.3.39
+    version: 1.3.39(react-dom@18.2.0)(react@18.2.0)
   langchain:
     specifier: ^0.0.157
     version: 0.0.157(@huggingface/inference@2.6.1)(@pinecone-database/pinecone@1.1.0)(axios@1.5.1)(cheerio@1.0.0-rc.12)(mammoth@1.6.0)(pdf-parse@1.1.1)(replicate@0.18.1)
@@ -78,8 +78,8 @@ dependencies:
     specifier: ^4.23.2
     version: 4.23.2(next@14.0.3-canary.9)(react-dom@18.2.0)(react@18.2.0)
   openai:
-    specifier: ^4.10.0
-    version: 4.10.0
+    specifier: ^4.24.1
+    version: 4.24.1
   parse-numeric-range:
     specifier: ^1.3.0
     version: 1.3.0
@@ -1337,18 +1337,6 @@ packages:
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
-  /@tinymce/tinymce-react@4.3.0(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-iB4cUsYfcJL4NGuKhqCGYuTmFTje3nPxyPv1HxprTsp/YMGuuiiSNWrv3zwI31QX5Cn8qeq9MrMDnbxuRugHyg==}
-    peerDependencies:
-      react: ^18.0.0 || ^17.0.1 || ^16.7.0
-      react-dom: ^18.0.0 || ^17.0.1 || ^16.7.0
-    dependencies:
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      tinymce: 6.7.2
-    dev: false
-
   /@tootallnate/once@2.0.0:
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
     engines: {node: '>= 10'}
@@ -2136,6 +2124,11 @@ packages:
     engines: {node: '>=4'}
     dev: false
 
+  /autobind-decorator@2.4.0:
+    resolution: {integrity: sha512-OGYhWUO72V6DafbF8PM8rm3EPbfuyMZcJhtm5/n26IDwO18pohE4eNazLoCGhPiXOCD0gEGmrbU3849QvM8bbw==}
+    engines: {node: '>=8.10', npm: '>=6.4.1'}
+    dev: false
+
   /autoprefixer@10.4.16(postcss@8.4.31):
     resolution: {integrity: sha512-7vd3UC6xKp0HLfua5IjZlcXvGAGy7cBAXTg2lyQ/8WpNhd6SiZ8Be+xm3FyBSYJx5GKcpRCzBh7RH4/0dnY+uQ==}
     engines: {node: ^10 || ^12 || >=14}
@@ -2667,6 +2660,11 @@ packages:
     engines: {node: '>=12.13'}
     dependencies:
       is-what: 4.1.15
+    dev: false
+
+  /core-js@3.34.0:
+    resolution: {integrity: sha512-aDdvlDder8QmY91H88GzNi9EtQi2TjvQhpCX6B1v/dAZHU1AuLgHvRh54RiOerpEhEW46Tkf+vgAViB/CWC0ag==}
+    requiresBuild: true
     dev: false
 
   /core-util-is@1.0.3:
@@ -4488,6 +4486,24 @@ packages:
     hasBin: true
     dev: true
 
+  /jodit-react@1.3.39(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-uZSRadPlgvcB6Wn54RGZ6XQEN+JHj0dB1SI4OH42yTC5WTeoYavksUwzCgFuQF4+janjSCxn0CXNqzd0MJEhVw==}
+    peerDependencies:
+      react: ~0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+      react-dom: ~0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      jodit: 3.24.9
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /jodit@3.24.9:
+    resolution: {integrity: sha512-t2d73v7GFbGI08ZzdCTwrzi8ZtoOG4icGzD6IIN2e+ghlpUKYxcHZ/Rmy6/mc6055172z+tv7QSr9BcOz6IOFQ==}
+    dependencies:
+      autobind-decorator: 2.4.0
+      core-js: 3.34.0
+    dev: false
+
   /jose@4.15.3:
     resolution: {integrity: sha512-RZJdL9Qjd1sqNdyiVteRGV/bnWtik/+PJh1JP4kT6+x1QQMn+7ryueRys5BEueuayvSVY8CWGCisCDazeRLTuw==}
     dev: false
@@ -5799,8 +5815,8 @@ packages:
       is-wsl: 2.2.0
     dev: true
 
-  /openai@4.10.0:
-    resolution: {integrity: sha512-II4b5/7qzwYkqA9MSjgqdofCc798EW+dtF2h6qNaVLet+qO7FShAJTWnoyzb50J4ZH1rPxRFAsmDLIhY3PT6DQ==}
+  /openai@4.2.0:
+    resolution: {integrity: sha512-zfvpO2eITIxIjTG8T6Cek7NB2dMvP/LW0TRUJ4P9E8+qbBNKw00DrtfF64b+fAV2+wUYCVyynT6iSycJ//TtbA==}
     hasBin: true
     dependencies:
       '@types/node': 18.18.0
@@ -5815,8 +5831,8 @@ packages:
       - encoding
     dev: false
 
-  /openai@4.2.0:
-    resolution: {integrity: sha512-zfvpO2eITIxIjTG8T6Cek7NB2dMvP/LW0TRUJ4P9E8+qbBNKw00DrtfF64b+fAV2+wUYCVyynT6iSycJ//TtbA==}
+  /openai@4.24.1:
+    resolution: {integrity: sha512-ezm/O3eiZMnyBqirUnWm9N6INJU1WhNtz+nK/Zj/2oyKvRz9pgpViDxa5wYOtyGYXPn1sIKBV0I/S4BDhtydqw==}
     hasBin: true
     dependencies:
       '@types/node': 18.18.0
@@ -5827,6 +5843,7 @@ packages:
       form-data-encoder: 1.7.2
       formdata-node: 4.4.1
       node-fetch: 2.7.0(encoding@0.1.13)
+      web-streams-polyfill: 3.2.1
     transitivePeerDependencies:
       - encoding
     dev: false
@@ -7180,10 +7197,6 @@ packages:
     engines: {node: '>= 0.2.0'}
     dev: false
 
-  /tinymce@6.7.2:
-    resolution: {integrity: sha512-6h/02jHmXyghekFzmzccZxUUEFtlPEKHxOd+gd49bjno3ybavZInPIaDd/pp2GeEwsFm20oGgJCL7UiebXm9dw==}
-    dev: false
-
   /titleize@3.0.0:
     resolution: {integrity: sha512-KxVu8EYHDPBdUYdKZdKtU2aj2XfEx9AfjXxE/Aj0vT06w2icA09Vus1rh6eSu1y01akYg6BjIK/hxyLJINoMLQ==}
     engines: {node: '>=12'}
@@ -7556,6 +7569,11 @@ packages:
     dependencies:
       glob-to-regexp: 0.4.1
       graceful-fs: 4.2.11
+    dev: false
+
+  /web-streams-polyfill@3.2.1:
+    resolution: {integrity: sha512-e0MO3wdXWKrLbL0DgGnUV7WHVuw9OUvL4hjgnPkIeEvESk74gAITi5G606JtZPp39cd8HA9VQzCIvA49LpPN5Q==}
+    engines: {node: '>= 8'}
     dev: false
 
   /web-streams-polyfill@4.0.0-beta.3:

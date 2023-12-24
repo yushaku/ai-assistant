@@ -2,7 +2,7 @@
 
 /* eslint-disable no-unused-vars */
 import { Button, Input } from '@material-tailwind/react'
-import { Editor } from '@tinymce/tinymce-react'
+import JoditEditor from 'jodit-react'
 import { useRef, useState } from 'react'
 
 type Props = { onConfirm: (data: FormData) => void }
@@ -12,7 +12,6 @@ export const TextEditor = ({ onConfirm }: Props) => {
     content: '',
     title: ''
   })
-  const API_KEY = process.env.NEXT_PUBLIC_TINY_API_KEY ?? ''
   const editorRef = useRef<any>(null)
 
   function handleSubmit() {
@@ -40,48 +39,16 @@ export const TextEditor = ({ onConfirm }: Props) => {
 
       <br />
 
-      <Editor
-        apiKey={API_KEY}
-        onInit={(editor) => (editorRef.current = editor)}
-        onEditorChange={(stringifiedHtmlValue) => {
-          setValue({ ...value, content: stringifiedHtmlValue })
+      <JoditEditor
+        className="h-[300px] w-full"
+        ref={editorRef}
+        config={{
+          theme: 'dark',
+          colors: ['#fff']
         }}
-        init={{
-          height: 300,
-          resize: true,
-          menubar: false,
-          plugins: [
-            'advlist',
-            'autolink',
-            'lists',
-            'link',
-            'image',
-            'charmap',
-            'preview',
-            'anchor',
-            'searchreplace',
-            'visualblocks',
-            'code',
-            'fullscreen',
-            'insertdatetime',
-            'media',
-            'table',
-            'code',
-            'help',
-            'wordcount',
-            'fullscreen'
-          ],
-          toolbar:
-            'undo redo | ' +
-            'blocks | ' +
-            'bullist numlist | ' +
-            'forecolor backcolor | ' +
-            'outdent indent | ' +
-            'bold italic | ' +
-            'fullscreen',
-          textpattern_patterns: [{ start: '*', end: '*', format: 'italic' }],
-          content_style: 'body { font-family: sans-serif; font-size: 14px }'
-        }}
+        value={value.content}
+        onBlur={(newContent) => setValue({ ...value, content: newContent })}
+        // onChange={(text) => setValue({ ...value, content: text })}
       />
 
       <div className="flex gap-3">

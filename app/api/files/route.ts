@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { deleteVertor, updatePinecone } from '@/lib/pinecone'
+import { deleteVertor, updatePinecone, updateText } from '@/lib/pinecone'
 import prisma from '@/lib/prisma'
 import type { Document } from 'langchain/document'
 import { CSVLoader } from 'langchain/document_loaders/fs/csv'
@@ -51,10 +51,15 @@ export async function POST(req: NextRequest) {
 
   if (type === 'TEXT') {
     const content = formData.get('content') as string
+    const ids = await updateText({ title, content })
 
-    // await updatePinecone(INDEX_NAME, docs)
     await prisma.documents.create({
-      data: { title, content, isTrained: true }
+      data: {
+        title,
+        content,
+        pineconeIds: ids,
+        isTrained: true
+      }
     })
 
     return NextResponse.json({ message: 'ok' })
@@ -68,20 +73,25 @@ export async function POST(req: NextRequest) {
     if (!Loader) return
     const loader = new Loader(file)
     docs = await loader.load()
-
     const ids = await updatePinecone(docs)
-    await prisma.documents.createMany({
-      data: docs.map((file) => ({
+
+    let allContent = ''
+    docs.forEach((doc) => {
+      const a = doc.pageContent.replace(/\n/g, '')
+      allContent += a
+      allContent += '\n\n'
+    })
+
+    await prisma.documents.create({
+      data: {
         title,
         pineconeIds: ids,
         isTrained: true,
-        content: file.pageContent
-      }))
+        content: allContent
+      }
     })
 
-    return NextResponse.json({
-      data: 'ok'
-    })
+    return NextResponse.json({ data: 'ok' })
   }
 
   return NextResponse.json({ data: 'comming soon' })

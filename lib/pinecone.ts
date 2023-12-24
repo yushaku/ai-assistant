@@ -1,40 +1,37 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 /* eslint-disable no-console */
 import { INDEX_NAME } from './constants'
 import { Pinecone } from '@pinecone-database/pinecone'
+import { randomUUID } from 'crypto'
 import { loadQAStuffChain } from 'langchain/chains'
 import { Document } from 'langchain/document'
 import { OpenAIEmbeddings } from 'langchain/embeddings/openai'
 import { OpenAI } from 'langchain/llms/openai'
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter'
 
-let pinecone: Pinecone
-export const pineconeClient = () => {
-  if (process.env.NODE_ENV === 'production') {
-    pinecone = new Pinecone({
-      apiKey: process.env.PINECONE_API_KEY || '',
-      environment: process.env.PINECONE_ENVIRONMENT || ''
-    })
-  } else {
-    // @ts-ignore:
-    if (!global.pinecone) {
-      // @ts-ignore:
-      global.pinecone = new Pinecone({
+export class PineconeClient {
+  private static instance: Pinecone
+  private constructor() {}
+  public static getInstance(): Pinecone {
+    if (!PineconeClient.instance) {
+      PineconeClient.instance = new Pinecone({
         apiKey: process.env.PINECONE_API_KEY || '',
         environment: process.env.PINECONE_ENVIRONMENT || ''
       })
     }
-    // @ts-ignore:
-    pinecone = global.pinecone
+    return PineconeClient.instance
   }
-  return pinecone
+}
+
+export async function clearIndex() {
+  const client = PineconeClient.getInstance()
+  const index = client.Index(INDEX_NAME)
+  await index.deleteAll()
 }
 
 export const queryPineconeVectorStoreAndQueryLLM = async (question: string) => {
-  const client = pineconeClient()
+  const client = PineconeClient.getInstance()
   const index = client.Index(INDEX_NAME)
 
   console.log(`Asking question: ${question}...`)
@@ -63,12 +60,11 @@ export const queryPineconeVectorStoreAndQueryLLM = async (question: string) => {
 }
 
 export const queryDatabase = async (question: string) => {
-  const client = pineconeClient()
-  const index = client.Index(INDEX_NAME)
-
+  const client = PineconeClient.getInstance()
+  const pineconeIndex = client.Index(INDEX_NAME)
   const queryEmbedding = await new OpenAIEmbeddings().embedQuery(question)
-  const queryResponse = await index.query({
-    topK: 10,
+  const queryResponse = await pineconeIndex.query({
+    topK: 2,
     vector: queryEmbedding,
     includeMetadata: true,
     includeValues: true
@@ -78,7 +74,7 @@ export const queryDatabase = async (question: string) => {
 }
 
 export const deleteVertor = async (id: string[]) => {
-  const client = pineconeClient()
+  const client = PineconeClient.getInstance()
   const index = client.Index(INDEX_NAME)
   index.deleteMany(id)
 }
@@ -105,48 +101,30 @@ export const createPineconeIndex = async (
 }
 
 export const updatePinecone = async (docs: Document<Record<string, any>>[]) => {
-  console.log('Retrieving Pinecone index...')
-  // 1. Retrieve Pinecone index
-  const client = pineconeClient()
-  const index = client.Index(INDEX_NAME)
+  const client = PineconeClient.getInstance()
+  const pinconeIndex = client.Index(INDEX_NAME)
   const ids: Array<string> = []
 
-  // 2. Process each document in the docs array
   for (const doc of docs) {
-    console.log(`Processing document: ${doc.metadata.source}`)
     const txtPath = doc.metadata.source
-    const text = doc.pageContent
-    // 4. Create RecursiveCharacterTextSplitter instance
-    const textSplitter = new RecursiveCharacterTextSplitter({
-      chunkSize: 2000
-    })
-
-    console.log('Splitting text into chunks...')
+    const text = doc.pageContent.replace(/\n/g, '')
+    const textSplitter = new RecursiveCharacterTextSplitter({ chunkSize: 2000 })
     const chunks = await textSplitter.createDocuments([text])
-    console.log(`Text split into ${chunks.length} chunks`)
-    console.log(
-      `Calling OpenAI's Embedding endpoint documents with ${chunks.length} text chunks ...`
+
+    const embeddings = new OpenAIEmbeddings()
+    const embeddingsArrays = await embeddings.embedDocuments(
+      chunks.map((chunk) => chunk.pageContent.replace(/\n/g, ''))
     )
 
-    // 6. Create OpenAI embeddings for documents
-    const embeddingsArrays = await new OpenAIEmbeddings().embedDocuments(
-      chunks.map((chunk) => chunk.pageContent.replace(/\n/g, ' '))
-    )
-    console.log('Finished embedding documents')
-    console.log(
-      `Creating ${chunks.length} vectors array with id, values, and metadata...`
-    )
-
-    // 7. Create and upsert vectors in batches of 100
-    const batchSize = 100
+    const batchSize = 2000
     let batch: any = []
-    for (let idx = 0; idx < chunks.length; idx++) {
-      const id = `${txtPath}_${idx}`
+    for (let index = 0; index < chunks.length; index++) {
+      const id = `${txtPath}_${index}`
       ids.push(id)
-      const chunk = chunks[idx] as any
+      const chunk = chunks[index] as any
       const vector = {
         id,
-        values: embeddingsArrays[idx],
+        values: embeddingsArrays[index],
         metadata: {
           ...chunk.metadata,
           loc: JSON.stringify(chunk.metadata.loc),
@@ -156,12 +134,59 @@ export const updatePinecone = async (docs: Document<Record<string, any>>[]) => {
       }
       batch = [...batch, vector]
 
-      if (batch.length === batchSize || idx === chunks.length - 1) {
-        await index.upsert([...batch])
+      if (batch.length === batchSize || index === chunks.length - 1) {
+        console.log(`Pinecone index updated with ${chunks.length} vectors`)
+        await pinconeIndex.upsert([...batch])
       }
     }
-    console.log(`Pinecone index updated with ${chunks.length} vectors`)
+  }
+  console.log(`Pinecone index add file successfully`)
+  return ids
+}
+
+export const updateText = async ({
+  title,
+  content
+}: {
+  title: string
+  content: string
+}) => {
+  const client = PineconeClient.getInstance()
+  const pineconeIndex = client.Index(INDEX_NAME)
+  const ids: Array<string> = []
+
+  const textSplitter = new RecursiveCharacterTextSplitter({
+    chunkSize: 2000
+  })
+  const chunks = await textSplitter.createDocuments([content])
+  const embeddingsArrays = await new OpenAIEmbeddings().embedDocuments(
+    chunks.map((chunk) => chunk.pageContent.replace(/\n/g, ''))
+  )
+
+  const batchSize = 1000
+
+  let batch: any = []
+  for (let index = 0; index < chunks.length; index++) {
+    const id = `${randomUUID()}_${index}`
+    ids.push(id)
+    const chunk = chunks[index] as any
+    const vector = {
+      id,
+      values: embeddingsArrays[index],
+      metadata: {
+        ...chunk.metadata,
+        loc: JSON.stringify(chunk.metadata.loc),
+        pageContent: chunk.pageContent,
+        txtPath: title
+      }
+    }
+    batch = [...batch, vector]
+
+    if (batch.length === batchSize || index === chunks.length - 1) {
+      await pineconeIndex.upsert([...batch])
+    }
   }
 
+  console.log(`Pinecone index updated with ${chunks.length} vectors`)
   return ids
 }

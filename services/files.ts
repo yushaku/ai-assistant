@@ -44,6 +44,10 @@ export const useDeleteFile = () => {
       onSuccess: () => {
         revalidatePath('/files')
         toast.success('Delete successfully')
+      },
+      onError: () => {
+        revalidatePath('/files')
+        toast.error('Delete false')
       }
     }
   )
