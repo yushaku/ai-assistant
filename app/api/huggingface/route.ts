@@ -19,31 +19,6 @@ export async function POST(req: Request) {
     }
   })
 
-  // Check for errors
-  // if (!response.ok) {
-  //   return new Response(await response.text(), {
-  //     status: response.status,
-  //   });
-  // }
-
   const stream = HuggingFaceStream(response)
   return new StreamingTextResponse(stream)
 }
-
-// export async function GET(req: Request) {
-//   const { messages } = await req.json()
-//
-//   const response = huggingface.translation({
-//     model: 'Helsinki-NLP/opus-mt-ru-en',
-//     inputs: experimental_buildOpenAssistantPrompt(messages)
-//   })
-//
-//   // Check for errors
-//   // if (!response.ok) {
-//   //   return new Response(await response.text(), {
-//   //     status: response.status,
-//   //   });
-//   // }
-//
-//   return response
-// }
