@@ -1,7 +1,6 @@
+import { TrashBtn } from '@/component/files/TrashBtn'
 import { UPLOAD_FILE_PATH } from '@/lib/constants'
 import prisma from '@/lib/prisma'
-import { TrashIcon } from '@heroicons/react/24/solid'
-import { Typography } from '@material-tailwind/react'
 import moment from 'moment'
 import Link from 'next/link'
 
@@ -23,7 +22,7 @@ const queryData = async () => {
   return data
 }
 
-export default async function CategoryPage() {
+export default async function DocumentPage() {
   const promptList = await queryData()
 
   return (
@@ -66,37 +65,28 @@ export default async function CategoryPage() {
                       </Link>
                     </td>
                     <td>
-                      <Typography className="max-w-xs truncate">
+                      <p className="max-w-xs truncate">
                         {url ? 'Website Crawled' : 'Document Uploaded'}
-                      </Typography>
+                      </p>
                     </td>
                     <td>
                       {isTrained ? (
-                        <Typography className="font-semibold text-green-500">
-                          yes
-                        </Typography>
+                        <p className="font-semibold text-green-500">yes</p>
                       ) : (
-                        <Typography className="font-semibold text-orange-300">
+                        <p className="font-semibold text-orange-300">
                           Processing
-                        </Typography>
+                        </p>
                       )}
                     </td>
                     <td>
-                      <Typography>
-                        {moment(createdAt).format('DD/MM/YYYY')}
-                      </Typography>
+                      <p>{moment(createdAt).format('DD/MM/YYYY')}</p>
                     </td>
                     <td>
-                      <Typography>
-                        {moment(updatedAt).format('DD/MM/YYYY')}
-                      </Typography>
+                      <p>{moment(updatedAt).format('DD/MM/YYYY')}</p>
                     </td>
                     <td className="flex-center">
-                      <button
-                        onClick={() => {}}
-                        className="rounded-lg p-3 font-normal text-gray-100 hover:bg-red-400"
-                      >
-                        <TrashIcon className="h-5 w-5" />
+                      <button className="rounded-lg p-3 font-normal text-gray-100 hover:bg-red-400">
+                        <TrashBtn id={id} />
                       </button>
                     </td>
                   </tr>

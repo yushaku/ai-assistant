@@ -29,7 +29,7 @@ export const Sidebar = () => {
 
   return (
     <div
-      className={`${style} animate no-scrollbar absolute left-0 top-[5%] z-10 h-[95%] overflow-y-scroll bg-dark-200`}
+      className={`${style} animate no-scrollbar absolute left-0 top-[5%] z-10 h-[95%] overflow-y-scroll bg-dark-200 lg:relative`}
     >
       <Resizable
         enable={{
