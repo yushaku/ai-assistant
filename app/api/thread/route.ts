@@ -4,6 +4,11 @@ import { kv } from '@vercel/kv'
 import { getToken } from 'next-auth/jwt'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
+import OpenAI from 'openai'
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
+})
 
 export async function GET(req: NextRequest) {
   const user = await getToken({ req })
@@ -31,8 +36,10 @@ export async function POST(req: NextRequest) {
   }
 
   const data = (await req.json()) as Pick<Thread, 'title'>
+  const thread = await openai.beta.threads.create()
   const cate = await prisma.thread.create({
     data: {
+      id: thread.id,
       title: data.title,
       userId: user.id as string
     }
@@ -58,6 +65,7 @@ export async function DELETE(req: NextRequest) {
     })
   }
 
+  await openai.beta.threads.del(id)
   const cate = await prisma.thread.delete({
     where: { id },
     include: { Message: true }

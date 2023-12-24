@@ -45,14 +45,11 @@ dependencies:
     specifier: ^6.9.11
     version: 6.9.11(react-dom@18.2.0)(react@18.2.0)
   ai:
-    specifier: ^2.2.13
-    version: 2.2.13(react@18.2.0)(solid-js@1.7.12)(svelte@4.2.1)(vue@3.3.4)
+    specifier: ^2.2.30
+    version: 2.2.30(react@18.2.0)(solid-js@1.7.12)(svelte@4.2.1)(vue@3.3.4)
   axios:
     specifier: ^1.5.1
     version: 1.5.1
-  bcrypt:
-    specifier: ^5.1.1
-    version: 5.1.1
   cheerio:
     specifier: 1.0.0-rc.12
     version: 1.0.0-rc.12
@@ -122,6 +119,9 @@ dependencies:
   replicate:
     specifier: ^0.18.1
     version: 0.18.1
+  uuid:
+    specifier: ^9.0.1
+    version: 9.0.1
 
 devDependencies:
   '@next/eslint-plugin-next':
@@ -1868,8 +1868,8 @@ packages:
       humanize-ms: 1.2.1
     dev: false
 
-  /ai@2.2.13(react@18.2.0)(solid-js@1.7.12)(svelte@4.2.1)(vue@3.3.4):
-    resolution: {integrity: sha512-tq0OpUUryPjSPn7WYhZ7viGUq1d2/L5T0FZawGun9ojYYOzu5eJIAQAnZ2HRTXsFIwuYTb9wAgZUx+sQUDjdnQ==}
+  /ai@2.2.30(react@18.2.0)(solid-js@1.7.12)(svelte@4.2.1)(vue@3.3.4):
+    resolution: {integrity: sha512-7dRgnEbYkbVjxyjiS7WEhNvO8ebeI4Om74D9OKXLK0yis4+s272pJ5I3vOAv3HaUBbVEiIFYQ7E34JH8XT1EeQ==}
     engines: {node: '>=14.6'}
     peerDependencies:
       react: ^18.2.0
@@ -1888,7 +1888,6 @@ packages:
     dependencies:
       eventsource-parser: 1.0.0
       nanoid: 3.3.6
-      openai: 4.2.0
       react: 18.2.0
       solid-js: 1.7.12
       solid-swr-store: 0.10.7(solid-js@1.7.12)(swr-store@0.10.6)
@@ -1898,8 +1897,6 @@ packages:
       swr-store: 0.10.6
       swrv: 1.0.4(vue@3.3.4)
       vue: 3.3.4
-    transitivePeerDependencies:
-      - encoding
     dev: false
 
   /ajv@6.12.6:
@@ -2238,18 +2235,6 @@ packages:
 
   /base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
-    dev: false
-
-  /bcrypt@5.1.1:
-    resolution: {integrity: sha512-AGBHOG5hPYZ5Xl9KXzU5iKq9516yEmvCKDg3ecP5kX2aB6UqTeXZxk2ELnDgDm6BQSMlLt9rDB4LoSMx0rYwww==}
-    engines: {node: '>= 10.0.0'}
-    requiresBuild: true
-    dependencies:
-      '@mapbox/node-pre-gyp': 1.0.11
-      node-addon-api: 5.1.0
-    transitivePeerDependencies:
-      - encoding
-      - supports-color
     dev: false
 
   /big-integer@1.6.51:
@@ -5600,10 +5585,6 @@ packages:
       - babel-plugin-macros
     dev: false
 
-  /node-addon-api@5.1.0:
-    resolution: {integrity: sha512-eh0GgfEkpnoWDq+VY8OyvYhFEzBk6jIYbRKdIlyTiAXIVJ8PyBaKb0rp7oDtoddbdoHWhq8wwr+XZ81F1rpNdA==}
-    dev: false
-
   /node-domexception@1.0.0:
     resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
     engines: {node: '>=10.5.0'}
@@ -5814,22 +5795,6 @@ packages:
       is-inside-container: 1.0.0
       is-wsl: 2.2.0
     dev: true
-
-  /openai@4.2.0:
-    resolution: {integrity: sha512-zfvpO2eITIxIjTG8T6Cek7NB2dMvP/LW0TRUJ4P9E8+qbBNKw00DrtfF64b+fAV2+wUYCVyynT6iSycJ//TtbA==}
-    hasBin: true
-    dependencies:
-      '@types/node': 18.18.0
-      '@types/node-fetch': 2.6.6
-      abort-controller: 3.0.0
-      agentkeepalive: 4.5.0
-      digest-fetch: 1.3.0
-      form-data-encoder: 1.7.2
-      formdata-node: 4.4.1
-      node-fetch: 2.7.0(encoding@0.1.13)
-    transitivePeerDependencies:
-      - encoding
-    dev: false
 
   /openai@4.24.1:
     resolution: {integrity: sha512-ezm/O3eiZMnyBqirUnWm9N6INJU1WhNtz+nK/Zj/2oyKvRz9pgpViDxa5wYOtyGYXPn1sIKBV0I/S4BDhtydqw==}

@@ -3,12 +3,12 @@
 /* eslint-disable no-console */
 import { INDEX_NAME } from './constants'
 import { Pinecone } from '@pinecone-database/pinecone'
-import { randomUUID } from 'crypto'
 import { loadQAStuffChain } from 'langchain/chains'
 import { Document } from 'langchain/document'
 import { OpenAIEmbeddings } from 'langchain/embeddings/openai'
 import { OpenAI } from 'langchain/llms/openai'
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter'
+import { v4 as uuid } from 'uuid'
 
 export class PineconeClient {
   private static instance: Pinecone
@@ -167,7 +167,7 @@ export const updateText = async ({
 
   let batch: any = []
   for (let index = 0; index < chunks.length; index++) {
-    const id = `${randomUUID()}_${index}`
+    const id = `${uuid()}_${index}`
     ids.push(id)
     const chunk = chunks[index] as any
     const vector = {

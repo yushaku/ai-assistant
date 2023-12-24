@@ -1,42 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { getContext } from '@/lib/queryVertor'
 import { kv } from '@vercel/kv'
-import { OpenAIStream, StreamingTextResponse } from 'ai'
 import type { Message } from 'ai'
+import { OpenAIStream, StreamingTextResponse } from 'ai'
 import { getToken } from 'next-auth/jwt'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import OpenAI from 'openai'
 
-// import prisma from '@/lib/prisma'
-
 export const runtime = 'edge'
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 })
-
-// const QUEUE_SIZE = 100
-// const TIME_OUT = 1000 * 60
-// type MSG = Pick<Message, 'role' | 'content'> & {
-//   threadId: string
-//   createdAt: Date
-// }
-//
-// const bulk = new BulkExecService<MSG>(QUEUE_SIZE, TIME_OUT, (items) => {
-//   prisma.message.createMany({
-//     data: items.map((msg) => ({
-//       threadId: msg.threadId,
-//       role: msg.role,
-//       content: msg.content,
-//       createdAt: msg.createdAt
-//     }))
-//   })
-// })
-
-export const OPEN_PROMPT = [
-  {
-    role: 'system',
-    content: `bạn là trợ lý để hỗ trợ sinh viên trường đại học xây dựng hà nội (HUCE) cung cấp ngấn gọn và đẩy đủ thông tin cho các bạn sinh viên`
-  }
-]
 
 export async function POST(req: NextRequest) {
   const user = await getToken({ req })
@@ -49,13 +24,27 @@ export async function POST(req: NextRequest) {
   try {
     const data = await req.json()
     const { messages, id } = data
+    const lastMessage = messages.at(-1)
+    const context = await getContext(lastMessage.content)
+    console.log({ context })
 
-    // const question = messages.at(-1)
-    const response = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
+    const prompt = [
+      {
+        role: 'system',
+        content: `
+        Bạn là trợ lý để hỗ trợ sinh viên trường đại học xây dựng hà nội (HUCE) cung cấp ngấn gọn và đẩy đủ thông tin cho các bạn sinh viên
+        START CONTEXT BLOCK
+        ${context}
+        END OF CONTEXT BLOCK
+        Nếu ngữ cảnh không cung cấp câu trả lời cho câu hỏi, trợ lý AI sẽ nói: "Tôi xin lỗi, nhưng tôi không biết câu trả lời cho câu hỏi đó. Bạn hãy liên hệ phòng chăm sóc sinh viên qua gmail: cssv@huce.vn.com hoặc qua số điện thoại 0973666666"`
+      }
+    ]
+
+    const response: any = await openai.chat.completions.create({
+      model: 'gpt-3.5-turbo-1106',
       stream: true,
       messages: [
-        ...OPEN_PROMPT,
+        ...prompt,
         ...messages.filter((message: Message) => message.role === 'user')
       ]
     })
@@ -67,9 +56,8 @@ export async function POST(req: NextRequest) {
         const title = messages[0].content.substring(0, 20)
         const createdAt = new Date()
         const threadId: string = id
-        // const threadId: string = id ? id : uidv4()
 
-        const payload = {
+        await kv.hmset(`chat:${threadId}`, {
           id,
           title,
           userId: user.id,
@@ -81,22 +69,7 @@ export async function POST(req: NextRequest) {
               role: 'assistant'
             }
           ]
-        }
-
-        /* bulk.push({ threadId, ...question, createdAt })
-        bulk.push({
-          threadId,
-          content: completion,
-          role: 'assistant',
-          createdAt
-        }) */
-
-        /* await kv.zadd(`user:chat:${user.id}`, {
-          member: `chat:${threadId}`,
-          score: createdAt
-        }) */
-
-        await kv.hmset(`chat:${threadId}`, payload)
+        })
       }
     })
 

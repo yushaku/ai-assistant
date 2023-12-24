@@ -64,14 +64,6 @@ export type UploadFile = {
   file: File
 }
 
-export function isUploadFile(data: Upload): data is UploadFile {
-  return (data as UploadFile)?.type === 'FILE'
-}
-
-export function isCrawWebsite(data: Upload): data is CrawlWebsite {
-  return (data as CrawlWebsite)?.type === 'WEBSITE'
-}
-
 export type PromptDTO = {
   cateId: string
   promptList: Array<string>

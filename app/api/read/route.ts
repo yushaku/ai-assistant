@@ -1,40 +1,46 @@
 import { kv } from '@vercel/kv'
-import { queryPineconeVectorStoreAndQueryLLM } from 'lib/pinecone'
+import { StreamingTextResponse } from 'ai'
+import { loadQAStuffChain } from 'langchain/chains'
+import { Document } from 'langchain/document'
+import { OpenAI } from 'langchain/llms/openai'
+import { queryDatabase } from 'lib/pinecone'
 import { getToken } from 'next-auth/jwt'
 import type { NextRequest } from 'next/server'
-import { NextResponse } from 'next/server'
 import type { ChatCache } from 'types'
 
-export async function POST(req: NextRequest) {
+export const runtime = 'edge'
+
+/* export async function POST(req: NextRequest) {
   const body = await req.json()
   const messages = body.messages ?? []
   const question = messages[messages.length - 1].content
-
   const text = await queryPineconeVectorStoreAndQueryLLM(question)
   return NextResponse.json({
     data: text
   })
-}
+} */
 
-// export async function GET(req: NextRequest) {
-//   console.log('get data from cache')
-//
-//   const user = await getToken({ req })
-//   const searchParams = req.nextUrl.searchParams
-//   const threadId = searchParams.get('id')
-//   // const limitMessage = searchParams.get('limit')
-//
-//   console.log({ threadId })
-//
-//   return []
-//
-//   // const chat = await kv.hgetall<Chat>(`chat:${threadId}`)
-//   // if (!chat || (user?.id && chat.userId !== user.id)) {
-//   //   return []
-//   // }
-//   //
-//   // return chat
-// }
+export async function POST(req: NextRequest) {
+  const body = await req.json()
+  const messages = body.messages ?? []
+  const question = messages.at(-1).content
+
+  const matches = await queryDatabase(question)
+  const chain = loadQAStuffChain(
+    new OpenAI({
+      streaming: true,
+      modelName: 'gpt-3.5-turbo-1106'
+    })
+  )
+  const content = matches.map((match) => match.metadata?.pageContent).join(' ')
+
+  const result = await chain.stream({
+    input_documents: [new Document({ pageContent: content })],
+    question
+  })
+
+  return new StreamingTextResponse(result)
+}
 
 export async function GET(req: NextRequest) {
   const user = await getToken({ req })
@@ -50,26 +56,4 @@ export async function GET(req: NextRequest) {
 
   const data = await kv.hgetall<ChatCache>(`chat:${threadId}`)
   return Response.json(data)
-
-  /* return prisma.thread.findUnique({
-    where: {
-      id: threadId,
-      userId: user.id as string
-    },
-    include: {
-      Message: {
-        select: {
-          id: true,
-          role: true,
-          content: true,
-          createdAt: true,
-          updatedAt: true
-        },
-        take: limit ? Number(limit) : 10,
-        orderBy: {
-          createdAt: 'desc'
-        }
-      }
-    }
-  }) */
 }
