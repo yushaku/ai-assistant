@@ -10,7 +10,7 @@ export const ThreadList = () => {
 
   return (
     <div>
-      <ul className="mt-2">
+      <ul className="mb-4 mt-2">
         {threads?.map((thread) => {
           return (
             <li key={thread.id}>

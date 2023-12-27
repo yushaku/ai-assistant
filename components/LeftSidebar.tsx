@@ -61,7 +61,7 @@ export const LeftSidebar = () => {
     setState(null)
     if (state === 'create') {
       const newone = await create({ title })
-      router.push(`?thread=${newone.id}`)
+      router.push(`/chat/${newone.id}`)
     } else {
       update({ title, id: thread.id })
     }

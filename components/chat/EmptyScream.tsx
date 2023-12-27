@@ -1,3 +1,4 @@
+import { AddThreadBtn } from '../AddThreadButton'
 import { ThreadList } from './ThreadList'
 import { ArrowRightIcon } from '@heroicons/react/24/solid'
 import type { UseChatHelpers } from 'ai/react/dist'
@@ -60,6 +61,7 @@ export const EmptyScreem = ({ setInput }: Pick<UseChatHelpers, 'setInput'>) => {
 
       <strong>Chọn cuộc trò chuyện bạn đã bỏ dở:</strong>
       <ThreadList />
+      <AddThreadBtn />
     </div>
   )
 }
