@@ -46,6 +46,9 @@ export const Navbar = () => {
         </ul>
 
         <div className="flex-center gap-4">
+          <span className="rounded bg-dark-300 px-2 text-[12px] text-green-300">
+            Beta version
+          </span>
           <Popover placement="bottom-end">
             <PopoverHandler>
               <QuestionMarkCircleIcon

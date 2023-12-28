@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
         START CONTEXT BLOCK
         ${context}
         END OF CONTEXT BLOCK
-        Nếu ngữ cảnh không cung cấp câu trả lời cho câu hỏi, trợ lý AI sẽ nói: "Tôi xin lỗi, nhưng tôi không biết câu trả lời cho câu hỏi đó. Bạn hãy liên hệ phòng chăm sóc sinh viên qua gmail: cssv@huce.vn.com hoặc qua số điện thoại 0973666666"`
+        Nếu không có câu trả lời cho câu hỏi, trợ lý AI sẽ nói: "Tôi xin lỗi, nhưng tôi không biết câu trả lời cho câu hỏi đó. Bạn hãy liên hệ phòng chăm sóc sinh viên qua gmail: cssv@huce.vn.com hoặc qua số điện thoại 0973666666"`
       }
     ]
 

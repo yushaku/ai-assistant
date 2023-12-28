@@ -117,7 +117,7 @@ export const LeftSidebar = () => {
                   <ChatBubbleLeftRightIcon className="h-5 w-5" />
                   {title}
 
-                  <Popover placement="bottom-end">
+                  <Popover placement="bottom-start">
                     <PopoverHandler className="group/func absolute bottom-1/2 right-1 translate-y-1/2 rounded-full p-2 opacity-0 group-hover:bg-dark-200/70 group-hover:opacity-100">
                       <EllipsisVerticalIcon
                         strokeWidth={10}
@@ -126,7 +126,7 @@ export const LeftSidebar = () => {
                       />
                     </PopoverHandler>
 
-                    <PopoverContent className="group/func-hover:opacity-100">
+                    <PopoverContent className="group/func-hover:opacity-100 z-50">
                       <ul className="grid cursor-pointer gap-3">
                         <li
                           onClick={() => {

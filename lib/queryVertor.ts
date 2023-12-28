@@ -27,15 +27,17 @@ export const getContext = async (
     modelName: 'text-embedding-ada-002'
   }).embedQuery(message.replace(/\n/g, ' '))
 
-  const matches = await getMatchesFromEmbeddings(embedding, 3, namespace)
+  const matches = await getMatchesFromEmbeddings(embedding, 1, namespace)
   const qualifyingDocs = matches.filter((m) => m.score && m.score > minScore)
+
+  console.log({ matches })
 
   if (!getOnlyText) {
     return qualifyingDocs
   }
 
   const docs = matches
-    ? qualifyingDocs.map((match) => (match.metadata as Metadata).chunk)
+    ? qualifyingDocs.map((match) => match?.metadata?.pageContent ?? '')
     : []
 
   return docs.join('\n').substring(0, maxTokens)

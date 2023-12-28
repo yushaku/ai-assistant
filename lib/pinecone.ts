@@ -24,6 +24,8 @@ export class PineconeClient {
   }
 }
 
+const CHUNK_SIZE = 512
+
 export async function clearIndex() {
   const client = PineconeClient.getInstance()
   const index = client.Index(INDEX_NAME)
@@ -62,7 +64,9 @@ export const queryPineconeVectorStoreAndQueryLLM = async (question: string) => {
 export const queryDatabase = async (question: string) => {
   const client = PineconeClient.getInstance()
   const pineconeIndex = client.Index(INDEX_NAME)
-  const queryEmbedding = await new OpenAIEmbeddings().embedQuery(question)
+  const queryEmbedding = await new OpenAIEmbeddings({
+    modelName: 'text-embedding-ada-002'
+  }).embedQuery(question)
   const queryResponse = await pineconeIndex.query({
     topK: 2,
     vector: queryEmbedding,
@@ -108,10 +112,15 @@ export const updatePinecone = async (docs: Document<Record<string, any>>[]) => {
   for (const doc of docs) {
     const txtPath = doc.metadata.source
     const text = doc.pageContent.replace(/\n/g, '')
-    const textSplitter = new RecursiveCharacterTextSplitter({ chunkSize: 2000 })
+    const textSplitter = new RecursiveCharacterTextSplitter({
+      chunkSize: CHUNK_SIZE,
+      chunkOverlap: 24
+    })
     const chunks = await textSplitter.createDocuments([text])
 
-    const embeddings = new OpenAIEmbeddings()
+    const embeddings = new OpenAIEmbeddings({
+      modelName: 'text-embedding-ada-002'
+    })
     const embeddingsArrays = await embeddings.embedDocuments(
       chunks.map((chunk) => chunk.pageContent.replace(/\n/g, ''))
     )
@@ -156,12 +165,12 @@ export const updateText = async ({
   const ids: Array<string> = []
 
   const textSplitter = new RecursiveCharacterTextSplitter({
-    chunkSize: 2000
+    chunkSize: CHUNK_SIZE
   })
   const chunks = await textSplitter.createDocuments([content])
-  const embeddingsArrays = await new OpenAIEmbeddings().embedDocuments(
-    chunks.map((chunk) => chunk.pageContent.replace(/\n/g, ''))
-  )
+  const embeddingsArrays = await new OpenAIEmbeddings({
+    modelName: 'text-embedding-ada-002'
+  }).embedDocuments(chunks.map((chunk) => chunk.pageContent.replace(/\n/g, '')))
 
   const batchSize = 1000
 
