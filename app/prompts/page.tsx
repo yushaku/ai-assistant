@@ -26,7 +26,7 @@ const CategoryPage = () => {
   useHotkeys('c', () => router.push('/prompts/create?add=prompts'))
 
   return (
-    <Card className="no-scrollbar h-full w-full overflow-y-scroll bg-dark-200">
+    <Card className="no-scrollbar h-full w-full overflow-y-scroll bg-dark-200 text-red-300">
       <table className="w-full min-w-max table-auto text-left">
         <thead className="bg-dark-100">
           <tr>

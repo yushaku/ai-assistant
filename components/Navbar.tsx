@@ -29,7 +29,7 @@ export const Navbar = () => {
           href="/"
           className="green_text_gradient flex-center gap-2 text-xl font-bold"
         >
-          <Avatar src="/favicon-32x32.png" size="sm" />
+          <Avatar src="/huce.jpg" size="sm" />
           <span className="hidden md:block">HUCE Assistents</span>
         </Link>
 

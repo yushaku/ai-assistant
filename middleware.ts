@@ -19,7 +19,8 @@ export const middleware = async (request: NextRequest) => {
     pathname.includes('/_next') ||
     pathname === '/sign-in' ||
     pathname === '/favicon-32x32.png' ||
-    pathname === '/spaceUp.gif'
+    pathname === '/spaceUp.gif' ||
+    pathname === '/huce.jpg'
   ) {
     return NextResponse.next()
   }
