@@ -33,9 +33,9 @@ export const EmptyScreem = ({ setInput }: Pick<UseChatHelpers, 'setInput'>) => {
           alt="wellcome"
         />
         <p>
-          Tôi là Tigon, một cộng sự sáng tạo và hữu ích của bạn. Tôi có một số
-          hạn chế và không phải lúc nào cũng đúng. Tuy nhiên, phản hồi của bạn
-          sẽ giúp tôi cải thiện.
+          Tôi là Tigon, một cộng sự và là trợ lý AI hỗ trợ bạn trong quá trình
+          bạn học tại trường HUCE. Tôi có một số hạn chế và không phải lúc nào
+          cũng đúng. Tuy nhiên, phản hồi của bạn sẽ giúp tôi cải thiện.
         </p>
       </div>
 
