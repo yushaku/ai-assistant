@@ -1,8 +1,7 @@
 'use client'
 
-import { HandThumbDownIcon } from '@heroicons/react/24/outline'
-
 /* eslint-disable no-unused-vars */
+import { HandThumbDownIcon } from '@heroicons/react/24/outline'
 import {
   Button,
   Checkbox,
