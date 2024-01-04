@@ -20,21 +20,14 @@ export const getContext = async (
   message: string,
   namespace: string = '',
   maxTokens = 3000,
-  minScore = 0.7,
-  getOnlyText = true
+  minScore = 0.7
 ): Promise<string | ScoredVector[]> => {
   const embedding = await new OpenAIEmbeddings({
     modelName: 'text-embedding-ada-002'
   }).embedQuery(message.replace(/\n/g, ' '))
 
-  const matches = await getMatchesFromEmbeddings(embedding, 1, namespace)
+  const matches = await getMatchesFromEmbeddings(embedding, 2, namespace)
   const qualifyingDocs = matches.filter((m) => m.score && m.score > minScore)
-
-  console.log({ matches })
-
-  if (!getOnlyText) {
-    return qualifyingDocs
-  }
 
   const docs = matches
     ? qualifyingDocs.map((match) => match?.metadata?.pageContent ?? '')

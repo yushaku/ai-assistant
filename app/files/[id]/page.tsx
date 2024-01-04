@@ -1,5 +1,6 @@
 import { TrashBtn } from '@/component/files/TrashBtn'
 import prisma from '@/lib/prisma'
+import parse from 'html-react-parser'
 import moment from 'moment'
 import React from 'react'
 
@@ -38,7 +39,9 @@ export default async function DetailPage({
         </p>
       </div>
 
-      <div className="mt-8 rounded-lg bg-dark-200 p-4">{data?.content}</div>
+      <div id="bot_answer" className="mt-8 rounded-lg bg-dark-200 p-4">
+        {parse(data?.content ?? '<p>Empty Content</p>')}
+      </div>
     </section>
   )
 }

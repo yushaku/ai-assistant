@@ -31,6 +31,9 @@ export async function POST(req: NextRequest) {
     const loader = new CheerioWebBaseLoader(url, { selector: 'section' })
     docs = await loader.load()
 
+    // const text = docs.map((doc) => doc.pageContent).join('\n')
+    // fs.writeFileSync('demo.txt', text)
+
     const ids = await updatePinecone(docs)
     await prisma.documents.createMany({
       data: docs.map((file) => {

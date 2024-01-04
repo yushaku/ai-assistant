@@ -133,6 +133,16 @@ p {
   padding: 0.2rem 0;
 }
 
+#bot_answer a {
+  text-decoration: underline;
+}
+
+#bot_answer table,
+#bot_answer th,
+#bot_answer td {
+  border: 1px solid;
+}
+
 #bot_answer code:not(pre code) {
   background-color: #2d3748;
   color: #fdba74;

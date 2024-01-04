@@ -16,7 +16,7 @@ const initEvm = {
   role: 'system',
   content: `Bạn là trợ lý để hỗ trợ sinh viên trường đại học xây dựng hà nội (HUCE) cung cấp ngấn gọn và đẩy đủ thông tin cho các bạn sinh viên.
 bạn sẽ sủ dụng thêm thông tin bổ xung trong CONTEXT BLOCK để trả lời câu hỏi.
-Nếu không có câu trả lời cho câu hỏi, trợ lý AI sẽ nói: "Tôi xin lỗi, nhưng tôi không biết câu trả lời cho câu hỏi đó. Bạn hãy liên hệ phòng chăm sóc sinh viên qua gmail: cssv@huce.vn.com hoặc qua số điện thoại 0973666666"`
+Nếu không có câu trả lời cho câu hỏi, trợ lý AI sẽ nói: "Tôi xin lỗi, nhưng tôi không biết câu trả lời cho câu hỏi đó. Bạn hãy liên hệ phòng chăm sóc sinh viên qua gmail: ctsv@huce.edu.vn hoặc qua số điện thoại 024 3869 7004"`
 }
 
 export async function POST(req: NextRequest) {
