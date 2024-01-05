@@ -26,7 +26,7 @@ export const getContext = async (
     modelName: 'text-embedding-ada-002'
   }).embedQuery(message.replace(/\n/g, ' '))
 
-  const matches = await getMatchesFromEmbeddings(embedding, 2, namespace)
+  const matches = await getMatchesFromEmbeddings(embedding, 1, namespace)
   const qualifyingDocs = matches.filter((m) => m.score && m.score > minScore)
 
   const docs = matches

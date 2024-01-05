@@ -1,11 +1,14 @@
+import { Loading } from '../Loading'
 import { ButtonScrollToBottom } from './button-scroll-to-bottom'
 import { PaperAirplaneIcon, StopIcon } from '@heroicons/react/24/solid'
 import { Button } from '@material-tailwind/react'
 import { type UseChatHelpers } from 'ai/react'
 import { useEnterSubmit } from 'hooks/useEnterSubmit'
+import { usePathname, useRouter } from 'next/navigation'
 import type { FormEvent } from 'react'
 import React, { useEffect, useRef } from 'react'
 import Textarea from 'react-textarea-autosize'
+import { useCreateThread } from 'services'
 
 export interface ChatPanelProps
   extends Pick<
@@ -25,6 +28,8 @@ export function ChatPanel({
 }: ChatPanelProps) {
   const { formRef, onKeyDown } = useEnterSubmit()
   const inputRef = useRef<HTMLTextAreaElement>(null)
+  const router = useRouter()
+  const { mutateAsync: create, isLoading: isCreating } = useCreateThread()
 
   useEffect(() => {
     inputRef.current?.focus()
@@ -34,7 +39,14 @@ export function ChatPanel({
     e.preventDefault()
     if (!input?.trim()) return
     setInput('')
-    await append({ id, content: input, role: 'user' })
+
+    if (id) {
+      await append({ id, content: input, role: 'user' })
+    } else {
+      const thread = await create({ title: input.substring(0, 22) })
+      router.push(`/chat/${thread.id}`)
+      await append({ id: thread.id, content: input, role: 'user' })
+    }
   }
 
   return (
@@ -75,6 +87,8 @@ export function ChatPanel({
           </div>
         </form>
       </div>
+
+      <Loading show={isCreating} />
     </div>
   )
 }

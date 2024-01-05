@@ -13,17 +13,20 @@ const exampleMessages = [
   {
     heading: 'Danh sách sinh viên đạt học bỏng kỳ này?',
     message:
-      'Danh sách sinh viên đạt học bỏng kỳ này của trường đại học xây dựng: \n'
+      'Danh sách sinh viên đạt học bỏng kỳ này của trường đại học xây dựng kỳ này\n'
   },
   {
-    heading: 'Tiêu chuẩn đầu ra tiếng anh của trường HUCE?',
-    message: `Tiêu chuẩn đầu ra tiếng anh của trường HUCE: \n`
+    heading: 'Tiêu chuẩn đầu ra tiếng anh của trường?',
+    message: `Tiêu chuẩn đầu ra tiếng anh của trường?`
   }
 ]
 
-export const EmptyScreem = ({ setInput }: Pick<UseChatHelpers, 'setInput'>) => {
+export const EmptyScreem = ({
+  setInput,
+  isAuth
+}: Pick<UseChatHelpers, 'setInput'> & { isAuth: boolean }) => {
   return (
-    <div className="mx-auto flex h-full w-[500px] flex-col justify-center">
+    <div className="mx-auto flex h-full max-w-[500px] flex-col justify-center px-4">
       <div className="flex gap-5">
         <Image
           src="/bot.png"
@@ -59,9 +62,13 @@ export const EmptyScreem = ({ setInput }: Pick<UseChatHelpers, 'setInput'>) => {
 
       <br />
 
-      <strong>Chọn cuộc trò chuyện bạn đã bỏ dở:</strong>
-      <ThreadList />
-      <AddThreadBtn />
+      {isAuth ? (
+        <>
+          <strong>Chọn cuộc trò chuyện bạn đã bỏ dở:</strong>
+          <ThreadList />
+          <AddThreadBtn />
+        </>
+      ) : null}
     </div>
   )
 }

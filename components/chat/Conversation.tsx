@@ -65,7 +65,7 @@ export default function Conversation({ initialMessages, id }: ChatProps) {
     <>
       <div
         ref={componentRef}
-        className="no-scrollbar relative mx-auto mb-auto h-[75dvh] max-w-[900px] overflow-y-scroll"
+        className="no-scrollbar relative mx-auto mb-auto h-[90dvh] max-w-[900px] overflow-y-scroll md:h-[75dvh]"
       >
         <SelectModel
           show={session?.user.email === SUPPER_ADMIN}
@@ -98,7 +98,7 @@ export default function Conversation({ initialMessages, id }: ChatProps) {
             <ChatScrollAnchor trackVisibility={isLoading} />
           </>
         ) : (
-          <EmptyScreem setInput={setInput} />
+          <EmptyScreem setInput={setInput} isAuth={true} />
         )}
       </div>
 

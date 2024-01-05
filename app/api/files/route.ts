@@ -7,6 +7,7 @@ import { DocxLoader } from 'langchain/document_loaders/fs/docx'
 import { PDFLoader } from 'langchain/document_loaders/fs/pdf'
 import { TextLoader } from 'langchain/document_loaders/fs/text'
 import { CheerioWebBaseLoader } from 'langchain/document_loaders/web/cheerio'
+import { getToken } from 'next-auth/jwt'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import type { ActionType } from 'types'
@@ -19,6 +20,13 @@ loaders.set('docx', DocxLoader)
 loaders.set('csv', CSVLoader)
 
 export async function POST(req: NextRequest) {
+  const user = await getToken({ req })
+  if (!user?.isAdmin) {
+    return new Response('Unauthorized', {
+      status: 403
+    })
+  }
+
   const formData = await req.formData()
   const type = formData.get('type') as ActionType
   const title = formData.get('title') as string
@@ -116,6 +124,12 @@ export async function GET() {
 }
 
 export async function DELETE(req: NextRequest) {
+  const user = await getToken({ req })
+  if (!user?.isAdmin) {
+    return new Response('Unauthorized', {
+      status: 403
+    })
+  }
   const searchParams = req.nextUrl.searchParams
   const id = searchParams.get('id')
   if (!id) throw new Error('there is no id')

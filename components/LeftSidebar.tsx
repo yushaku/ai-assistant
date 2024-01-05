@@ -82,6 +82,7 @@ export const LeftSidebar = () => {
         }}
         maxWidth={500}
         minWidth={200}
+        className={`${status === 'authenticated' ? 'block' : 'hidden'}`}
         defaultSize={{ width: 300 }}
       >
         <div className="p-6">

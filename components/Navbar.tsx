@@ -9,7 +9,7 @@ import {
 } from '@material-tailwind/react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 
@@ -17,13 +17,18 @@ export const Navbar = () => {
   const { data: section } = useSession()
   const styled = section?.user?.isAdmin ? 'flex-center' : 'hidden'
   const router = useRouter()
+  const path = usePathname()
 
   useHotkeys('ctrl+alt+c', () => router.push('/'), [])
   useHotkeys('ctrl+alt+f', () => router.push('/files'), [])
   useHotkeys('ctrl+alt+p', () => router.push('/prompts'), [])
 
   return (
-    <nav className="absolute top-0 z-10 flex h-14 w-full items-center bg-dark-200">
+    <nav
+      className={`absolute top-0 z-10 flex h-14 w-full items-center ${
+        path === '/sign-in' ? 'bg-[#234f66]' : 'bg-dark-200'
+      }`}
+    >
       <div className="flex-between w-full px-6">
         <Link
           href="/"
@@ -46,7 +51,7 @@ export const Navbar = () => {
         </ul>
 
         <div className="flex-center gap-4">
-          <span className="rounded bg-dark-300 px-2 text-[12px] text-green-300">
+          <span className="hidden rounded bg-dark-300 px-2 text-[12px] text-green-300 md:block">
             Beta version
           </span>
           <Popover placement="bottom-end">

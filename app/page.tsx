@@ -1,12 +1,14 @@
+import { LeftSidebar } from '@/component/LeftSidebar'
 import Conversation from '@/component/chat/Conversation'
 
-export const runtime = 'edge'
-export const preferredRegion = 'home'
-
-export default async function Chat() {
+export default async function HomePage() {
   return (
-    <div className="h-screen">
-      <Conversation />
-    </div>
+    <section className="relative flex w-screen overflow-hidden">
+      <LeftSidebar />
+
+      <article className="h-screen flex-1 md:p-24">
+        <Conversation />
+      </article>
+    </section>
   )
 }

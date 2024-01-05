@@ -1,5 +1,6 @@
 import prisma from '@/lib/prisma'
 import type { Prompt } from '@prisma/client'
+import { getToken } from 'next-auth/jwt'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import type { PromptDTO } from 'types'
@@ -22,6 +23,12 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+    const user = await getToken({ req })
+  if (!user?.isAdmin) {
+    return new Response('Unauthorized', {
+      status: 403
+    })
+  }
   const body = (await req.json()) as PromptDTO
   const cate = await prisma.prompt.createMany({
     data: body.promptList.map((item) => ({

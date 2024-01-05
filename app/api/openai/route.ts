@@ -33,6 +33,8 @@ export async function POST(req: NextRequest) {
     const lastMessage = messages.at(-1)
     const context = await getContext(lastMessage.content)
 
+    //console.log(context)
+    
     const prompt = {
       role: 'system',
       content: `
