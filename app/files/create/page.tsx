@@ -2,7 +2,7 @@
 
 import { CrawlWebsiteForm } from '@/component/files/CrawlWebsiteForm'
 import { FileDropZone } from '@/component/files/FileDropZone'
-import { TextEditor } from '@/component/files/TextEdittor'
+// import { TextEditor } from '@/component/files/TextEdittor'
 import { createDocBtn } from '@/lib/constants'
 import { ArrowLeftIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
@@ -10,7 +10,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import React from 'react'
 import { useUpload } from 'services/files'
 
-const KnownledgePage = () => {
+const CreateFilesPage = () => {
   const searchParams = useSearchParams()
   const router = useRouter()
 
@@ -60,7 +60,7 @@ const KnownledgePage = () => {
       </article>
 
       <article>
-        {action === 'TEXT' ? <TextEditor onConfirm={upload} /> : null}
+        {/* {action === 'TEXT' ? <TextEditor onConfirm={upload} /> : null} */}
         {action === 'FILE' ? <FileDropZone onConfirm={upload} /> : null}
         {action === 'WEBSITE' ? <CrawlWebsiteForm onConfirm={upload} /> : null}
       </article>
@@ -68,4 +68,4 @@ const KnownledgePage = () => {
   )
 }
 
-export default KnownledgePage
+export default CreateFilesPage
