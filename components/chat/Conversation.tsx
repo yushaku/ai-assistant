@@ -5,7 +5,7 @@ import { ReportDialog } from '../dialog/ReportDialog'
 import { ChatPanel } from './ChatPanel'
 import { ChatScrollAnchor } from './ChatScrollAnchor'
 import { EmptyScreem } from './EmptyScream'
-import { BotAnswer, UserQuestion } from '@/component/chat/QA'
+import { BotAnswer, BotLoading, UserQuestion } from '@/component/chat/QA'
 import { SelectModel } from '@/component/dropdown/modelOptions'
 import { globlePrompt } from '@/lib/atom'
 import { AI_MODELS } from '@/lib/constants'
@@ -100,6 +100,8 @@ export default function Conversation({ initialMessages, id }: ChatProps) {
         ) : (
           <EmptyScreem setInput={setInput} isAuth={true} />
         )}
+
+        <div>{isLoading ? <BotLoading /> : null}</div>
       </div>
 
       <ChatPanel

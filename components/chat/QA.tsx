@@ -62,3 +62,18 @@ export const BotAnswer = ({
     </div>
   )
 }
+
+export const BotLoading = () => {
+  return (
+    <div className="group relative flex gap-4 rounded-lg bg-dark-200 p-4">
+      <span className="hidden h-7 w-7 rounded-full md:block">
+        <Avatar size="sm" src="/bot.png" alt="avata" />
+      </span>
+
+      <span className="flex gap-2">
+        <ArrowPathIcon className="mx-auto h-6 w-6 animate-spin" />I am searching
+        to get your answer.
+      </span>
+    </div>
+  )
+}

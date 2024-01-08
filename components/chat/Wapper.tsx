@@ -18,7 +18,6 @@ const queryData = async () => {
       }
     }
   })
-  console.log(data)
 
   return data as unknown as PromptList[]
 }

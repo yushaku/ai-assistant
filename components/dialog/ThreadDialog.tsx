@@ -40,7 +40,7 @@ export const ThreadDialog = function ({
             label="Thread Title"
             name="content"
             onChange={(e) => setValue(e.target.value)}
-            onKeyDown={(e)=> {
+            onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 onConfirm(value)
                 setValue('')

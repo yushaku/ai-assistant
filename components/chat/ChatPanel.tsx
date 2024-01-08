@@ -4,7 +4,7 @@ import { PaperAirplaneIcon, StopIcon } from '@heroicons/react/24/solid'
 import { Button } from '@material-tailwind/react'
 import { type UseChatHelpers } from 'ai/react'
 import { useEnterSubmit } from 'hooks/useEnterSubmit'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import type { FormEvent } from 'react'
 import React, { useEffect, useRef } from 'react'
 import Textarea from 'react-textarea-autosize'
@@ -45,7 +45,6 @@ export function ChatPanel({
     } else {
       const thread = await create({ title: input.substring(0, 22) })
       router.push(`/chat/${thread.id}`)
-      await append({ id: thread.id, content: input, role: 'user' })
     }
   }
 
@@ -71,17 +70,18 @@ export function ChatPanel({
             rows={1}
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Send a message."
+            placeholder={id ? 'Input a message' : 'Enter a title'}
             spellCheck={false}
             className="min-h-[60px] w-full resize-none py-5 pl-4 pr-16 text-base text-gray-200"
           />
 
           <div className="absolute bottom-1/2 right-5 translate-y-1/2">
             <button
-              className="btn-contained"
+              className="btn-contained flex gap-2"
               type="submit"
               disabled={isLoading || input === ''}
             >
+              {!id && 'Create thread'}
               <PaperAirplaneIcon className="h-5 w-5" color="white" />
             </button>
           </div>
