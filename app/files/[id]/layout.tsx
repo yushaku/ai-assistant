@@ -1,4 +1,4 @@
-import { Sidebar } from './Sidebar'
+import { Sidebar } from '@/component/files/Sidebar'
 import React from 'react'
 
 type Props = {
