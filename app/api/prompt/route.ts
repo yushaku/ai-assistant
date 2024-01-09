@@ -23,7 +23,7 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-    const user = await getToken({ req })
+  const user = await getToken({ req })
   if (!user?.isAdmin) {
     return new Response('Unauthorized', {
       status: 403

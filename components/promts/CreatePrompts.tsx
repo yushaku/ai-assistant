@@ -6,8 +6,7 @@ import {
   PencilIcon,
   TrashIcon
 } from '@heroicons/react/24/solid'
-import { Option, Select, Spinner } from '@material-tailwind/react'
-import { useRouter } from 'next/navigation'
+import { Spinner } from '@material-tailwind/react'
 import React, { useState } from 'react'
 import { useCreatePrompt, useGetCategory } from 'services'
 
@@ -18,7 +17,6 @@ export const CreatePrompt = () => {
   const [promptList, setPromptList] = useState<Array<string>>([])
   const [prompt, setPrompt] = useState('')
   const [cateId, setCateId] = useState(cateList?.at(0)?.id ?? '')
-  const router = useRouter()
 
   const handleAdd = () => {
     setPromptList([...promptList, prompt])
@@ -40,28 +38,33 @@ export const CreatePrompt = () => {
     }
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     createPrompt({ cateId, promptList })
-    router.push('/')
+    setPromptList([])
   }
 
   return (
     <div>
       <div className="mt-12">
         {cateList ? (
-          <Select
+          <select
             defaultValue={cateList?.at(0)?.title ?? ''}
-            label="Select Category"
-            className="text-gray-100"
+            className="w-full rounded-lg bg-dark-100 p-2 text-gray-100"
+            onChange={(e) => setCateId(e.target.value)}
           >
             {cateList.map((cate, index) => {
               return (
-                <Option key={index} onClick={() => setCateId(cate.id)}>
+                <option
+                  className="py-2"
+                  value={cate.id}
+                  key={index}
+                  onClick={() => setCateId(cate.id)}
+                >
                   {cate.title}
-                </Option>
+                </option>
               )
             })}
-          </Select>
+          </select>
         ) : (
           <Spinner />
         )}
