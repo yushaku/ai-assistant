@@ -39,6 +39,7 @@ const PromptPage = () => {
           <Tab value="prompts" onClick={() => router.push('?add=prompts')}>
             Prompts
           </Tab>
+
           <Tab value="category" onClick={() => router.push('?add=category')}>
             Category
           </Tab>
