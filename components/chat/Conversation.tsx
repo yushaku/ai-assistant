@@ -39,7 +39,7 @@ export default function Conversation({ initialMessages, id }: ChatProps) {
       api: model.href,
       initialMessages,
       body: { id },
-      onFinish: () => {},
+      onError: (e) => toast.error(e.message),
       onResponse(response) {
         if (response.status === 401) {
           toast.error(response.statusText)

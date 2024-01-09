@@ -24,7 +24,7 @@ export class PineconeClient {
   }
 }
 
-const CHUNK_SIZE = 512
+const CHUNK_SIZE = 2000
 
 export async function clearIndex() {
   const client = PineconeClient.getInstance()

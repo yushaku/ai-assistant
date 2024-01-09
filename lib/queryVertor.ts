@@ -19,7 +19,6 @@ export type Meta = {
 export const getContext = async (
   message: string,
   namespace: string = '',
-  maxTokens = 3000,
   minScore = 0.7
 ): Promise<string | ScoredVector[]> => {
   const embedding = await new OpenAIEmbeddings({
@@ -33,7 +32,7 @@ export const getContext = async (
     ? qualifyingDocs.map((match) => match?.metadata?.pageContent ?? '')
     : []
 
-  return docs.join('\n').substring(0, maxTokens)
+  return docs.join('\n\n Tài liệu khác \n')
 }
 
 const getMatchesFromEmbeddings = async (
