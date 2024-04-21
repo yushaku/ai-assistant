@@ -14,7 +14,7 @@ const roboto = Roboto({
 })
 
 export const metadata: Metadata = {
-  title: 'Huce AI',
+  title: 'Yu AI',
   description: "Generate answer for student's questions",
   icons: [
     {

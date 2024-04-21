@@ -2,7 +2,6 @@
 
 import { CrawlWebsiteForm } from '@/component/files/CrawlWebsiteForm'
 import { FileDropZone } from '@/component/files/FileDropZone'
-// import { TextEditor } from '@/component/files/TextEdittor'
 import { createDocBtn } from '@/lib/constants'
 import { ArrowLeftIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'

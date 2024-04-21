@@ -34,8 +34,8 @@ export const Navbar = () => {
           href="/"
           className="green_text_gradient flex-center gap-2 text-xl font-bold"
         >
-          <Avatar src="/huce.jpg" size="sm" />
-          <span className="hidden md:block">HUCE Assistents</span>
+          <Avatar src="/favicon-32x32.png" size="sm" />
+          <span className="hidden md:block">Yu assistant</span>
         </Link>
 
         <ul className={`${styled} gap-4`}>
